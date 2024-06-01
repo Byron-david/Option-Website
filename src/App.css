@@ -29,7 +29,21 @@ body{
 }
 
 #addTrade {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 2rem;
   border-radius: 0.5rem;
   background-color: var(--background-color-secondary);
 }
+
+#addTrade > div {
+  /* display: flex;
+  justify-content: space-between;
+  align-content: space-between; */
+}
+
+#addTrade > *{
+  /* flex: 1 1 100px; */
+}
+
