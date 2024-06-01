@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function CustomInput( {width="50px", padding="0.5rem"}) {
+function CustomInput( {width="50px", margin="1rem", padding="0.5rem"}) {
   const inputStyle = {
     width: width,
   }
@@ -11,21 +11,27 @@ function CustomInput( {width="50px", padding="0.5rem"}) {
     padding: padding,
   }
 
+  const containerStyle = {
+    margin: margin
+  }
+
   // Controls state of input
   const [value, setValue] = useState("");
 
   return (
     <>
-      <label for="symbolName" style={labelStyle}>Symbol Name:</label>
-      <input
-        style={inputStyle}
-        id="symbolName"
-        type="text"
-        placeholder="AAPL"
-        name="symbol"
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-      />
+      <div style={containerStyle}>
+        <label for="symbolName" style={labelStyle}>Symbol Name:</label>
+          <input
+            style={inputStyle}
+            id="symbolName"
+            type="text"
+            placeholder="AAPL"
+            name="symbol"
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+          />
+      </div>
     </>
 
   );
