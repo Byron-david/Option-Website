@@ -37,10 +37,21 @@ body{
   background-color: var(--background-color-secondary);
 }
 
-#addTrade > div {
-  /* display: flex;
+#addTrade > div{
+  /* flex: 1 1 100px; */
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-content: space-between; */
+  align-items:center;
+}
+
+#addTrade > div > label {
+  flex: 2;
+}
+
+#addTrade > div > input {
+  flex: 1;
 }
 
 #addTrade > *{

@@ -23,19 +23,19 @@ function TextInput( { width, padding, text, id, placeholder, htmlFor, name}) {
     <>
       <div>
         <label style={labelStyle}>{text}</label>
-          <input
-            style={inputStyle}
-            type="text"
-            value={textValue}
-            onChange={(event) => setTextValue(event.target.value)}
-          />
+        <input
+          style={inputStyle}
+          type="text"
+          value={textValue}
+          onChange={(event) => setTextValue(event.target.value)}
+        />
       </div>
     </>
   );
 }
 
 TextInput.defaultProps = {
-  width: "50px",
+  width: "80px",
   padding: "0.5" + "rem",
   margin: 1 + "rem"
 };

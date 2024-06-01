@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function DateInput( {padding="0.5rem", text="Date:", id, name, htmlFor}) {
+function DateInput( { padding="0.5rem", text="Date:", id, name, htmlFor }) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,

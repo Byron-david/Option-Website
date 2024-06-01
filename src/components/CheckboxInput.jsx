@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function CheckboxInput( {  padding, text, id, placeholder, htmlFor, name}) {
+function CheckboxInput( {  padding, text, id, placeholder, htmlFor, name }) {
   const inputStyle = {
     id: id,
     placeholder: placeholder,
