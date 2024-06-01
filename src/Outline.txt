@@ -1,0 +1,21 @@
+Add Trade Button:
+-Symbol
+-Strike Price
+-Exp. Date
+-Premium Collected
+-Spreads?
+-Quantity
+-Date executed
+-Open or Close?
+
+Positions Table:
+-Combine positions to spread?
+-Separate table for rolls? Maybe add a column for roll?
+
+PnL Display:
+-Unrealized and realized
+-Pnl for selected positions or underlyings
+-Win/loss percentage for underlyings or strategies
+
+Strategy Tracker:
+-Wheel trades or covered call?

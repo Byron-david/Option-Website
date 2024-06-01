@@ -1,3 +1,18 @@
+:root {
+  --background-color-main : #2D3142;
+  --background-color-secondary : #4F5D75;
+  --background-color-alt : #BFC0C0;
+  --background-color-button : #B1F054;
+  --text-color-main : #FFFFFF;
+  --text-color-alt : #4F5D75;
+  --text-color-secondary : #2D3142;
+  /* --background-color-main : #222831;
+  --background-color-secondary : #31363F;
+  --background-color-button : #76ABAE;
+  --text-color-main : #E7F6F2;
+  --text-color-secondary : #222831; */
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,38 +20,16 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body{    
+  margin: 0px;
+  padding: 0px;
+  background-color: var(--background-color-main);
+  color: var(--text-color-main);
+  font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+#addTrade {
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--background-color-secondary);
 }
