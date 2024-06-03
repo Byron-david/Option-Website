@@ -1,17 +1,15 @@
 import { useState } from 'react'
 
-function DropdownInput( { padding, text, placeholder, htmlFor}) {
+function DropdownInput( { name, id, padding, text, placeholder, htmlFor, list}) {
   const inputStyle = {
     placeholder: placeholder,
     htmlFor: htmlFor,
   }
   const labelStyle = {
     padding: padding,
+    name: name,
+    id: id
   }
-
-  // const containerStyle = {
-  //   justifyContent: justifyContent
-  // }
 
   // Controls state of input
   const [textValue, setTextValue] = useState("");
@@ -23,9 +21,8 @@ function DropdownInput( { padding, text, placeholder, htmlFor}) {
         <select 
           style={inputStyle} 
           value={textValue}
-          onChange={(event) => setTextValue(event.target.value)}
-          name="strategyInput" 
-          id="strategyInput">
+          onChange={(event) => setTextValue(event.target.value)}>
+          {list}
           <option value="stock">Stock</option>
           <option value="singleOption">Single Option</option>
           <option value="coveredCall">Covered Call</option>

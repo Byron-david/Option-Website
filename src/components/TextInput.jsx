@@ -1,18 +1,14 @@
 import { useState } from 'react'
 
-function TextInput( { maxLength, padding, text, id, placeholder, htmlFor, name}) {
+function TextInput( { inputType, maxLength, padding, text, id, placeholder, htmlFor, name}) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,
     name: name
   }
   const labelStyle = {
-    padding: padding,
+    padding: padding + "rem",
   }
-
-  // const containerStyle = {
-  //   justifyContent: justifyContent
-  // }
 
   // Controls state of input
   const [textValue, setTextValue] = useState("");
@@ -26,7 +22,7 @@ function TextInput( { maxLength, padding, text, id, placeholder, htmlFor, name})
           required="required"
           style={inputStyle}
           placeholder={placeholder}
-          type="text"
+          type={inputType}
           value={textValue}
           onChange={(event) => setTextValue(event.target.value.toUpperCase())}
         />
@@ -36,8 +32,7 @@ function TextInput( { maxLength, padding, text, id, placeholder, htmlFor, name})
 }
 
 TextInput.defaultProps = {
-  padding: "0.5rem",
-  margin: 1 + "rem"
+  padding: 0.5,
 };
 
 export default TextInput
