@@ -16,7 +16,7 @@ function DateInput( { padding="0.5rem", text="Date:", id, name, htmlFor }) {
   return (
     <>
       <div>
-        <label  style={labelStyle}>{text}</label>
+        <label style={labelStyle}>{text}</label>
           <input 
             type="date" 
             style={inputStyle}

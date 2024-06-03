@@ -1,10 +1,8 @@
 import { useState } from 'react'
 
-function TextInput( { width, padding, text, id, placeholder, htmlFor, name}) {
+function TextInput( { maxLength, padding, text, id, placeholder, htmlFor, name}) {
   const inputStyle = {
-    width: width,
     id: id,
-    placeholder: placeholder,
     htmlFor: htmlFor,
     name: name
   }
@@ -24,10 +22,13 @@ function TextInput( { width, padding, text, id, placeholder, htmlFor, name}) {
       <div>
         <label style={labelStyle}>{text}</label>
         <input
+          maxLength={maxLength}
+          required="required"
           style={inputStyle}
+          placeholder={placeholder}
           type="text"
           value={textValue}
-          onChange={(event) => setTextValue(event.target.value)}
+          onChange={(event) => setTextValue(event.target.value.toUpperCase())}
         />
       </div>
     </>
@@ -35,8 +36,7 @@ function TextInput( { width, padding, text, id, placeholder, htmlFor, name}) {
 }
 
 TextInput.defaultProps = {
-  width: "80px",
-  padding: "0.5" + "rem",
+  padding: "0.5rem",
   margin: 1 + "rem"
 };
 
