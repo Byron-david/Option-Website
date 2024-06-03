@@ -5,29 +5,7 @@ import DateInput from './components/DateInput.jsx'
 // import DropdownInput from './components/DropdownInput.jsx'
 import Strategies from './components/StrategiesDropdown.jsx'
 
-
-// function Strategies (props){
-//   const strategyNames = {
-//     "stock": "Stock",
-//     "singleOption": "Single Option",
-//     "coveredCall": "Covered Call",
-//     "verticalSpread": "Vertical Spread",
-//     "strangle": "Strangle",
-//     "straddle": "Straddle",
-//     "ironCondor": "Iron Condor",
-//     "butterfly": "Butterfly",
-//     "ratio": "Ratio Spread"
-//   };
-
-//   return (
-//     {props.animals.map((animal) => {
-//       return <li key={animal}>{animal}</li>;
-//     })}
-//   )
-// };
-
 function App() {
-
 
   return (
     <>
