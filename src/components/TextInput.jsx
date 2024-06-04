@@ -16,16 +16,20 @@ function TextInput( { inputType, maxLength, padding, text, id, placeholder, html
   return (
     <>
       <div>
-        <label style={labelStyle}>{text}</label>
-        <input
-          maxLength={maxLength}
-          required="required"
-          style={inputStyle}
-          placeholder={placeholder}
-          type={inputType}
-          value={textValue}
-          onChange={(event) => setTextValue(event.target.value.toUpperCase())}
-        />
+        {/* <label style={labelStyle}>{text}</label> */}
+        <fieldset>
+        <legend>{text}</legend>
+          <input
+            maxLength={maxLength}
+            required="required"
+            style={inputStyle}
+            placeholder={placeholder}
+            type={inputType}
+            value={textValue}
+            onChange={(event) => setTextValue(event.target.value.toUpperCase())}
+          />
+        </fieldset>
+
       </div>
     </>
   );

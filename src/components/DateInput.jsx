@@ -16,13 +16,15 @@ function DateInput( { padding="0.5rem", text="Date:", id, name, htmlFor }) {
   return (
     <>
       <div>
-        <label style={labelStyle}>{text}</label>
+      <fieldset>
+        <legend>{text}</legend>
           <input 
             type="date" 
             style={inputStyle}
             value={dateValue}
             onChange={(event) => setDateValue(event.target.value)}
           />
+        </fieldset>
       </div>
     </>
   );

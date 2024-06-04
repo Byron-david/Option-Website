@@ -9,7 +9,24 @@ function OptionItems(props) {
   );
 }
 
-function DropdownInput( { name, id, padding, text, placeholder, htmlFor, list, items }) {
+// const ClientChoice = (props) => {
+//   const [selectedClient,setSelectedClient] = useState([]);
+
+//   function handleSelectChange(event) {
+//       setSelectedClient(event.target.value);
+//   }
+
+//   return (
+//       <select value={selectedClient} onChange={handleSelectChange}>
+//           <option value="one">One</option>
+//           <option value="two">Two</option>
+//           <option value="three">Three</option>
+//       </select>
+//   )
+// }
+
+
+function DropdownInput( { name, id, padding, text, placeholder, htmlFor, items }) {
   const inputStyle = {
     placeholder: placeholder,
     htmlFor: htmlFor,
@@ -21,28 +38,21 @@ function DropdownInput( { name, id, padding, text, placeholder, htmlFor, list, i
   }
 
   // Controls state of input
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState("Stock");
 
   return (
     <>
       <div>
-        <label style={labelStyle}>{text}</label>
-        <select 
-          style={inputStyle} 
-          value={textValue}
-          onChange={(event) => setTextValue(event.target.value)}>
-          {list}
-          <OptionItems items={items}/>
-          {/* // <option value="stock">Stock</option>
-          // <option value="singleOption">Single Option</option>
-          // <option value="coveredCall">Covered Call</option>
-          // <option value="verticalSpread">Vertical Spread</option>
-          // <option value="strangle">Strangle</option>
-          // <option value="straddle">Straddle</option>
-          // <option value="ironCondor">Iron Condor</option>
-          // <option value="butterfly">Butterfly</option>
-          // <option value="ratio">Ratio Spread</option> */}
-        </select>
+        {/* <label style={labelStyle}>{text}</label> */}
+        <fieldset>
+          <legend>{text}</legend>
+          <select 
+            style={inputStyle} 
+            value={textValue}
+            onChange={(event) => setTextValue(event.target.value)}> 
+            <OptionItems items={items}/>
+          </select>
+        </fieldset>
       </div>
     </>
   );
