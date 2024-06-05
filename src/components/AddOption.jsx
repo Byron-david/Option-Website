@@ -2,12 +2,13 @@ import { useState } from 'react'
 import TextInput from './TextInput.jsx'
 import DateInput from './DateInput.jsx'
 
-function Button({ text = "+", color = "white" }) {
-  const buttonStyle = {
-    color: color,
-  }
+function Button({ text = "x" }) {
+  // const buttonStyle = {
+  //   color: color,
+  //   backgroundColor: backgroundColor,
+  // }
   return (
-    <button style={buttonStyle}>{text}</button>
+    <button className="buttonRemove">{text}</button>
   )
 }
 
@@ -18,10 +19,7 @@ function AddOptionButtons({ display = "flex"}) {
   
   return (
     <>
-      <div style={buttonStyle}>
-        <Button text="+"/>
-        <Button text="x"/>
-      </div>
+      <Button text="x" />
     </>
   )
 }

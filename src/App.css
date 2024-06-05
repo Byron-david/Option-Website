@@ -3,6 +3,7 @@
   --background-color-secondary : #4F5D75;
   --background-color-alt : #BFC0C0;
   --background-color-button : #B1F054;
+  --background-color-button-red :rgb(161, 28, 28);
   --text-color-main : #FFFFFF;
   --text-color-alt : #4F5D75;
   --text-color-secondary : #2D3142;
@@ -94,6 +95,7 @@ input[type=date]{
 .addOption {
   display: flex;
   flex-wrap: nowrap;
+  align-items: center;
 }
 
 @media screen and (max-width: 750px) {
@@ -101,14 +103,8 @@ input[type=date]{
     flex-wrap: wrap;
   }
 }
-#fieldsetDiv {
-  max-width: 10vw;
-  /* display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
 
-  text-wrap: nowrap;
-  text-align: left;
-  min-width: 0%; */
+.buttonRemove {
+  background-color: var(--background-color-button-red);
+  padding: 0.2rem 0.5rem;
 }
-
