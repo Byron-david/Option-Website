@@ -38,9 +38,6 @@ function StrategiesDropDown(props) {
                       id="strategyInput" 
                       text="Strategy:" />
 
-
-
-
   if (strategyValue === "singleOption") {
     return (
       <>
@@ -51,7 +48,13 @@ function StrategiesDropDown(props) {
     );
   }
   else {
-    return dropDown
+    return (
+      <>
+        {dropDown}
+        <TextInput placeholder="100" inputType="number" id="stockPrice" name="stockPrice" htmlFor="stockPrice" text="Stock Price:" />
+      </>  
+    )
+
   }
 }
 

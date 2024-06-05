@@ -91,15 +91,24 @@ input[type=date]{
   min-width: 0%;
 }
 
-#addTradeBody > div{
-  max-width: 250px;
-  
+.addOption {
   display: flex;
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 750px) {
+  .addOption {
+    flex-wrap: wrap;
+  }
+}
+#fieldsetDiv {
+  max-width: 10vw;
+  /* display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 
   text-wrap: nowrap;
   text-align: left;
-  min-width: 0%;
+  min-width: 0%; */
 }
 

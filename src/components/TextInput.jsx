@@ -12,7 +12,7 @@ function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name
 
   return (
     <>
-      <div>
+      <div className="fieldsetDiv">
         <fieldset>
         <legend>{text}</legend>
           <input

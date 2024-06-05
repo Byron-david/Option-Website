@@ -12,7 +12,7 @@ function DateInput( { text="Date:", id, name, htmlFor }) {
 
   return (
     <>
-    <div> 
+    <div className="fieldsetDiv"> 
         <fieldset>
           <legend>{text}</legend>
             <input 

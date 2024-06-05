@@ -17,7 +17,7 @@ function DropdownInput( { text, placeholder, htmlFor, items, value, onChange }) 
 
   return (
     <>
-      <div>
+      <div className="fieldsetDiv">
         <fieldset>
           <legend>{text}</legend>
           <select 
