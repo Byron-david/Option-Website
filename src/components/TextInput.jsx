@@ -1,13 +1,10 @@
 import { useState } from 'react'
 
-function TextInput( { inputType, maxLength, padding, text, id, placeholder, htmlFor, name}) {
+function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name}) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,
     name: name
-  }
-  const labelStyle = {
-    padding: padding + "rem",
   }
 
   // Controls state of input
@@ -16,7 +13,6 @@ function TextInput( { inputType, maxLength, padding, text, id, placeholder, html
   return (
     <>
       <div>
-        {/* <label style={labelStyle}>{text}</label> */}
         <fieldset>
         <legend>{text}</legend>
           <input
@@ -34,9 +30,5 @@ function TextInput( { inputType, maxLength, padding, text, id, placeholder, html
     </>
   );
 }
-
-TextInput.defaultProps = {
-  padding: 0.5,
-};
 
 export default TextInput
