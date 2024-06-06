@@ -5,9 +5,12 @@ import Button from './Button.jsx'
 import AddOption from './AddOption.jsx'
 import StrategiesDropdown from './StrategiesDropdown.jsx'
 
-function AddOptionList({ props, handleClick }) {
+function AddOptionList(props) {
+  if (props.items.length === 0) {
+    return null;
+  }
   return (
-    props.items((item, index) => ( <AddOption key={index} items={handleClick}/> ))
+    props.items.map((item, index) => ( <AddOption key={index} item={item}/> ))
    );
 }
 
@@ -23,13 +26,15 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
 
   const handleButtonClickAdd = () => {
     console.log("Adding....");
-    setAddOption(addOption + 1);
-    console.log(addOption);
+    // let newArray = 
+    // setArtists([
+    //   ...artists, { id: nextId++, name: name } 
+    // ]);
   };
 
   const handleButtonClickRemove = () => {
     console.log("Removing....")
-    setAddOption(addOption - 1);
+    // setAddOption(addOption - 1);
     console.log(addOption);
   };
 
@@ -41,7 +46,7 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
           <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
           <StrategiesDropdown htmlFor="strategyInput" name="strategyInput" id="strategyInput" text="Strategy:" />
           <DateInput id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
-          <AddOption handleClick={handleButtonClickRemove} />
+          <AddOptionList items={addOption} handleClick={handleButtonClickRemove} />
           {/* <TextInput placeholder="50" inputType="number" id="strikePrice" name="strikePrice" htmlFor="strikePrice" text="Strike Price:" /> */}
           {/* <TextInput placeholder="100" inputType="number" id="stockPrice" name="stockPrice" htmlFor="stockPrice" text="Stock Price:" /> */}
           {/* <TextInput placeholder="10,000" inputType="number" id="stockValue" name="stockValue" htmlFor="stockValue" text="Value:" /> */}
