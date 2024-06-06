@@ -3,7 +3,7 @@
   --background-color-secondary : #4F5D75;
   --background-color-alt : #BFC0C0;
   --background-color-button : #B1F054;
-  --background-color-button-red :rgb(161, 28, 28);
+  --background-color-button-red :#f05454;
   --text-color-main : #FFFFFF;
   --text-color-alt : #4F5D75;
   --text-color-secondary : #2D3142;
@@ -92,6 +92,16 @@ input[type=date]{
   min-width: 0%;
 }
 
+#addTradeFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: end;
+  border-top: 2px solid var(--background-color-secondary);
+  padding: 1rem;
+  align-self: end;
+}
+
 .addOption {
   display: flex;
   flex-wrap: nowrap;
@@ -106,5 +116,12 @@ input[type=date]{
 
 .buttonRemove {
   background-color: var(--background-color-button-red);
+  color: var(--background-color-main);
+  padding: 0.2rem 0.5rem;
+}
+
+.buttonAdd {
+  background-color: var(--background-color-button);
+  color: var(--background-color-main);
   padding: 0.2rem 0.5rem;
 }

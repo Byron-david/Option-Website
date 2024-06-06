@@ -2,43 +2,24 @@ import { useState } from 'react'
 import TextInput from './TextInput.jsx'
 import DateInput from './DateInput.jsx'
 
-function Button({ text = "x" }) {
+function Button({ text = "x", handleClick, className }) {
   // const buttonStyle = {
   //   color: color,
   //   backgroundColor: backgroundColor,
   // }
   return (
-    <button className="buttonRemove">{text}</button>
+    <button className={className} onClick={handleClick}>{text}</button>
   )
 }
 
-function AddOptionButtons({ display = "flex"}) {
-  const buttonStyle = {
-    display: display,
-  }
-  
-  return (
-    <>
-      <Button text="x" />
-    </>
-  )
-}
-
-function AddOption({ display = "flex", flexDirection = "row", flexWrap = "nowrap", minWidth = "0%"}) {
-  const buttonStyle = {
-    display: display,
-    flexDirection: flexDirection,
-    flexWrap: flexWrap,
-    minWidth: minWidth
-  }
-
+function AddOption({ handleClick }) {
   return (
     <>
       <div className="addOption">
-        <AddOptionButtons />
+        <Button handleClick={handleClick} className="buttonRemove" />
         <TextInput placeholder="50" inputType="number" id="strikePrice" name="strikePrice" htmlFor="strikePrice" text="Strike Price:" />
         <TextInput placeholder="1,000" inputType="number" id="optionValue" name="optionValue" htmlFor="optionValue" text="Value:" />
-        <TextInput placeholder="1" id="quantityValue" inputType="number" iname="quantityValue" htmlFor="quantityValue" text="Qty:" />
+        <TextInput placeholder="1" id="quantityValue" inputType="number" name="quantityValue" htmlFor="quantityValue" text="Qty:" />
         <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
       </div>
     </>

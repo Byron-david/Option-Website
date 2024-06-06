@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name}) {
+function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name }) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,
-    name: name
+    name: name,
   }
 
   // Controls state of input
