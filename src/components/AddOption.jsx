@@ -12,15 +12,15 @@ function Button({ text = "x", handleClick, className }) {
   )
 }
 
-function AddOption({ handleClick }) {
+function AddOption({ handleClick, strikePrice, optionValue, quantity, exp }) {
   return (
     <>
       <div className="addOption">
         <Button handleClick={handleClick} className="buttonRemove" />
-        <TextInput placeholder="50" inputType="number" id="strikePrice" name="strikePrice" htmlFor="strikePrice" text="Strike Price:" />
-        <TextInput placeholder="1,000" inputType="number" id="optionValue" name="optionValue" htmlFor="optionValue" text="Value:" />
-        <TextInput placeholder="1" id="quantityValue" inputType="number" name="quantityValue" htmlFor="quantityValue" text="Qty:" />
-        <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
+        <TextInput placeholder="50" inputType="number" id={strikePrice} name={strikePrice} htmlFor={strikePrice} text="Strike Price:" />
+        <TextInput placeholder="1,000" inputType="number" id={optionValue} name={optionValue} htmlFor={optionValue} text="Value:" />
+        <TextInput placeholder="1" id={quantity} inputType="number" name={quantity} htmlFor={quantity} text="Qty:" />
+        <DateInput id={exp} name={exp} htmlFor={exp} text="Exp. Date" />
       </div>
     </>
   );

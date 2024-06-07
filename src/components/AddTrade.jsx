@@ -14,6 +14,8 @@ function AddOptionList(props) {
    );
 }
 
+let nextId = 0;
+
 function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap", minWidth = "0%"}) {
   const buttonStyle = {
     display: display,
@@ -21,6 +23,12 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
     flexWrap: flexWrap,
     minWidth: minWidth
   };
+
+  let inputNames = { strikePrice: "strikePrice",
+                      id: nextId,
+                      optionValue: "optionValue",
+                      quantity: "quantity",
+                      exp: "exp",}
 
   const [addOption, setAddOption] = useState([]);
 
@@ -30,6 +38,15 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
     // setArtists([
     //   ...artists, { id: nextId++, name: name } 
     // ]);
+    let strike = inputNames.strikePrice = "strikePrice" + nextId;
+    let value = inputNames.optionValue = "optionValue" + nextId;
+    let quantity = inputNames.quantity = "quantity" + nextId;
+    let exp = inputNames.exp = "exp" + nextId;
+
+    setAddOption([
+      ...addOption,
+      { id: nextId++, strikePrice: strike, optionValue: value, quantity: quantity, exp: exp }
+    ]);
   };
 
   const handleButtonClickRemove = () => {
@@ -46,7 +63,10 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
           <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
           <StrategiesDropdown htmlFor="strategyInput" name="strategyInput" id="strategyInput" text="Strategy:" />
           <DateInput id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
-          <AddOptionList items={addOption} handleClick={handleButtonClickRemove} />
+          {addOption.map((option, index) => (
+          <AddOption key={index} handleClick={handleButtonClickRemove} strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
+          ))}
+          {/* <AddOptionList items={addOption} handleClick={handleButtonClickRemove} strikePrice={} optionValue={} quantity={} exp={}/> */}
           {/* <TextInput placeholder="50" inputType="number" id="strikePrice" name="strikePrice" htmlFor="strikePrice" text="Strike Price:" /> */}
           {/* <TextInput placeholder="100" inputType="number" id="stockPrice" name="stockPrice" htmlFor="stockPrice" text="Stock Price:" /> */}
           {/* <TextInput placeholder="10,000" inputType="number" id="stockValue" name="stockValue" htmlFor="stockValue" text="Value:" /> */}
