@@ -120,10 +120,24 @@ input[type=date]{
   }
 }
 
+/* Make buttons round with centered text */
+.buttonRemove:before {
+  content:'';
+  display:inline-block;;
+  vertical-align:middle;
+  padding-top:100%;
+}
+
 .buttonRemove {
+  min-width: 25px;
+  cursor: pointer;
+  color: white;
+  border-radius: 20%;
+  text-align: center;
+  padding: 0;
   background-color: var(--background-color-button-red);
   color: var(--background-color-main);
-  padding: 0.2rem 0.5rem;
+  /* padding: 0.2rem 0.5rem; */
 }
 
 .buttonAdd {
