@@ -3,28 +3,22 @@ import TextInput from './TextInput.jsx'
 import DropdownInput from './DropdownInput.jsx'
 import { v4 as uuidv4 } from 'uuid';
 
-function StrategiesDropDown(props) {
+function StrategiesDropDown({ handleChange, value }) {
   const strategyNames = [
     { id: uuidv4(), value: "stock", text: "Stock" },
     { id: uuidv4(), value: "singleOption", text: "Option" },
   ];
-  const [strategyValue, setStrategyValue] = useState("stock");
-
-  function handleChange(e) {
-    setStrategyValue(e.target.value);
-  }
 
   const dropDown = <DropdownInput 
-                      {...props} 
-                      value={strategyValue} 
+                      value={value} 
                       items={strategyNames} 
-                      onChange={handleChange} 
+                      onChange={e => handleChange(e.target.value)} 
                       htmlFor="strategyInput" 
                       name="strategyInput" 
                       id="strategyInput" 
                       text="Strategy:" />
 
-  if (strategyValue === "singleOption") {
+  if (value === "singleOption") {
     return (
       <>
         {dropDown}
