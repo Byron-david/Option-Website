@@ -20,15 +20,16 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
   const [strategyValue, setStrategyValue] = useState("stock");
 
   const handleButtonClickAdd = () => {
+    const newOption = [ ...addOption,
+      { id: nextId++,
+        strikePrice: "strikePrice" + nextId, 
+        optionValue: "optionValue" + nextId, 
+        quantity: "quantity" + nextId, 
+        exp: "exp" + nextId }
+    ];
+    
     if (addOption.length < 4) {
-      setAddOption([
-        ...addOption,
-        { id: nextId++,
-          strikePrice: "strikePrice" + nextId, 
-          optionValue: "optionValue" + nextId, 
-          quantity: "quantity" + nextId, 
-          exp: "exp" + nextId }
-      ]);
+      setAddOption(newOption);
     }
   };
 

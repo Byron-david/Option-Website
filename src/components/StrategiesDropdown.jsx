@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import TextInput from './TextInput.jsx'
 import DropdownInput from './DropdownInput.jsx'
+import OptionTypeDropdown from './OptionTypeDropdown.jsx'
 import { v4 as uuidv4 } from 'uuid';
 
 function StrategiesDropDown({ handleChange, value }) {
@@ -22,6 +23,7 @@ function StrategiesDropDown({ handleChange, value }) {
     return (
       <>
         {dropDown}
+        <OptionTypeDropdown />
         <TextInput placeholder="50" inputType="number" id="strikePrice" name="strikePrice" htmlFor="strikePrice" text="Strike Price:" />
       </>
     );
