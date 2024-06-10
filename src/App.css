@@ -165,3 +165,12 @@ input[type=date]{
   color: var(--background-color-main);
   padding: 0.2rem 0.5rem;
 }
+
+table {
+  border-radius: 0.5rem;
+  border: 2px solid var(--background-color-secondary);
+}
+
+thead > tr {
+  border-bottom: 2px solid var(--background-color-secondary);
+}
