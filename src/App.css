@@ -8,6 +8,8 @@
   --text-color-main : #FFFFFF;
   --text-color-alt : #4F5D75;
   --text-color-secondary : #2D3142;
+
+  --border-radius-main: 0.7rem;
   /* --background-color-main : #222831;
   --background-color-secondary : #31363F;
   --background-color-button : #76ABAE;
@@ -51,7 +53,7 @@ input, select {
 
 fieldset {
   border: 1px solid var(--background-color-secondary); 
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-main);
   min-width: 0%;
   margin: 0.5rem;
 }
@@ -81,8 +83,8 @@ input[type=date]{
 
 #addTrade {
   max-width: 80vw;
-  border-radius: 0.5rem;
-  border: 2px solid var(--background-color-secondary);
+  border-radius: var(--border-radius-main);
+  border: 1px solid var(--background-color-secondary);
   /* box-shadow: 10px 5px 5px black; */
   box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .2);
   min-width: 0%;
@@ -92,7 +94,7 @@ input[type=date]{
 #addTradeTitle {
   text-align: left;
   padding: 1rem;
-  border-bottom: 2px solid var(--background-color-secondary);
+  border-bottom: 1px solid var(--background-color-secondary);
 }
 
 #addTradeBody {
@@ -116,7 +118,7 @@ input[type=date]{
   flex-wrap: wrap;
   align-items: center;
   justify-content: end;
-  border-top: 2px solid var(--background-color-secondary);
+  border-top: 1px solid var(--background-color-secondary);
   padding: 1rem;
   align-self: end;
 }
@@ -145,8 +147,7 @@ input[type=date]{
   min-width: 25px;
   cursor: pointer;
   color: white;
-  border-radius: 50%;
-  text-align: center;
+  border-radius: var(--border-radius-main) text-align: center;
   padding: 0;
   background-color: var(--background-color-button-red);
   color: var(--background-color-main);
@@ -171,7 +172,7 @@ table {
   background-color: var(--background-color-secondary);
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-main);
   border: 1px solid var(--background-color-highlight);
   box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2);
   /* table-layout: fixed; */
@@ -196,8 +197,8 @@ th, td {
   font-size: 1em;
   text-align: left;
   padding: 1rem 3rem 1rem .5rem;
-  /* padding: 1rem 2rem; */
 }
 
-td {
+tr:not(:first-child) > td {
+  border-top: 1px solid var(--background-color-highlight);
 }
