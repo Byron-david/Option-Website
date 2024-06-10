@@ -6,6 +6,7 @@ function CsvData() {
     const parsedArray = [];
     const mappedTrades = [];
 
+
     const addParsedData = (data) => {
         parsedArray.push(data)
     };
@@ -16,6 +17,10 @@ function CsvData() {
         console.log(parsedArray);
     };
 
+    // const mapData = (mapping) => {
+    //     parsedArray.forEach((obj) => )
+    // }
+
     return {
         addParsedData,
         getParsedData,
@@ -23,7 +28,7 @@ function CsvData() {
     }
 }
 
-const mapTable = (rowArray, rowHeader) => {
+function MapTable () {
     let newArray = {};
     const tastyMapping = {
         symbol: 4,
@@ -36,16 +41,28 @@ const mapTable = (rowArray, rowHeader) => {
         date: 0,
         open_close: 2,
     };
+    const rowHeader = ["Symbol", 
+                        "Action", 
+                        "Qty", 
+                        "Call/Put", 
+                        "Value", 
+                        "Strike",  
+                        "Exp. Date", 
+                        "Date", 
+                        "Open/Close", 
+                        "Edit/Del"];
+
     let count = 0;
 
     for (const value of Object.values(tastyMapping)) {
         // Check if Symbol
         if (value === 4) {
-            let splitValue = rowArray[value].split(" ")[0];
-            newArray.rowHeader[count] = splitValue;
+            let splitValue = rowHeader[value].split(" ")[0];
+            colName = rowHeader[count];
+            newArray.colName = splitValue;
         }
         else if (value === 0) {
-            let date = new Date(rowArray[value]);
+            let date = new Date(rowHeader[value]);
             let day = date.getDay();
             let month = date.getMonth();
             let year = date.getFullYear().toString();
@@ -58,6 +75,7 @@ const mapTable = (rowArray, rowHeader) => {
         }
         count++;
     }
+    console.log(newArray)
 };
 
 // Allowed extensions for input file
@@ -67,16 +85,6 @@ function ImportCSV() {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
     const [file, setFile] = useState("");
-    const rowHeader = ["Symbol", 
-                        "Action", 
-                        "Qty", 
-                        "Call/Put", 
-                        "Value", 
-                        "Strike",  
-                        "Exp. Date", 
-                        "Date", 
-                        "Open/Close", 
-                        "Edit/Del"];
 
     // This function will be called when
     // the file input changes
@@ -114,27 +122,13 @@ function ImportCSV() {
                 header: true,
             });
             const parsedData = csv?.data;
-            // const rows = Object.keys(parsedData[0]);
- 
-            // const columns = Object.values(parsedData[0]);
 
-            
-            // const res = rows.reduce((acc, e, i) => {
-            //     // []
-            //     // return [...acc, {[e]:columns[i]}];
-            //     return [...acc, [[e], columns[i]]];
-            //     // return [.acc {rows: columns}]
-            // }, []);
-            // console.log(res);
-            // setData(res);
             for (let i = 1; i < parsedData.length; i++) {
                 csvData.addParsedData(parsedData[i]);
-                // mapTable(parsedData[i], rowHeader);
-                // console.log(parsedData[i])
             }
-
         };
         reader.readAsText(file);
+        MapTable()
     };
  
     return (
