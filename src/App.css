@@ -1,7 +1,7 @@
 :root {
   --background-color-main : #2D3142;
   --background-color-secondary : #4F5D75;
-  --background-color-alt : #BFC0C0;
+  --background-color-highlight : #BFC0C0;
   --background-color-button : #B1F054;
   --background-color-button-red :#f05454;
 
@@ -20,6 +20,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  overflow: hidden;
 }
 
 body{    
@@ -167,10 +168,36 @@ input[type=date]{
 }
 
 table {
+  background-color: var(--background-color-secondary);
+  border-collapse: separate;
+  border-spacing: 0;
   border-radius: 0.5rem;
-  border: 2px solid var(--background-color-secondary);
+  border: 1px solid var(--background-color-highlight);
+  box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2);
+  /* table-layout: fixed; */
+  width: 100%;
+  min-width: 800px;
+  overflow:hidden
 }
 
-thead > tr {
-  border-bottom: 2px solid var(--background-color-secondary);
+th {
+  border-bottom: 1px solid var(--background-color-highlight);
+  background-color: var(--background-color-secondary);
+  filter: brightness(90%);
+
+}
+
+tbody > tr:hover{
+  background-color: var(--background-color-secondary);
+  filter: brightness(120%);
+}
+
+th, td {
+  font-size: 1em;
+  text-align: left;
+  padding: 1rem 3rem 1rem .5rem;
+  /* padding: 1rem 2rem; */
+}
+
+td {
 }

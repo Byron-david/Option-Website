@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import AddTrade from './components/AddTrade.jsx'
-import PositionsTable from './components/Positions/PositionsTable.jsx'
+import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 
 function App() {
 

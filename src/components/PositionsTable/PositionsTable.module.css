@@ -1,0 +1,33 @@
+/* table {
+    background-color: var(--background-color-secondary);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
+    border: 1px solid var(--background-color-alt);
+    box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2);
+  }
+  
+  
+  thead {
+    border-radius: 1rem;
+    border-bottom: 1px solid var(--background-color-alt);
+  }
+  
+  tbody > tr {
+  }
+  
+  th {
+    padding: 1rem;
+    border-bottom: 1px solid var(--background-color-secondary);
+  }
+  
+  td {
+    background-color: none;
+    padding: 1rem;
+  } */
+
+.tableTemplate {
+    /* display:block; */
+    overflow: auto;
+    /* max-height:248px; */
+}
