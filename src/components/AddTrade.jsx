@@ -28,7 +28,7 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
         exp: "exp" + nextId }
     ];
     
-    if (addOption.length < 4) {
+    if (addOption.length < 3) {
       setAddOption(newOption);
     }
   };
@@ -42,7 +42,9 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
           <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
           <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
           <TextInput placeholder="1" type="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-          {addOption.map(option => (
+        </div>
+        <div id="addTradeLeg">
+        {addOption.map(option => (
           <AddOption key={option.id} handleClick={() => {
             setAddOption(
               addOption.filter(o =>
