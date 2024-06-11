@@ -3,43 +3,53 @@ import Papa, { parse } from "papaparse";
 import styles from './PositionsTable/PositionsTable.module.css'; 
 
 function CsvData() {
-    const parsedArray = [];
+    const parsedRows = [];
+    let parsedHeader = [];
     const mappedTrades = [];
 
 
-    const addParsedData = (data) => {
-        parsedArray.push(data)
+    const addParsedRows = (data) => {
+        parsedRows.push(data);
     };
 
-    const getParsedData = () => parsedArray;
+    const addParsedHeader = (data) => {
+        parsedHeader = Object.keys(data);
+    };
+
+    const getParsedHeader = () => parsedHeader;
+
+    const getParsedData = () => parsedRows;
 
     const printParsedData = () => {
-        console.log(parsedArray);
+        console.log(parsedRows);
     };
 
-    // const mapData = (mapping) => {
-    //     parsedArray.forEach((obj) => )
-    // }
+    const mapData = (mapping) => {
+        for (let i = 0; i < parsedRows.length; i++) {
+            mappedTrades[mapping[i]]
+        }
+    }
 
     return {
-        addParsedData,
+        addParsedRows,
+        addParsedHeader,
+        getParsedHeader,
         getParsedData,
         printParsedData
     }
 }
 
 function MapTable () {
-    let newArray = {};
     const tastyMapping = {
-        symbol: 4,
-        action: 3,
-        qty: 8,
-        call_put: 17,
-        value: 7,
-        strike: 16,
-        exp_date: 15,
-        date: 0,
-        open_close: 2,
+        "Symbol": 4,
+        "Action": 3,
+        "Quantity": 8,
+        "Call or Put": 17,
+        "Value": 7,
+        "Strike Price": 16,
+        "Expiration Date": 15,
+        "Date": 0,
+        "Sub Type": 2,
     };
     const rowHeader = ["Symbol", 
                         "Action", 
@@ -52,30 +62,46 @@ function MapTable () {
                         "Open/Close", 
                         "Edit/Del"];
 
-    let count = 0;
+    const csvData = CsvData();
 
-    for (const value of Object.values(tastyMapping)) {
-        // Check if Symbol
-        if (value === 4) {
-            let splitValue = rowHeader[value].split(" ")[0];
-            colName = rowHeader[count];
-            newArray.colName = splitValue;
-        }
-        else if (value === 0) {
-            let date = new Date(rowHeader[value]);
-            let day = date.getDay();
-            let month = date.getMonth();
-            let year = date.getFullYear().toString();
-            let dateString = `${day}/${month}/${year.substring(2)}`;
+    // let count = 0;
 
-            newArray.rowHeader[count] = dateString;
-        }
-        else {
-            newArray.rowHeader[count] = value;
-        }
-        count++;
-    }
-    console.log(newArray)
+    // rowHeader.forEach(function (value, i) {
+    //     console.log('%d: %s', i, value);
+    // });
+
+    ////
+    const data = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }],
+    result = data.reduce((res, {id, val}) => {
+      if(id === 5) {
+        return res;
+      }
+      res.push({id: res.length + 1, val});
+      return res;
+    }, []);
+    console.log(result)
+    ////
+
+    // for (const [key, value] of Object.values(tastyMapping)) {
+    //     // Check if Symbol
+    //     if (key === "Symbol") {
+    //         let splitValue = rowHeader[value].split(" ")[0];
+    //     }
+    //     else if (value === 0) {
+    //         let date = new Date(rowHeader[value]);
+    //         let day = date.getDay();
+    //         let month = date.getMonth();
+    //         let year = date.getFullYear().toString();
+    //         let dateString = `${day}/${month}/${year.substring(2)}`;
+
+    //         newArray.rowHeader[count] = dateString;
+    //     }
+    //     else {
+    //         newArray.rowHeader[count] = value;
+    //     }
+    //     count++;
+    // }
+    // console.log(newArray)
 };
 
 // Allowed extensions for input file
@@ -114,7 +140,6 @@ function ImportCSV() {
  
         const reader = new FileReader();
         const csvData = CsvData();
-        const dataArray = []
  
         // loads, we parse it and set the data.
         reader.onload = async ({ target }) => {
@@ -122,13 +147,18 @@ function ImportCSV() {
                 header: true,
             });
             const parsedData = csv?.data;
+            csvData.addParsedHeader(parsedData[0]);
 
             for (let i = 1; i < parsedData.length; i++) {
-                csvData.addParsedData(parsedData[i]);
+                if (parsedData[i]["Symbol"] === "") {
+                    continue;
+                } 
+                else {
+                    csvData.addParsedRows(parsedData[i]);
+                }
             }
         };
         reader.readAsText(file);
-        MapTable()
     };
  
     return (
