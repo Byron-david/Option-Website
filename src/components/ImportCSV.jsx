@@ -14,6 +14,7 @@ function CsvData() {
 
     const addParsedHeader = (data) => {
         parsedHeader = Object.keys(data);
+        console.log(parsedHeader)
     };
 
     const getParsedHeader = () => parsedHeader;
@@ -64,22 +65,15 @@ function MapTable () {
 
     const csvData = CsvData();
 
+    // for (const [key, value] of Object.values(tastyMapping)) {
+        
+    }
+
     // let count = 0;
-
-    // rowHeader.forEach(function (value, i) {
-    //     console.log('%d: %s', i, value);
-    // });
-
+    // const result = csv.getParsedData.map(option => ({ "Symbol": option.symbol, "Action": option.action }));
+    // console.log(result)
     ////
-    const data = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }],
-    result = data.reduce((res, {id, val}) => {
-      if(id === 5) {
-        return res;
-      }
-      res.push({id: res.length + 1, val});
-      return res;
-    }, []);
-    console.log(result)
+
     ////
 
     // for (const [key, value] of Object.values(tastyMapping)) {
@@ -102,7 +96,6 @@ function MapTable () {
     //     count++;
     // }
     // console.log(newArray)
-};
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
@@ -159,6 +152,30 @@ function ImportCSV() {
             }
         };
         reader.readAsText(file);
+        // const datatest = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }],
+        // result = datatest.reduce((res, {id, val}) => {
+        //   if(id === 5) {
+        //     return res;
+        //   }
+        //   res.push({id: res.length + 1, val});
+        //   return res;
+        // }, []);
+        // console.log(result)
+        const datatest = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }]
+
+        const test = csvData.getParsedData()
+        console.log(test)
+        const mappedResult = test.map((option) => ({ date: option["Date"] }));
+        // const mappedResult = datatest.map(option => ({ test: option.id }));
+
+        // var mapObj= { fieldName: 'map', fieldValue: { first: 'first_name', last: 'last_name', title: 'null', mail: 'email', cellphone: 'cellphone', phone_2: 'null', address_1: 'address_line_1', address_2: 'address_line_2', address_3: 'null', address_4: 'null', address_5: 'null', zipcode: 'null', country: 'country' }};
+
+        // var obj={ first: 'Zaaac', last: 'Ezzell', title: 'Mrs', mail: 'oezzell0@reddit.com', cellphone: '+444444', phone_2: '6506679207', address_2: 'Holmberg', address_1: '34 Scott Center', address_3: 'Iowa City', address_4: 'Stephen', address_5: 'Iowa', country: 'United States', zipcode: '52245' };
+
+        // var result = Object.fromEntries(Object.entries(obj).map(([k,v])=>([mapObj.fieldValue[k] == "null" ? k : mapObj.fieldValue[k]  ,v])));
+
+        // console.log(result);
+        console.log(mappedResult)
     };
  
     return (
