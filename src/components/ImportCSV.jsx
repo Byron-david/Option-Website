@@ -133,6 +133,7 @@ function ImportCSV() {
  
         const reader = new FileReader();
         const csvData = CsvData();
+        const newArray = []
  
         // loads, we parse it and set the data.
         reader.onload = async ({ target }) => {
@@ -142,41 +143,38 @@ function ImportCSV() {
             const parsedData = csv?.data;
             csvData.addParsedHeader(parsedData[0]);
 
+            const rowHeader = ["Symbol", 
+                "Action", 
+                "Qty", 
+                "Call/Put", 
+                "Value", 
+                "Strike",  
+                "Exp. Date", 
+                "Date", 
+                "Open/Close", 
+                "Edit/Del"];
+
             for (let i = 1; i < parsedData.length; i++) {
                 if (parsedData[i]["Symbol"] === "") {
                     continue;
                 } 
                 else {
                     csvData.addParsedRows(parsedData[i]);
+                    // newArray.push(parsedData[i]);
                 }
             }
         };
         reader.readAsText(file);
-        // const datatest = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }],
-        // result = datatest.reduce((res, {id, val}) => {
-        //   if(id === 5) {
-        //     return res;
-        //   }
-        //   res.push({id: res.length + 1, val});
-        //   return res;
-        // }, []);
-        // console.log(result)
-        const datatest = [{ id: 4, val: "21321" }, { id: 5, val: "435345" }, { id: 6, val: "345345" }]
-
         const test = csvData.getParsedData()
         console.log(test)
-        const mappedResult = test.map((option) => ({ date: option["Date"] }));
-        // const mappedResult = datatest.map(option => ({ test: option.id }));
-
-        // var mapObj= { fieldName: 'map', fieldValue: { first: 'first_name', last: 'last_name', title: 'null', mail: 'email', cellphone: 'cellphone', phone_2: 'null', address_1: 'address_line_1', address_2: 'address_line_2', address_3: 'null', address_4: 'null', address_5: 'null', zipcode: 'null', country: 'country' }};
-
-        // var obj={ first: 'Zaaac', last: 'Ezzell', title: 'Mrs', mail: 'oezzell0@reddit.com', cellphone: '+444444', phone_2: '6506679207', address_2: 'Holmberg', address_1: '34 Scott Center', address_3: 'Iowa City', address_4: 'Stephen', address_5: 'Iowa', country: 'United States', zipcode: '52245' };
-
-        // var result = Object.fromEntries(Object.entries(obj).map(([k,v])=>([mapObj.fieldValue[k] == "null" ? k : mapObj.fieldValue[k]  ,v])));
-
-        // console.log(result);
-        console.log(mappedResult)
     };
+
+    const handleLog = () => {
+        const csvData = CsvData().getParsedData();
+        const mappedResult = csvData.map((option) => ({ date: option["Date"] }));
+        CsvData().printParsedData()
+        // console.log(mappedResult)
+    }
  
     return (
         <div className="App">
@@ -197,6 +195,11 @@ function ImportCSV() {
                 <div>
                     <button onClick={handleParse}>
                         Parse
+                    </button>
+                </div>
+                <div>
+                    <button onClick={handleLog}>
+                        Log
                     </button>
                 </div>
                 <div style={{ marginTop: "3rem" }}>
