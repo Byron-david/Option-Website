@@ -175,10 +175,11 @@ table {
   border-radius: var(--border-radius-main);
   border: 1px solid var(--background-color-highlight);
   box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2);
-  /* table-layout: fixed; */
+  table-layout: fixed;
   width: 100%;
-  min-width: 800px;
-  overflow:hidden
+  min-width: 600px;
+  overflow:hidden;
+  font-size: 0.9em;
 }
 
 th {
@@ -194,9 +195,11 @@ tbody > tr:hover{
 }
 
 th, td {
-  font-size: 1em;
   text-align: left;
   padding: 1rem 3rem 1rem .5rem;
+  max-width: 250px;
+  min-width: 150px;
+  /* overflow: hidden; */
 }
 
 tr:not(:first-child) > td {

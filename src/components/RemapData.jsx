@@ -2,9 +2,8 @@ import CsvFileInput from './CsvFileInput.jsx'
 
 const tableHeadNames = [
   "Symbol", 
-  "Action", 
   "Qty", 
-  "Call/Put", 
+  "Type", 
   "Value", 
   "Strike",  
   "Exp. Date", 
@@ -15,7 +14,6 @@ const tableHeadNames = [
 
 const tastyMapping = [
   "Symbol",
-  "Action",
   "Quantity",
   "Call or Put",
   "Value",
@@ -38,7 +36,7 @@ const Remap = (data, mapping) => {
           for (const key of mapping) {
               const value = data[i][key];
               if (key === "Symbol") {
-                  let splitValue = data[i][key].split(" ")[0];
+                  let splitValue = value.split(" ")[0];
                   obj[key] = splitValue;
               }
               else if (key === "Date") {
@@ -49,6 +47,17 @@ const Remap = (data, mapping) => {
                   let dateString = `${day}/${month}/${year.substring(2)}`;
   
                   obj[key] = dateString;
+              }
+              else if (key === "Sub Type") {
+                if (value !== null) {
+                  // let actionValue = value.split('_');
+                  // actionValue.join(' ')
+                  obj[key] = value
+                  
+                }
+                else {
+                  obj[key] = value
+                }
               }
               else {
                   obj[key] = value

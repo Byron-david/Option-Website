@@ -7,11 +7,14 @@ import { v4 as uuid } from 'uuid';
 
 export default function PositionsTable() {
     const [data, setData] = useState([]);
+    const [header, setHeader] = useState([]);
     const handleFileLoad = (csvData) => {
       setData(csvData);
+      setHeader(Object.keys(csvData[0]));
+    //   setBody(Object.keys(csvData[0]));
     }
 
-    const handleClick = () => Object.keys(data[0]);
+    // const handleClick = () => console.log(Object.values(data[0]));
 
     // const mapData = (data) => {
     //     const mappedResult = data.map((option) => ({ date: option["Date"] }));
@@ -25,9 +28,9 @@ export default function PositionsTable() {
                 <table>
                         <thead>
                             <tr>
-                                {/* {Object.keys(data[0]).map((element, index) => (
-                                    <th scope="col" key={index}>{element}</th>
-                                ))} */}
+                                {header.map((element) => (
+                                    <th scope="col" key={element}>{element}</th>
+                                ))}
                                 {/* {data.map((obj, index) => (
                                     <th scope="col" key={index}>{Object.keys(obj)}</th>
                                     ))} */}
@@ -39,11 +42,11 @@ export default function PositionsTable() {
                             </tr> */}
                         </thead>
                         <tbody>
-                            {/* {data.map((row, index) => (
+                            {data.map((row) => (
                                 <tr key={uuid()}>
-                                    <td key={index}>{row}</td>
+                                    {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
                                 </tr>
-                            ))} */}
+                            ))}
                             {/* <tr>
                                 {tableHeadNames.map((name, index) => (
                                     <td key={index}>{name}</td>
