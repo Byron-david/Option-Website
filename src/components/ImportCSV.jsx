@@ -140,40 +140,31 @@ function ImportCSV() {
             const csv = Papa.parse(target.result, {
                 header: true,
             });
-            const parsedData = csv?.data;
-            csvData.addParsedHeader(parsedData[0]);
-
-            const rowHeader = ["Symbol", 
-                "Action", 
-                "Qty", 
-                "Call/Put", 
-                "Value", 
-                "Strike",  
-                "Exp. Date", 
-                "Date", 
-                "Open/Close", 
-                "Edit/Del"];
-
-            for (let i = 1; i < parsedData.length; i++) {
-                if (parsedData[i]["Symbol"] === "") {
-                    continue;
-                } 
-                else {
-                    csvData.addParsedRows(parsedData[i]);
-                    // newArray.push(parsedData[i]);
-                }
+            Papa.parse(file, {
+                complete: (result) => {
+                  onFileLoad(result.data);
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+              });
             }
         };
         reader.readAsText(file);
-        const test = csvData.getParsedData()
-        console.log(test)
+        setData(newArray)
+        const mappedResult = newArray.map((option) => ({ date: option["Date"] }));
+        console.log(mappedResult)
+
+
+        // const test = csvData.getParsedData()
+        // console.log(test)
     };
 
     const handleLog = () => {
-        const csvData = CsvData().getParsedData();
-        const mappedResult = csvData.map((option) => ({ date: option["Date"] }));
-        CsvData().printParsedData()
-        // console.log(mappedResult)
+        // const csvData = CsvData().getParsedData();
+        const mappedResult = data.map((option) => ({ date: option["Date"] }));
+        // CsvData().printParsedData()
+        console.log(mappedResult)
     }
  
     return (
@@ -203,13 +194,13 @@ function ImportCSV() {
                     </button>
                 </div>
                 <div style={{ marginTop: "3rem" }}>
-                    {error
+                    {/* {error
                         ? error
                         : data.map((e, i) => (
                               <div key={i} className="item">
                                   {e[0]}:{e[1]}
                               </div>
-                          ))}
+                          ))} */}
                 </div>
             </div>
         </div>
