@@ -11,21 +11,27 @@ export default function PositionsTable() {
       setData(csvData);
     }
 
-    const mapData = (data) => {
-        const mappedResult = data.map((option) => ({ date: option["Date"] }));
-    }
+    const handleClick = () => Object.keys(data[0]);
+
+    // const mapData = (data) => {
+    //     const mappedResult = data.map((option) => ({ date: option["Date"] }));
+    // }
 
     return (
         <>
             <div className={styles.tableTemplate}>
                 <RemapData onFileLoad={handleFileLoad} />
+                {/* <button onClick={handleClick}></button> */}
                 <table>
                         <thead>
-                            {/* <tr>
-                                {data.map((name, index) => (
-                                    <th scope="col" key={index}>{name}</th>
-                                    ))}
-                            </tr> */}
+                            <tr>
+                                {/* {Object.keys(data[0]).map((element, index) => (
+                                    <th scope="col" key={index}>{element}</th>
+                                ))} */}
+                                {/* {data.map((obj, index) => (
+                                    <th scope="col" key={index}>{Object.keys(obj)}</th>
+                                    ))} */}
+                            </tr>
                             {/* <tr>
                                 {data.map((name, index) => (
                                     <th scope="col" key={index}>{name}</th>

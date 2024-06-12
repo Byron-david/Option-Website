@@ -57,6 +57,9 @@ const Remap = (data, mapping) => {
               newArray.push(obj)
           }
   }
+  return (
+    newArray
+  )
 }
 
 const RemapData = ({ onFileLoad }) => {
