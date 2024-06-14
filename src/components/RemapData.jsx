@@ -3,23 +3,23 @@ import CsvFileInput from './CsvFileInput.jsx'
 const tableHeadNames = [
   "Symbol", 
   "Qty", 
+  "Action", 
   "Type", 
   "Value", 
   "Strike",  
   "Exp. Date", 
   "Date", 
-  "Open/Close", 
 ];
 
 const tastyMapping = {
   "Symbol": 4,
   "Quantity": 8,
+  "Sub Type": 2,
   "Call or Put": 17,
   "Value": 7,
   "Strike Price": 16,
   "Expiration Date": 15,
   "Date": 0,
-  "Sub Type": 2,
 };
 
 const Remap = (data, mapping) => {
@@ -35,29 +35,27 @@ const Remap = (data, mapping) => {
     } 
     else {
       tableHeadNames.forEach((name, index) => {
-        if (name === "Symbol") {
-            let splitValue = value.split(" ")[0];
-            obj[key] = splitValue;
+        const value = dataValues[mappingValues[index]];
+        if (name === "Symbol" || name === "Action") {
+            const splitValue = value.split(" ")[0];
+            obj[name] = splitValue;
         }
-        else if (key === "Date") {
-            let date = new Date(value);
-            let day = date.getDay();
-            let month = date.getMonth();
-            let year = date.getFullYear().toString();
-            let dateString = `${day}/${month}/${year.substring(2)}`;
+        else if (name === "Date") {
+          const date = new Date(value);
+          const day = date.getDay();
+          const month = date.getMonth();
+          const year = date.getFullYear().toString();
+          const dateString = `${day}/${month}/${year.substring(2)}`;
 
-            obj[key] = dateString;
+          obj[name] = dateString;
         }
-        else if (key === "Sub Type") {
-          if (value !== null) {
-            obj[key] = actionValue
-            
-          }
-          else {
-            obj[key] = value
-          }
+        // Check if stock
+        else if (name === "Type" && data[i]["Instrument Type"] === "Equity") {
+          obj[name] = "Stock";
         }
-        obj[name] = dataValues[mappingValues[index]]
+        else {
+          obj[name] = value;
+        }
     })
       newArray.push(obj);
       }
