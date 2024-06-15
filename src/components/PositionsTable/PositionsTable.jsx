@@ -2,13 +2,35 @@ import { useState } from 'react'
 import styles from './PositionsTable.module.css'; 
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
+import Button from '../Button.jsx'
 
+function Trades(tradeData) {
+    // get trade data
 
+    // remove time or other columns
+
+    // Combine individual trades to strategies
+    const trades = tradeData;
+
+    // loop through array
+    
+}
+
+function RowButtons() {
+    return (
+        <div>
+            <Button />
+            <Button />
+        </div>
+    )
+}
 
 export default function PositionsTable() {
     const [data, setData] = useState([]);
+    const [importData, setImportData] = useState([]);
     const [trades, setTrades] = useState([]);
     const [header, setHeader] = useState([]);
+
     const handleFileLoad = (csvData) => {
       setData(csvData);
       let newHeader = Object.keys(csvData[0]);
@@ -27,33 +49,17 @@ export default function PositionsTable() {
                             <tr>
                                 {header.map((element) => (
                                     <th scope="col" key={element}>{element}</th>
-                                ))}
-                                {/* {data.map((obj, index) => (
-                                    <th scope="col" key={index}>{Object.keys(obj)}</th>
-                                    ))} */}
+                                ))
+                                }
                             </tr>
-                            {/* <tr>
-                                {data.map((name, index) => (
-                                    <th scope="col" key={index}>{name}</th>
-                                    ))}
-                            </tr> */}
                         </thead>
                         <tbody>
                             {data.map((row) => (
                                 <tr key={uuid()}>
                                     {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
+                                    {/* <RowButtons /> */}
                                 </tr>
                             ))}
-                            {/* <tr>
-                                {tableHeadNames.map((name, index) => (
-                                    <td key={index}>{name}</td>
-                                    ))}
-                            </tr>
-                            <tr>
-                                {tableHeadNames.map((name, index) => (
-                                    <td key={index}>{name}</td>
-                                    ))}
-                            </tr> */}
                         </tbody>
                     </table>  
             </div>

@@ -211,12 +211,11 @@ tbody > tr:hover{
 }
 
 th, td {
-  background-color: none;
+  background-color: transparent;
   text-align: left;
   padding: 1rem 3rem 1rem .5rem;
   min-width: 50px;
   border-bottom: 3px solid var(--background-color-main);
-
 }
 
 tr:not(:first-child) > td {
@@ -244,4 +243,5 @@ tr:not(:first-child) > td {
   background-color: var(--background-color-secondary);
   border: none;
   padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-main);
 }

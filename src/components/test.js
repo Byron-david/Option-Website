@@ -112,4 +112,10 @@ for (let i = 0; i < data.length; i++) {
             newArray.push(obj)
         }
 }
-console.log(newArray)
+let strArray = [ "q", "w", "w", "w", "e", "i", "i", "u", "r"];
+let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+
+console.log(findDuplicates(strArray)) // All duplicates
+console.log([...new Set(findDuplicates(strArray))]) // Unique duplicates
+
+// console.log(newArray)

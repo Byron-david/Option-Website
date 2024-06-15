@@ -1,16 +1,7 @@
 import { useState } from 'react'
 import TextInput from './TextInput.jsx'
 import DateInput from './DateInput.jsx'
-
-function Button({ text = "x", handleClick, className }) {
-  // const buttonStyle = {
-  //   color: color,
-  //   backgroundColor: backgroundColor,
-  // }
-  return (
-    <button className={className} onClick={handleClick}>{text}</button>
-  )
-}
+import Button from './Button.jsx'
 
 function AddOption({ handleClick, strikePrice, optionValue, quantity, exp }) {
   return (

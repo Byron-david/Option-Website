@@ -54,9 +54,11 @@ const Remap = (data, mapping) => {
         else if (name === "Time") {
           const date = new Date(value);
           const hour = date.getHours();
-          const min = date.getMinutes();
-          const secs = date.getSeconds();
-          const time = `${hour}:${min}:${secs}`;
+          let min = date.getMinutes();
+          if (min < 10) {
+            min = `0${min}`;
+          }
+          const time = `${hour}:${min}`;
 
           obj[name] = time;
         }
@@ -71,7 +73,6 @@ const Remap = (data, mapping) => {
       newArray.push(obj);
       }
   }
-  console.log(newArray)
   return (
     newArray
   )
