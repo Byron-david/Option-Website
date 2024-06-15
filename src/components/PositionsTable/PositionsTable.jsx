@@ -1,31 +1,28 @@
 import { useState } from 'react'
 import styles from './PositionsTable.module.css'; 
-import RemapData from '../RemapData.jsx'
+import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
 
 
 
 export default function PositionsTable() {
     const [data, setData] = useState([]);
+    const [trades, setTrades] = useState([]);
     const [header, setHeader] = useState([]);
     const handleFileLoad = (csvData) => {
       setData(csvData);
-      setHeader(Object.keys(csvData[0]));
-    //   setBody(Object.keys(csvData[0]));
+      let newHeader = Object.keys(csvData[0]);
+      setHeader(newHeader);
     }
-
-    // const handleClick = () => console.log(Object.values(data[0]));
-
-    // const mapData = (data) => {
-    //     const mappedResult = data.map((option) => ({ date: option["Date"] }));
-    // }
 
     return (
         <>
-            <div className={styles.tableTemplate}>
+            <div className={styles.tableTools}>
                 <RemapData onFileLoad={handleFileLoad} />
-                {/* <button onClick={handleClick}></button> */}
+            </div>
+            <div className={styles.tableContainer}>
                 <table>
+                    <caption>All Positions</caption>
                         <thead>
                             <tr>
                                 {header.map((element) => (

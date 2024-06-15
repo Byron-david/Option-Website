@@ -16,7 +16,7 @@ const CsvFileInput = ({ onFileLoad }) => {
       }
     };
     return (
-      <div className="InputCsv">
+      <div className="inputCsv">
         <label htmlFor="csvInput">
             Import CSV
         </label>

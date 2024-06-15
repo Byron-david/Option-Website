@@ -1,4 +1,4 @@
-import CsvFileInput from './CsvFileInput.jsx'
+import CsvFileInput from '../Input/CsvFileInput.jsx'
 
 const tableHeadNames = [
   "Symbol", 
@@ -8,7 +8,8 @@ const tableHeadNames = [
   "Value", 
   "Strike",  
   "Exp. Date", 
-  "Date", 
+  "Date",
+  "Time"
 ];
 
 const tastyMapping = {
@@ -20,6 +21,7 @@ const tastyMapping = {
   "Strike Price": 16,
   "Expiration Date": 15,
   "Date": 0,
+  "Time": 0
 };
 
 const Remap = (data, mapping) => {
@@ -49,7 +51,16 @@ const Remap = (data, mapping) => {
 
           obj[name] = dateString;
         }
-        // Check if stock
+        else if (name === "Time") {
+          const date = new Date(value);
+          const hour = date.getHours();
+          const min = date.getMinutes();
+          const secs = date.getSeconds();
+          const time = `${hour}:${min}:${secs}`;
+
+          obj[name] = time;
+        }
+        // Check if stock or option
         else if (name === "Type" && data[i]["Instrument Type"] === "Equity") {
           obj[name] = "Stock";
         }

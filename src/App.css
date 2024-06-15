@@ -37,7 +37,7 @@ button:hover {
   filter: brightness(125%);
 }
 
-input, select {
+.inputSelect {
   background: var(--background-color-main);
   border:none;
   font-size: 1rem;
@@ -172,9 +172,6 @@ table {
   background-color: var(--background-color-secondary);
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: var(--border-radius-main);
-  border: 1px solid var(--background-color-highlight);
-  box-shadow: 0 5px 22px 0 rgba(0, 0, 0, .2);
   table-layout: fixed;
   width: 100%;
   min-width: 600px;
@@ -182,26 +179,69 @@ table {
   font-size: 0.9em;
 }
 
-th {
-  border-bottom: 1px solid var(--background-color-highlight);
-  background-color: var(--background-color-secondary);
-  filter: brightness(90%);
+caption {
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
 
+th {
+  /* border-bottom: 1px solid var(--background-color-highlight); */
+  filter: brightness(90%);
+}
+
+/* th:first-child{
+  border-top-left-radius: var(--border-radius-main);
+}
+
+th:last-child {
+  border-top-right-radius: var(--border-radius-main);
+} */
+
+thead > tr {
+  background-color: var(--background-color-main);
+}
+
+tbody > tr {
+  background-color: var(--background-color-secondary);
 }
 
 tbody > tr:hover{
-  background-color: var(--background-color-secondary);
   filter: brightness(120%);
 }
 
 th, td {
+  background-color: none;
   text-align: left;
   padding: 1rem 3rem 1rem .5rem;
-  max-width: 250px;
-  min-width: 150px;
-  /* overflow: hidden; */
+  min-width: 50px;
+  border-bottom: 3px solid var(--background-color-main);
+
 }
 
 tr:not(:first-child) > td {
-  border-top: 1px solid var(--background-color-highlight);
+  /* border-top: 1px solid var(--background-color-highlight); */
+}
+
+.inputCsv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.inputCsv >  * {
+  padding: 0.25rem;
+}
+
+
+.inputCsv > label {
+  align-content: flex-start;
+}
+
+.inputCsv > input::file-selector-button {
+  background-color: var(--background-color-secondary);
+  border: none;
+  padding: 0.25rem 0.5rem;
 }

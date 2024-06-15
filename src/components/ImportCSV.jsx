@@ -64,38 +64,8 @@ function MapTable () {
                         "Edit/Del"];
 
     const csvData = CsvData();
-
-    // for (const [key, value] of Object.values(tastyMapping)) {
-        
     }
 
-    // let count = 0;
-    // const result = csv.getParsedData.map(option => ({ "Symbol": option.symbol, "Action": option.action }));
-    // console.log(result)
-    ////
-
-    ////
-
-    // for (const [key, value] of Object.values(tastyMapping)) {
-    //     // Check if Symbol
-    //     if (key === "Symbol") {
-    //         let splitValue = rowHeader[value].split(" ")[0];
-    //     }
-    //     else if (value === 0) {
-    //         let date = new Date(rowHeader[value]);
-    //         let day = date.getDay();
-    //         let month = date.getMonth();
-    //         let year = date.getFullYear().toString();
-    //         let dateString = `${day}/${month}/${year.substring(2)}`;
-
-    //         newArray.rowHeader[count] = dateString;
-    //     }
-    //     else {
-    //         newArray.rowHeader[count] = value;
-    //     }
-    //     count++;
-    // }
-    // console.log(newArray)
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];

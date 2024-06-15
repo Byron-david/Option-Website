@@ -21,6 +21,7 @@ function DropdownInput( { text, placeholder, htmlFor, items, value, onChange }) 
         <fieldset>
           <legend>{text}</legend>
           <select 
+            className="inputSelect"
             style={inputStyle} 
             value={value}
             onChange={onChange}> 

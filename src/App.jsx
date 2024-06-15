@@ -2,8 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import AddTrade from './components/AddTrade.jsx'
 // import ImportCSV from './components/ImportCSV.jsx'
-import CsvFileInput from './components/CsvFileInput.jsx'
-import RemapData from './components/RemapData.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 
 function App() {

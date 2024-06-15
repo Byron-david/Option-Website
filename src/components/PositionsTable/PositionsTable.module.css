@@ -26,9 +26,17 @@
     padding: 1rem;
   } */
 
-.tableTemplate {
+.tableTools {
+  box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
+  border-radius: var(--border-radius-main);
+}
+
+.tableContainer {
     /* display:block; */
     overflow: auto;
+    box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
+    border-radius: var(--border-radius-main);
     /* white-space: nowrap; */
     /* max-height:248px; */
 }
+
