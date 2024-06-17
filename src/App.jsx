@@ -11,9 +11,12 @@ function App() {
     <>
       {/* <AddTrade /> */}
       <Navbar />
-      <main>
-        <PositionsTable />
-      </main>
+      <div id="mainContainer">
+        <main>
+          <PositionsTable />
+        </main>
+      </div>
+
       {/* <ImportCSV /> */}
       {/* <CsvFileInput /> */}
     </>

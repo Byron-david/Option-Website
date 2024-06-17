@@ -27,15 +27,16 @@
   } */
 
 .tableTools {
-  box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
   border-radius: var(--border-radius-main);
 }
 
 .tableContainer {
-    /* display:block; */
-    overflow: auto;
-    box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
+    /* overflow: auto; */
+    box-shadow: 0px 0px 22px 0 rgba(0, 0, 0, .5) ;
     border-radius: var(--border-radius-main);
+    margin: 1rem;
+    background-color: var(--background-color-main);
+
     /* white-space: nowrap; */
     /* max-height:248px; */
 }

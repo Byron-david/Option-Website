@@ -9,7 +9,7 @@
   --text-color-alt : #4F5D75;
   --text-color-secondary : #2D3142;
 
-  --border-radius-main: 0.7rem;
+  --border-radius-main: 0.5rem;
   /* --background-color-main : #222831;
   --background-color-secondary : #31363F;
   --background-color-button : #76ABAE;
@@ -18,42 +18,31 @@
 }
 
 body {    
-  width: 100%;
-  overflow: hidden;
+  /* height: 100vh; */
+  /* padding: 0px; */
   margin: 0px;
-  padding: 0px;
+  background-color: var(--background-color-secondary);
+  min-height: 100vh;
   color: var(--text-color-main);
   font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
-  display: block;
 }
 
 #root {
-  background-color: var(--background-color-main);
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  min-height: 100%;
 }
 
 main {
-  /* position: absolute; */
+  overflow-y: auto;
 }
 
-nav {
-  flex: 1 0 20%;
-  /* width: 50%; */
-  background-color: var(--background-color-secondary);
-  height: 100vh;
-  z-index: 1;
-  /* position: fixed;
-  top: 0;
-  left: 0; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
+#mainContainer {
+  padding-left: 20vw;
 }
+
 
 button:hover {
   filter: brightness(125%);
@@ -107,8 +96,7 @@ input[type=date]{
   max-width: 80vw;
   border-radius: var(--border-radius-main);
   border: 1px solid var(--background-color-secondary);
-  /* box-shadow: 10px 5px 5px black; */
-  box-shadow: 0px 5px 22px 0 rgba(0, 0, 0, .5) ;
+  box-shadow: 0px 0 22px 0 rgba(0, 0, 0, .5) ;
   min-width: 0%;
   background-color: var(--background-color-main);
 }
@@ -179,9 +167,8 @@ input[type=date]{
 
 .buttonRemove:hover {
   border: none;
-  /* box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1); */
   filter: brightness(125%);
-  /* box-shadow: 0 5px 22px 0 rgba(255, 255, 255, 0.2); */
+  /* box-shadow: 0 0 22px 0 rgba(255, 255, 255, 0.2); */
 
 }
 
@@ -250,7 +237,7 @@ tr:not(:first-child) > td {
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
-  margin: 1rem;
+  /* margin: 1rem; */
 }
 
 .inputCsv >  * {

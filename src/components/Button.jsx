@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Button({ text = "x", handleClick, className }) {
+function Button({ text = "x", handleClick, className, }) {
   // const buttonStyle = {
   //   color: color,
   //   backgroundColor: backgroundColor,

@@ -39,31 +39,29 @@ export default function PositionsTable() {
 
     return (
         <>
-            <div>
+            <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
                     <RemapData onFileLoad={handleFileLoad} />
                 </div>
-                <div className={styles.tableContainer}>
-                    <table>
-                        <caption>All Positions</caption>
-                            <thead>
-                                <tr>
-                                    {header.map((element) => (
-                                        <th scope="col" key={element}>{element}</th>
-                                    ))
-                                    }
+                <table>
+                    <caption>All Positions</caption>
+                        <thead>
+                            <tr>
+                                {header.map((element) => (
+                                    <th scope="col" key={element}>{element}</th>
+                                ))
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((row) => (
+                                <tr key={uuid()}>
+                                    {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
+                                    {/* <RowButtons /> */}
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((row) => (
-                                    <tr key={uuid()}>
-                                        {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
-                                        {/* <RowButtons /> */}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>  
-                </div>
+                            ))}
+                        </tbody>
+                    </table>  
             </div>
         </>
     )
