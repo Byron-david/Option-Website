@@ -39,29 +39,31 @@ export default function PositionsTable() {
 
     return (
         <>
-            <div className={styles.tableTools}>
-                <RemapData onFileLoad={handleFileLoad} />
-            </div>
-            <div className={styles.tableContainer}>
-                <table>
-                    <caption>All Positions</caption>
-                        <thead>
-                            <tr>
-                                {header.map((element) => (
-                                    <th scope="col" key={element}>{element}</th>
-                                ))
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row) => (
-                                <tr key={uuid()}>
-                                    {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
-                                    {/* <RowButtons /> */}
+            <div>
+                <div className={styles.tableTools}>
+                    <RemapData onFileLoad={handleFileLoad} />
+                </div>
+                <div className={styles.tableContainer}>
+                    <table>
+                        <caption>All Positions</caption>
+                            <thead>
+                                <tr>
+                                    {header.map((element) => (
+                                        <th scope="col" key={element}>{element}</th>
+                                    ))
+                                    }
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>  
+                            </thead>
+                            <tbody>
+                                {data.map((row) => (
+                                    <tr key={uuid()}>
+                                        {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
+                                        {/* <RowButtons /> */}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>  
+                </div>
             </div>
         </>
     )
