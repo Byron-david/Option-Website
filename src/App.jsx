@@ -9,11 +9,12 @@ function App() {
 
   return (
     <>
-      {/* <AddTrade /> */}
       <Navbar />
       <div id="mainContainer">
         <main>
           <PositionsTable />
+        <AddTrade />
+
         </main>
       </div>
 

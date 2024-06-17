@@ -41,7 +41,7 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
           <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
           <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
           <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
-          <TextInput placeholder="1" type="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
+          <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
         </div>
         <div id="addTradeLeg">
         {addOption.map(option => (

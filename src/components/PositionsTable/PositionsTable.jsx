@@ -43,6 +43,7 @@ export default function PositionsTable() {
                 <div className={styles.tableTools}>
                     <RemapData onFileLoad={handleFileLoad} />
                 </div>
+                <hr/>
                 <table>
                     <caption>All Positions</caption>
                         <thead>
