@@ -1,37 +1,12 @@
-import styles from './ContainerTemplate.module.css'; 
-
-function ContainerTemplate({ titleChildren, bodyChildren, footerChildren }) {
-  if (!footerChildren) {
-    return (
-      <>
-         <div className={styles.containerTemplate}>
-          <div className={styles.titleTemplate}>
-            {titleChildren}
-          </div>
-          <div className={styles.bodyTemplate}>
-            {bodyChildren}
-          </div>
-        </div>   
-      </>
-
-    )
-  }
+function ContainerTemplate({ children, className = "containerTemplate" }) {
 
   return (
     <>
-      <div className={styles.containerTemplate}>
-        <div className={styles.titleTemplate}>
-          {titleChildren}
-        </div>
-        <div className={styles.bodyTemplate}>
-          {bodyChildren}
-        </div>
-        <div className={styles.footerTemplate}>
-          {footerChildren}
-        </div>
-      </div>
+      <div className={className}>
+        {children}
+      </div>   
     </>
   );
-}
+  }
 
 export default ContainerTemplate
