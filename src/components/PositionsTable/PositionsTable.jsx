@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './PositionsTable.module.css'; 
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
-import Button from '../Button.jsx'
+import Button from '../Button/Button.jsx'
 
 function Trades(tradeData) {
     // get trade data

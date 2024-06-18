@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styles from './Navbar.module.css'; 
+import AddTradeModal from '../AddTradeModal.jsx'
 
 function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
   // const buttonStyle = {
@@ -33,6 +34,7 @@ function Navbar() {
             <li><Button text="Support"/></li>
           </ul>
         </nav>
+        <AddTradeModal />
       </div>
     </>
   )

@@ -1,0 +1,9 @@
+.buttonGreen {
+    background-color: var(--background-color-button);
+    color: var(--background-color-main);
+    padding: 0.2rem 0.5rem;
+}
+
+.buttonContainer {
+    padding: 0.5rem;
+}

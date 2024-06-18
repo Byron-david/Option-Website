@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TextInput from './TextInput.jsx'
 import DateInput from './DateInput.jsx'
-import Button from './Button.jsx'
+import Button from './Button/Button.jsx'
 import AddOption from './AddOption.jsx'
 import StrategiesDropdown from './StrategiesDropdown.jsx'
 import { v4 as uuid } from 'uuid';
@@ -30,7 +30,6 @@ function AddTrade({ handleClickClose }) {
     <>
       <div id="addTrade">
         <div id="addTradeTitle">Add Trade</div>
-        <span><button onClick={handleClickClose}>Close</button></span>
         <div id="addTradeBody">
           <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
           <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
@@ -49,11 +48,11 @@ function AddTrade({ handleClickClose }) {
            strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
           ))}
         </div>
-        <div>
+        <div className="buttonContainer">
           <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
         </div>
-
         <div id="addTradeFooter">
+          <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
           <Button text="Save" className="buttonAdd" handleClick={handleClickClose} />
         </div>
       </div>
