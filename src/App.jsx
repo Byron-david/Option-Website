@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import AddTrade from './components/AddTrade.jsx'
+import AddTradeModal from './components/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 // import ImportCSV from './components/ImportCSV.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
@@ -18,12 +19,8 @@ function App() {
           </Modal> */}
           <PositionsTable />
           {/* <AddTrade /> */}
-
         </main>
       </div>
-
-      {/* <ImportCSV /> */}
-      {/* <CsvFileInput /> */}
     </>
   )
 }
