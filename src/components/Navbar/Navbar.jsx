@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './Navbar.module.css'; 
-import AddTradeModal from '../AddTradeModal.jsx'
+import AddTradeModal from '../AddTrade/AddTradeModal.jsx'
 
 function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
   // const buttonStyle = {

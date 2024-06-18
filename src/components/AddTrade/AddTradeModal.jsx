@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from './Modal/Modal.jsx'
+import Modal from '../Modal/Modal.jsx'
 import AddTrade from './AddTrade.jsx'
 
 function AddTradeModal() {

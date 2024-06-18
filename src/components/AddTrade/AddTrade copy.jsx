@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import TextInput from './TextInput.jsx'
-import DateInput from './DateInput.jsx'
-import Button from './Button/Button.jsx'
+import TextInput from '../TextInput.jsx'
+import DateInput from '../DateInput.jsx'
+import Button from '../Button/Button.jsx'
 import AddOption from './AddOption.jsx'
-import StrategiesDropdown from './StrategiesDropdown.jsx'
+import StrategiesDropdown from '../StrategiesDropdown.jsx'
 import styles from './AddTrade.module.css'; 
 import { v4 as uuid } from 'uuid';
 

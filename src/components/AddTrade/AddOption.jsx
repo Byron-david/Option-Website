@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import TextInput from './TextInput.jsx'
-import DateInput from './DateInput.jsx'
-import Button from './Button/Button.jsx'
+import TextInput from '../Input/TextInput.jsx'
+import DateInput from '../Input/DateInput.jsx'
+import Button from '../Button/Button.jsx'
 
 function AddOption({ handleClick, strikePrice, optionValue, quantity, exp }) {
   return (
