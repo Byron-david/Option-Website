@@ -37,8 +37,6 @@ function Navbar() {
         </nav>
         <AddTradeModal />
         <ImportCsvModal />
-
-
       </div>
     </>
   )
