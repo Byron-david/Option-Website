@@ -8,14 +8,7 @@ import { v4 as uuid } from 'uuid';
 
 let nextId = 0;
 
-function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap", minWidth = "0%"}) {
-  const buttonStyle = {
-    display: display,
-    flexDirection: flexDirection,
-    flexWrap: flexWrap,
-    minWidth: minWidth
-  };
-
+function AddTrade({ handleClickClose }) {
   const [addOption, setAddOption] = useState([]);
   const [strategyValue, setStrategyValue] = useState("stock");
 
@@ -37,6 +30,7 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
     <>
       <div id="addTrade">
         <div id="addTradeTitle">Add Trade</div>
+        <span><button onClick={handleClickClose}>Close</button></span>
         <div id="addTradeBody">
           <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
           <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
@@ -55,8 +49,12 @@ function AddTrade({ display = "flex", flexDirection = "row", flexWrap = "nowrap"
            strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
           ))}
         </div>
-        <div id="addTradeFooter">
+        <div>
           <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
+        </div>
+
+        <div id="addTradeFooter">
+          <Button text="Save" className="buttonAdd" handleClick={handleClickClose} />
         </div>
       </div>
     </>
