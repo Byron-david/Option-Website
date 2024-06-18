@@ -32,7 +32,7 @@ function AddTrade({ handleClickClose }) {
       <div id="addTrade">
         <div id="addTradeTitle">Add Trade</div>
         <div id="addTradeBody">
-          <div class={styles.inputContainer}>
+          <div className={styles.inputContainer}>
             <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
             <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
             <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />

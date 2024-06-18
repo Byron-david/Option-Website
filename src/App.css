@@ -22,6 +22,7 @@
   --border-radius-main : 0.25rem;
 
   --box-shadow : 0px 0px 5px 0 rgba(0, 0, 0, .2);
+  --box-shadow-light : 0px 0px 5px 0 rgba(1, 1, 1, .2);
 }
 
 body {    
@@ -126,7 +127,7 @@ input[type=date]{
   max-width: 80vw;
   border-radius: var(--border-radius-main);
   border: 1px solid var(--background-color-secondary);
-  box-shadow: var(--box-shadow) ;
+  box-shadow: var(--box-shadow);
   min-width: 0%;
   background-color: var(--background-color-secondary);
   margin: 1rem;

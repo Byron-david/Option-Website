@@ -8,9 +8,9 @@ function Modal({ children, open}) {
 
   return ReactDom.createPortal(
     <>
-      <div className={styles.modalContainer}>
+    <dialog className={styles.modalContainer}>
         {children}
-      </div>
+    </dialog>
       <div className={styles.modalOverlay}/>
     </>,
     document.getElementById('portal')
