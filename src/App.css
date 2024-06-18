@@ -13,10 +13,11 @@
   
   --text-color-light : #eaeaea;
   --text-color-alt : #4F5D75;
-  --text-color-dark : #303838;
+  --text-color-dark : #232829;
 
   --nav-width : 15%;
   --padding : 0.5rem;
+  --padding-title : 1rem;
 
   --border-radius-main : 0.25rem;
 
@@ -74,7 +75,6 @@ hr {
   border:none;
   font-size: 1rem;
   min-width: 0;
-  width: 100%;
   color: var(--text-color-light);
   padding: var(--padding);
 }
@@ -134,24 +134,23 @@ input[type=date]{
 
 #addTradeTitle {
   text-align: left;
-  padding: var(--padding);
-  border-bottom: 1px solid var(--background-color-main);
+  padding: var(--padding-title);
+  border-bottom: 1px solid var(--text-color-dark);
 }
 
 #addTradeBody {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
   padding: var(--padding);
-  min-width: 0%;
 }
 
 #addTradeLeg {
   padding: 0 var(--padding) var(--padding) var(--padding);
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
 }
 
 #addTradeFooter {
@@ -159,7 +158,7 @@ input[type=date]{
   flex-wrap: wrap;
   align-items: center;
   justify-content: end;
-  border-top: 1px solid var(--background-color-main);
+  border-top: 1px solid var(--text-color-dark);
   padding: var(--padding);
   align-self: end;
 }

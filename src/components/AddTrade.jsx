@@ -4,6 +4,7 @@ import DateInput from './DateInput.jsx'
 import Button from './Button/Button.jsx'
 import AddOption from './AddOption.jsx'
 import StrategiesDropdown from './StrategiesDropdown.jsx'
+import styles from './AddTrade.module.css'; 
 import { v4 as uuid } from 'uuid';
 
 let nextId = 0;
@@ -31,25 +32,26 @@ function AddTrade({ handleClickClose }) {
       <div id="addTrade">
         <div id="addTradeTitle">Add Trade</div>
         <div id="addTradeBody">
-          <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
-          <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
-          <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
-          <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-        </div>
-        <div id="addTradeLeg">
-        {addOption.map(option => (
-          <AddOption key={option.id} handleClick={() => {
-            setAddOption(
-              addOption.filter(o =>
-                o.id !== option.id
-              )
-            );
-          }}
-           strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
-          ))}
-        </div>
-        <div className="buttonContainer">
+          <div class={styles.inputContainer}>
+            <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
+            <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
+            <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
+            <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
+            <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
+          </div>
+          <div id="addTradeLeg">
+            {addOption.map(option => (
+            <AddOption key={option.id} handleClick={() => {
+              setAddOption(
+                addOption.filter(o =>
+                  o.id !== option.id
+                )
+              );
+            }}
+            strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
+            ))}
           <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
+          </div>
         </div>
         <div id="addTradeFooter">
           <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
