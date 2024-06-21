@@ -42,26 +42,26 @@ function AddTrade({ handleClickClose }) {
           Add Trade
         </TitleTemplate>
         <BodyTemplate>
-        <div className={styles.inputContainer}>
-              <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
-              <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
-              <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
-              <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-              <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
-            </div>
-            <div id="addTradeLeg">
-              {addOption.map(option => (
-              <AddOption key={option.id} handleClick={() => {
-                setAddOption(
-                  addOption.filter(o =>
-                    o.id !== option.id
-                  )
-                );
-              }}
-              strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
-              ))}
-            </div>
-            <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
+          <div className={styles.inputContainer}>
+            <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
+            <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
+            <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
+            <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
+            <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
+          </div>
+          <div id="addTradeLeg">
+            {addOption.map(option => (
+            <AddOption key={option.id} handleClick={() => {
+              setAddOption(
+                addOption.filter(o =>
+                  o.id !== option.id
+                )
+              );
+            }}
+            strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
+            ))}
+          </div>
+        <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
         </BodyTemplate>
         <FooterTemplate>
           <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />

@@ -35,8 +35,8 @@ function Navbar() {
             <li><Button text="Support"/></li>
           </ul>
         </nav>
-        <AddTradeModal />
-        <ImportCsvModal />
+        {/* <AddTradeModal /> */}
+        {/* <ImportCsvModal /> */}
       </div>
     </>
   )
