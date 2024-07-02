@@ -48,6 +48,9 @@ main {
   overflow-y: auto;
 }
 
+#mainContainer {
+  padding-left: var(--nav-width);
+}
 
 button {
   background-color: var(--background-color-button);

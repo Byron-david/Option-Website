@@ -9,11 +9,9 @@ function MainContent() {
     <>
       <div id={styles.mainContainer}>
         <main>
-          {/* <AddTradeModal /> */}
           <AddTradeModal />
           <ImportCsvModal />
           <PositionsTable />
-          {/* <AddTrade /> */}
         </main>
       </div>
     </>

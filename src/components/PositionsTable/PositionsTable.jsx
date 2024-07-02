@@ -3,6 +3,7 @@ import styles from './PositionsTable.module.css';
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
+import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
 
 function Trades(tradeData) {
     // get trade data
@@ -25,44 +26,44 @@ function RowButtons() {
     )
 }
 
-export default function PositionsTable() {
-    const [data, setData] = useState([]);
-    const [importData, setImportData] = useState([]);
-    const [trades, setTrades] = useState([]);
+export default function PositionsTable({ data }) {
+    // const [data, setData] = useState([]);
+    // const [importData, setImportData] = useState([]);
     const [header, setHeader] = useState([]);
 
-    const handleFileLoad = (csvData) => {
-      setData(csvData);
-      let newHeader = Object.keys(csvData[0]);
-      setHeader(newHeader);
-    }
+    // const handleFileLoad = (csvData) => {
+    //   setData(csvData);
+    //   let newHeader = Object.keys(csvData[0]);
+    //   setHeader(newHeader);
+    // }
 
     return (
         <>
             <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
-                    <RemapData onFileLoad={handleFileLoad} />
+                    {/* <RemapData onFileLoad={handleFileLoad} /> */}
+                    <AddTradeModal />
                 </div>
                 <hr/>
                 <table>
                     <caption>All Positions</caption>
-                        <thead>
-                            <tr>
-                                {header.map((element) => (
-                                    <th scope="col" key={element}>{element}</th>
-                                ))
-                                }
+                    <thead>
+                        <tr>
+                            {header.map((element) => (
+                                <th scope="col" key={element}>{element}</th>
+                            ))
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((row) => (
+                            <tr key={uuid()}>
+                                {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
+                                {/* <RowButtons /> */}
                             </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row) => (
-                                <tr key={uuid()}>
-                                    {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
-                                    {/* <RowButtons /> */}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>  
+                        ))}
+                    </tbody>
+                </table>  
             </div>
         </>
     )

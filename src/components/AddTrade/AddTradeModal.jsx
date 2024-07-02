@@ -3,14 +3,14 @@ import Modal from '../Modal/Modal.jsx'
 import AddTradeForm from './AddTradeForm.jsx'
 import styles from '../Modal/Modal.module.css'; 
 
-function AddTradeModal() {
+function AddTradeModal({ addTrade }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <div className={styles.modalButtonContainer}>
         <button onClick={() => setIsOpen(true)}>+ Add Trade</button>
         <Modal open={isOpen}>
-          <AddTradeForm handleClickClose={() => setIsOpen(false)}/>
+          <AddTradeForm addTrade={addTrade} handleClickClose={() => setIsOpen(false)}/>
         </Modal>
       </div>
     </>

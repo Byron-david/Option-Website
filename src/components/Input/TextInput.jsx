@@ -1,14 +1,11 @@
 import { useState } from 'react'
 
-function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name }) {
+function TextInput( { tradeValue, handleChange, inputType, maxLength, text, id, placeholder, htmlFor, name }) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,
     name: name,
   }
-
-  // Controls state of input
-  const [textValue, setTextValue] = useState("");
 
   return (
     <>
@@ -21,8 +18,8 @@ function TextInput( { inputType, maxLength, text, id, placeholder, htmlFor, name
             style={inputStyle}
             placeholder={placeholder}
             type={inputType}
-            value={textValue}
-            onChange={(event) => setTextValue(event.target.value.toUpperCase())}
+            value={tradeValue}
+            onChange={handleChange}
           />
         </fieldset>
 
