@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Modal from '../Modal/Modal.jsx'
-import AddTrade from './AddTrade.jsx'
+import AddTradeForm from './AddTradeForm.jsx'
 import styles from '../Modal/Modal.module.css'; 
 
 function AddTradeModal() {
@@ -10,7 +10,7 @@ function AddTradeModal() {
       <div className={styles.modalButtonContainer}>
         <button onClick={() => setIsOpen(true)}>+ Add Trade</button>
         <Modal open={isOpen}>
-          <AddTrade handleClickClose={() => setIsOpen(false)}/>
+          <AddTradeForm handleClickClose={() => setIsOpen(false)}/>
         </Modal>
       </div>
     </>
