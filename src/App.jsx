@@ -4,29 +4,46 @@ import AddTradeModal from './components/AddTrade/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 import ImportCsvModal from './components/ImportCsvModal.jsx'
+import Button from './components/Button/Button.jsx'
+import AddOption from './components/AddTrade/AddOption.jsx'
 import DropdownOptions from './components/Input/DropdownOptions.jsx'
 import { v4 as uuid } from 'uuid';
 
 const dropdownOptions = [
   { id: uuid(), value: "ironCondor", text: "Iron Condor" },
+  { id: uuid(), value: "stock", text: "Stock" },
   { id: uuid(), value: "strangle", text: "Strangle" }
 ]
 
 function App() {
-  const [trades, setTrades] = useState([])
-  const [newTrade, setNewTrade] = useState([])
+  const [newTrade, setNewTrade] = useState({ 
+    symbol: '', 
+    strike: '', 
+    price: '', 
+    expDate: '', 
+    quantity: '', 
+    dateExec: '' },
+  )
 
-  const [inputs, setInputs] = useState({});
-  const [leg1, setLeg1] = useState({});
-  const [leg2, setLeg2] = useState(null);
-  const [leg3, setLeg3] = useState(null);
-  const [leg4, setLeg4] = useState(null);
+  const [optionLegs, setOptionLegs] = useState([{
+    strike: '', 
+    optionValue: '', 
+    expDate: '', 
+    quantity: '', 
+  }]
+  )
   const [strategy, setStrategy] = useState("");
 
-  const handleChange = (event) => {
+  const handleLegChange = (index, event) => {
+    let data = [...optionLegs];
+    data[index][event.target.name] = event.target.value;
+    setOptionLegs(data);
+  }
+
+  const handleTrade = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setLeg1(values => ({...values, [name]: value}))
+    setNewTrade(values => ({...values, [name]: value}))
   }
 
   const handleStrategy = (event) => {
@@ -35,34 +52,41 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const objectString = JSON.stringify(leg1);
-    alert(`${objectString}`);
+    // const objectString = JSON.stringify(newTrade);
+    // alert(`${objectString}`);
   }
 
-  const addTrade = (event) => {
-    event.preventDefault()
-    const trade = {
-      "Symbol": "test" 
-      // "Qty", 
-      // "Action", 
-      // "Type", 
-      // "Value", 
-      // "Strike",  
-      // "Exp. Date", 
-      // "Date",
-      // "Time"
-    }
+  const addLeg = () => {
+    let newLeg = {
+                    strike: '', 
+                    optionValue: '', 
+                    expDate: '', 
+                    quantity: '', 
+                  }
 
-    // setTrades(trades.concat(trade))
-    // console.log(trades);
+    setOptionLegs([...optionLegs, newLeg])
   }
 
-  // const handleChange = (event) => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   console.log(name, value);
-  //   setNewTrade(values => ({...values, [name]: value}))
-  // }
+  const deleteLeg = (index) => {
+    let data = [...optionLegs];
+    data.splice(index, 1)
+    setOptionLegs(data)
+  }
+
+  const handleButtonClickAdd = () => {
+    // const newOption = [ ...addOption,
+    //   { id: nextId++,
+    //     strikePrice: "strikePrice" + nextId, 
+    //     optionValue: "optionValue" + nextId, 
+    //     quantity: "quantity" + nextId, 
+    //     exp: "exp" + nextId }
+    // ];
+    
+    // // Prevents more than 3 additional legs
+    // if (addOption.length < 3) {
+    //   setAddOption(newOption);
+    // }
+  };
 
   return (
     <>
@@ -70,21 +94,18 @@ function App() {
       <div id="mainContainer">
         <main>
           <div>
-            {strategy} {JSON.stringify(leg1)}
+            {strategy} {JSON.stringify(newTrade)}
           </div>
           <form onSubmit={handleSubmit}>
             <div className="formContainer">
-              <div className="inputContainer">
                 <label>Symbol: 
                   <input 
                     type="text" 
                     name="symbol" 
-                    value={leg1.symbol || ""} 
-                    onChange={handleChange}
+                    value={newTrade.symbol || ""} 
+                    onChange={handleTrade}
                   />
                 </label>
-              </div>
-              <div className="inputContainer">
                 <label>Strategy:
                   <select 
                       className="inputSelect"
@@ -94,40 +115,56 @@ function App() {
                       <DropdownOptions items={dropdownOptions}/>
                   </select>
                 </label>
-              </div>
-              <div className="inputContainer">
+                <label>Strike Price: 
+                  <input 
+                    type="number" 
+                    name="strike" 
+                    value={newTrade.strike || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
+                <label>Strike Price: 
+                  <input 
+                    type="number" 
+                    name="price" 
+                    value={newTrade.price || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
                 <label>Expiration:
                   <input 
                     type="date" 
                     name="expDate" 
-                    value={leg1.expDate || ""} 
-                    onChange={handleChange}
+                    value={newTrade.expDate || ""} 
+                    onChange={handleTrade}
                   />
                 </label>
-              </div>          
-              <div className="inputContainer">
                 <label>Quantity: 
                   <input 
                     type="number" 
                     name="quantity" 
-                    value={leg1.quantity || ""} 
-                    onChange={handleChange}
+                    value={newTrade.quantity || ""} 
+                    onChange={handleTrade}
                   />
                 </label>
-              </div>
-              <div className="inputContainer">
                 <label>Date Exec.:
                   <input 
                     type="date" 
                     name="dateExec" 
-                    value={leg1.dateExec || ""} 
-                    onChange={handleChange}
+                    value={newTrade.dateExec || ""} 
+                    onChange={handleTrade}
                   />
                 </label>
-              </div>     
-              <button type="submit">Submit</button>
+            </div>
+            <div>
+            {optionLegs.map((option, index) => (
+              <AddOption key={index} inputs={option} handleChange={e => handleLegChange(index, e)} 
+              handleClick={() => deleteLeg(index)}/>
+              ))}
+            <Button type="button" text="+ Add Option" className="buttonAdd" handleClick={addLeg} />
             </div>
 
+            {/* <button type="submit">Submit</button> */}
           </form>
           {/* <AddTradeModal addTrade={addTrade} handleChange={handleChange} newTrade={newTrade}/> */}
           {/* <ImportCsvModal />

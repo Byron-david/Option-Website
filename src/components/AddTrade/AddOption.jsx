@@ -1,65 +1,50 @@
-import { useState } from 'react'
-import TextInput from '../Input/TextInput.jsx'
-import DateInput from '../Input/DateInput.jsx'
 import Button from '../Button/Button.jsx'
 import styles from './AddTrade.module.css'; 
 
-
-// [ {"Iron Condor": [strike 1], 
-                  // [strike 2],
-                  // [strike 3],
-                  // [strike 4],
-// } ]
-
-function AddOption({ inputs, handleClick, strikePrice, optionValue, quantity, exp }) {
+function AddOption({ inputs, handleClick, handleChange }) {
   return (
     <>
-      <Button handleClick={handleClick} className="buttonRemove" />
       <div className={styles.addOption}>
-      <div className="inputContainer">
+        <Button handleClick={handleClick} className="buttonRemove" />
           <label>Strike Price: 
             <input 
+              required="required"
+              placeholder="50"
               type="number" 
               name="strike" 
-              value={inputs.strategy[0].strike || ""} 
+              value={inputs.strike || ""} 
               onChange={handleChange}
             />
           </label>
-        </div>
-        <div className="inputContainer">
-          <label>Expiration:
+          <label>Strike Price: 
             <input 
-              type="date" 
-              name="expDate" 
-              value={inputs.expDate || ""} 
+              required="required"
+              placeholder="1,000"
+              type="number" 
+              name="price" 
+              value={inputs.price || ""} 
               onChange={handleChange}
             />
           </label>
-        </div>          
-        <div className="inputContainer">
           <label>Quantity: 
             <input 
+              placeholder="1"
+              required="required"
               type="number" 
               name="quantity" 
               value={inputs.quantity || ""} 
               onChange={handleChange}
             />
           </label>
-        </div>
-        <div className="inputContainer">
-          <label>Date Exec.:
+          <label>Expiration:
             <input 
+              required="required"
               type="date" 
-              name="dateExec" 
-              value={inputs.dateExec || ""} 
+              name="expDate" 
+              value={inputs.expDate || ""} 
               onChange={handleChange}
             />
           </label>
-        </div>     
-        {/* <TextInput placeholder="50" inputType="number" id={strikePrice} name={strikePrice} htmlFor={strikePrice} text="Strike Price:" />
-        <TextInput placeholder="1,000" inputType="number" id={optionValue} name={optionValue} htmlFor={optionValue} text="Value:" />
-        <TextInput placeholder="1" id={quantity} inputType="number" name={quantity} htmlFor={quantity} text="Qty:" />
-        <DateInput id={exp} name={exp} htmlFor={exp} text="Exp. Date" /> */}
       </div>
     </>
   );
