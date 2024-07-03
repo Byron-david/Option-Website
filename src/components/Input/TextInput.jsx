@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function TextInput( { tradeValue, handleChange, inputType, maxLength, text, id, placeholder, htmlFor, name }) {
+function TextInput( { value, handleChange, inputType, maxLength, text, id, placeholder, htmlFor, name }) {
   const inputStyle = {
     id: id,
     htmlFor: htmlFor,
@@ -18,11 +18,10 @@ function TextInput( { tradeValue, handleChange, inputType, maxLength, text, id, 
             style={inputStyle}
             placeholder={placeholder}
             type={inputType}
-            value={tradeValue}
+            value={value}
             onChange={handleChange}
           />
         </fieldset>
-
       </div>
     </>
   );

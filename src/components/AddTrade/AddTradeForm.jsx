@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import TextInput from '../Input/TextInput.jsx'
 import DateInput from '../Input/DateInput.jsx'
+import DropdownOptions from '../Input/DropdownOptions.jsx'
 import Button from '../Button/Button.jsx'
 import AddOption from './AddOption.jsx'
 import StrategiesDropdown from '../Input/StrategiesDropdown.jsx'
@@ -9,9 +10,14 @@ import { v4 as uuid } from 'uuid';
 
 let nextId = 0;
 
-function AddTradeForm({ addTrade, handleClickClose }) {
+function AddTradeForm({ newTrade, addTrade, handleClickClose, handleChange }) {
   const [addOption, setAddOption] = useState([]);
   const [strategyValue, setStrategyValue] = useState("stock");
+
+  const dropdownOptions = [
+    { id: uuid(), value: "ironCondor", text: "Iron Condor" },
+    { id: uuid(), value: "strangle", text: "Strangle" }
+  ]
 
   // const addTrade = (event) => {
   //   event.preventDefault()
@@ -56,12 +62,19 @@ function AddTradeForm({ addTrade, handleClickClose }) {
               <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
               <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
               <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." /> */}
-
-              <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
-              <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
+              <label>Strategies:</label>
+              <select 
+                className="inputSelect"
+                name="strategy"
+                value={newTrade.strategy}
+                onChange={handleChange}> 
+                <DropdownOptions items={dropdownOptions}/>
+              </select>
+              <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" value={addTrade.symbol} handleChange={handleChange}/>
+              {/* <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
               <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
               <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-              <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." />
+              <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." /> */}
             </div>
             {/* <div id={styles.addTradeLeg}>
               {addOption.map(option => (

@@ -25,10 +25,18 @@ function App() {
     //   important: Math.random() < 0.5,
     //   id: notes.length + 1,
     }
-  
+
     setTrades(trades.concat(trade))
+    console.log(trades);
     // setNotes(notes.concat(noteObject))
     // setNewNote('')
+  }
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    console.log(name, value);
+    setNewTrade(values => ({...values, [name]: value}))
   }
 
   return (
@@ -37,11 +45,11 @@ function App() {
       <div id="mainContainer">
         <main>
           <div>
-            This is the new trade! {newTrade}
+            {/* {newTrade} */}
           </div>
-          <AddTradeModal addTrade={addTrade}/>
-          <ImportCsvModal />
-          <PositionsTable data={trades}/>
+          <AddTradeModal addTrade={addTrade} handleChange={handleChange} newTrade={newTrade}/>
+          {/* <ImportCsvModal />
+          <PositionsTable data={trades}/> */}
         </main>
       </div>
     </>
