@@ -55,7 +55,7 @@ function AddTradeForm({ newTrade, addTrade, handleClickClose, handleChange }) {
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
         <form onSubmit={addTrade}>
-          <div className="addTradeBody">
+          <div className="bodyTemplate">
             <div className={styles.inputContainer}>
               {/* <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
               <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
