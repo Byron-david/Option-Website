@@ -8,15 +8,30 @@ import StrategiesDropdown from '../Input/StrategiesDropdown.jsx'
 import styles from './AddTrade.module.css'; 
 import { v4 as uuid } from 'uuid';
 
-let nextId = 0;
+function AddTradeForm({ setNewTrade, handleClickClose }) {
+  const [trade, setTrade] = useState({ 
+    symbol: '', 
+    strike: '', 
+    priceValue: '', 
+    expDate: '', 
+    quantity: '', 
+    dateExec: '' },
+  )
 
-function AddTradeForm({ newTrade, addTrade, handleClickClose, handleChange }) {
-  const [addOption, setAddOption] = useState([]);
-  const [strategyValue, setStrategyValue] = useState("stock");
+  const [leg, setLeg] = useState([])
+  const [strategy, setStrategy] = useState("");
 
   const dropdownOptions = [
+    { id: uuid(), value: "stock", text: "Stock" },
+    { id: uuid(), value: "singleOption", text: "Single Option" },
+    { id: uuid(), value: "coveredCall", text: "Covered Call" },
+    { id: uuid(), value: "verticalSpread", text: "Vertical Spread" },
+    { id: uuid(), value: "strangle", text: "Strangle" },
+    { id: uuid(), value: "straddle", text: "Straddle" },
     { id: uuid(), value: "ironCondor", text: "Iron Condor" },
-    { id: uuid(), value: "strangle", text: "Strangle" }
+    { id: uuid(), value: "butterfly", text: "Butterfly" },
+    { id: uuid(), value: "ratioSpread", text: "Ratio Spread" },
+    { id: uuid(), value: "custom", text: "Custom" }
   ]
 
   // const addTrade = (event) => {
@@ -31,64 +46,136 @@ function AddTradeForm({ newTrade, addTrade, handleClickClose, handleChange }) {
   //   setNewNote('')
   // }
 
-  const handleButtonClickAdd = () => {
-    const newOption = [ ...addOption,
-      { id: nextId++,
-        strikePrice: "strikePrice" + nextId, 
-        optionValue: "optionValue" + nextId, 
-        quantity: "quantity" + nextId, 
-        exp: "exp" + nextId }
-    ];
-    
-    // Prevents more than 3 additional legs
-    if (addOption.length < 3) {
-      setAddOption(newOption);
-    }
-  };
+  const submitTrade = (event) => {
+    event.preventDefault()
+  }
 
   const handleButtonSave = () => {
-    console.log("Saving...");
-  };
+    console.log("Saving...");  
+  }
+
+  const handleLegChange = (index, event) => {
+    let data = [...leg];
+    data[index][event.target.name] = event.target.value;
+    setLeg(data);
+  }
+
+  const handleTrade = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setTrade(values => ({...values, [name]: value}))
+  }
+
+  const handleStrategy = (event) => {
+    setStrategy(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // const objectString = JSON.stringify(trade);
+    // alert(`${objectString}`);
+  }
+
+  const addLeg = () => {
+    let newLeg = {
+                    strike: '', 
+                    priceValue: '', 
+                    expDate: '', 
+                    quantity: '', 
+                  }
+
+    // 3 legs max
+    if (leg.length <= 2) setLeg([...leg, newLeg])
+  }
+
+  const deleteLeg = (index) => {
+    let data = [...leg];
+    data.splice(index, 1)
+    setLeg(data)
+  }
 
   return (
     <>
       <div className="containerTemplate">
+        <form onSubmit={submitTrade}>
         <div className="titleTemplate">Add Trade</div>
-        <form onSubmit={addTrade}>
           <div className="bodyTemplate">
-            <div className={styles.inputContainer}>
-              {/* <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" />
-              <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
-              <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
-              <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-              <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." /> */}
-              <label>Strategies:</label>
-              <select 
-                className="inputSelect"
-                name="strategy"
-                value={newTrade.strategy}
-                onChange={handleChange}> 
-                <DropdownOptions items={dropdownOptions}/>
-              </select>
-              <TextInput placeholder="AAPL" maxLength="4" id="stockSymbol" name="stockSymbol" htmlFor="stockSymbol" text="Symbol Name:" value={addTrade.symbol} handleChange={handleChange}/>
-              {/* <StrategiesDropdown value={strategyValue} handleChange={setStrategyValue}/>
-              <DateInput id="expDate" name="expDate" htmlFor="expDate" text="Exp. Date" />
-              <TextInput placeholder="1" inputType="number" id="quantityNumber" name="quantityNumber" htmlFor="quantityNumber" text="Qty:" />
-              <DateInput  id="dateExec" name="dateExec" htmlFor="dateExec" text=" Date Exec." /> */}
+            <div className="formContainer">
+                <label>Symbol: 
+                  <input 
+                    type="text" 
+                    name="symbol" 
+                    value={trade.symbol || ""} 
+                    onChange={handleTrade}
+                    placeholder="AAPL"
+                    maxLength="4"
+                  />
+                </label>
+                <label>Strategy:
+                  <select 
+                      className="inputSelect"
+                      name="strategy"
+                      value={strategy}
+                      onChange={handleStrategy}> 
+                      <DropdownOptions items={dropdownOptions}/>
+                  </select>
+                </label>
+                <label>Strike Price: 
+                  <input 
+                    type="number" 
+                    name="strike" 
+                    value={trade.strike || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
+                <label>Value: 
+                  <input 
+                    type="number" 
+                    name="value" 
+                    value={trade.value || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
+                <label>Expiration:
+                  <input 
+                    type="date" 
+                    name="expDate" 
+                    value={trade.expDate || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
+                <label>Quantity: 
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    value={trade.quantity || ""} 
+                    onChange={handleTrade}
+                    placeholder="1"
+                  />
+                </label>
+                <label>Date Exec.:
+                  <input 
+                    type="date" 
+                    name="dateExec" 
+                    value={trade.dateExec || ""} 
+                    onChange={handleTrade}
+                  />
+                </label>
             </div>
-            {/* <div id={styles.addTradeLeg}>
-              {addOption.map(option => (
-              <AddOption key={option.id} handleClick={() => {
-                setAddOption(
-                  addOption.filter(o =>
-                    o.id !== option.id
-                  )
-                );
-              }}
-              strikePrice={option.strikePrice} optionValue={option.optionValue} quantity={option.quantity} exp={option.exp} />
+            <div>
+              {leg.map((option, index) => (
+                    <AddOption key={index}
+                              inputs={option}
+                              handleChange={e => handleLegChange(index, e)} 
+                              handleClick={() => deleteLeg(index)}/>
               ))}
-            <Button text="+ Add Option" className="buttonAdd" handleClick={handleButtonClickAdd} />
-            </div> */}
+
+            </div>
+            <Button type="button"
+                      text="+ Add Option"
+                      className="buttonAdd"
+                      handleClick={addLeg} />
+            {/* <button type="submit">Submit</button> */}
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
