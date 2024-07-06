@@ -1,36 +1,18 @@
 import Button from '../Button/Button.jsx'
-import AddLeg from './AddLeg.jsx'
 import styles from './AddTrade.module.css'; 
 
-function AddLegCustom({ leg, setLeg, strategy, handleClick, handleChange }) {
-  const addNewLeg = () => {
-    let newLeg = {
-                    strike: '', 
-                    tradeValue: '', 
-                    expDate: '', 
-                    quantity: '', 
-                  }
-
-    // 3 legs max
-    if (leg.length <= 2) setLeg([...leg, newLeg])
-  }
-
-  const deleteLeg = (index) => {
-    let data = [...leg];
-    data.splice(index, 1)
-    setLeg(data)
+function OptionLeg({ strategy, inputs, handleClick, handleChange }) {
+  let button;
+  if (strategy === "custom") {
+    button = <Button handleClick={handleClick} className="buttonRemove" />
   }
 
   return (
     <>
-        {leg.map((option, index) => (
-                  <AddLeg key={index}
-                            inputs={option}
-                            handleChange={e => handleLegChange(index, e)} 
-                            handleClick={() => deleteLeg(index)}
-                            strategy={strategy}/>
-            ))}
-          {/* <label>Strike Price: 
+      <div className={styles.addOption}>
+        {button}
+        {/* <Button handleClick={handleClick} className="buttonRemove" /> */}
+          <label>Strike Price: 
             <input 
               required="required"
               placeholder="50"
@@ -68,13 +50,10 @@ function AddLegCustom({ leg, setLeg, strategy, handleClick, handleChange }) {
               value={inputs.expDate || ""} 
               onChange={handleChange}
             />
-          </label> */}
-      <Button type="button"
-                      text="+ Add Option"
-                      className="buttonAdd"
-                      handleClick={addNewLeg} />
+          </label>
+      </div>
     </>
   );
 }
 
-export default AddLegCustom
+export default OptionLeg

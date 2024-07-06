@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import DropdownOptions from '../Input/DropdownOptions.jsx'
 import Button from '../Button/Button.jsx'
-import AddLeg from './AddLeg.jsx'
 import AddOption from './AddOption.jsx'
 import { v4 as uuid } from 'uuid';
-import AddLegCustom from './AddLegCustom.jsx'
+import AddLeg from './AddLeg.jsx'
 
 function AddTradeForm({ setNewTrade, handleClickClose }) {
   const [trade, setTrade] = useState({ 
@@ -19,17 +18,17 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("stock");
 
-  const dropdownOptions = [
-    { id: uuid(), value: "stock", text: "Stock" },
-    { id: uuid(), value: "singleOption", text: "Single Option" },
-    { id: uuid(), value: "coveredCall", text: "Covered Call" },
-    { id: uuid(), value: "verticalSpread", text: "Vertical Spread" },
-    { id: uuid(), value: "strangle", text: "Strangle" },
-    { id: uuid(), value: "straddle", text: "Straddle" },
-    { id: uuid(), value: "ironCondor", text: "Iron Condor" },
-    { id: uuid(), value: "butterfly", text: "Butterfly" },
-    { id: uuid(), value: "ratioSpread", text: "Ratio Spread" },
-    { id: uuid(), value: "custom", text: "Custom" }
+  const strategyOptions = [
+    { id: uuid(), value: "stock", text: "Stock", quantity: 0 },
+    { id: uuid(), value: "singleOption", text: "Single Option", quantity: 0 },
+    { id: uuid(), value: "coveredCall", text: "Covered Call", quantity: 1 },
+    { id: uuid(), value: "verticalSpread", text: "Vertical Spread", quantity: 1 },
+    { id: uuid(), value: "strangle", text: "Strangle", quantity: 1 },
+    { id: uuid(), value: "straddle", text: "Straddle", quantity: 1 },
+    { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 3 },
+    { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 3 },
+    { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 2 },
+    { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
   // const addTrade = (event) => {
@@ -52,12 +51,6 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     console.log("Saving...");  
   }
 
-  const handleLegChange = (index, event) => {
-    let data = [...leg];
-    data[index][event.target.name] = event.target.value;
-    setLeg(data);
-  }
-
   const handleTrade = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -65,10 +58,10 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   }
 
   const handleStrategy = (event) => {
-    setStrategy(event.target.value)
-  }
+    const currentStrategy = event.target.value
 
-  const strategyDisplay = () => {
+    setStrategy(event.target.value)
+
     let newLeg = {
       strike: '', 
       tradeValue: '', 
@@ -76,40 +69,17 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
       quantity: '', 
     }
 
-    switch(strategy) {
-      case "stock":
-        return setLeg([])
-      case "singleOption":
-        return setLeg([...leg, newLeg])
-      case "ironCondor":
-        return setLeg([...leg, newLeg * 3])
-      default:
-        return setLeg([])
-    }
+    const findQty = strategyOptions.find(element => element.value === currentStrategy)
+    let legQuantity = Array(findQty.quantity).fill(newLeg)
+
+    setLeg([])
+    setLeg(legQuantity)
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // const objectString = JSON.stringify(trade);
     // alert(`${objectString}`);
-  }
-
-  const addLeg = () => {
-    let newLeg = {
-                    strike: '', 
-                    tradeValue: '', 
-                    expDate: '', 
-                    quantity: '', 
-                  }
-
-    // 3 legs max
-    if (leg.length <= 2) setLeg([...leg, newLeg])
-  }
-
-  const deleteLeg = (index) => {
-    let data = [...leg];
-    data.splice(index, 1)
-    setLeg(data)
   }
 
   return (
@@ -135,7 +105,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                       name="strategy"
                       value={strategy}
                       onChange={handleStrategy}> 
-                      <DropdownOptions items={dropdownOptions}/>
+                      <DropdownOptions items={strategyOptions}/>
                   </select>
                 </label>
                 <label>Value: 
@@ -147,7 +117,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
 
-                {strategy !== "stock" && <AddOption inputs={trade} handleChange={handleTrade}/>}
+                {strategy !== "stock" || strategy !== "coveredCall" && <AddOption inputs={trade} handleChange={handleTrade}/>}
                 
                 <label>Quantity: 
                   <input 
@@ -167,23 +137,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
             </div>
-            {/* <AddLegCustom leg={leg} setLeg={setLeg} strategy={strategy}/> */}
-            {/* {strategy === "custom" && 
-            
-            } */}
-            {/* {leg.map((option, index) => (
-                  <AddLeg key={index}
-                            inputs={option}
-                            handleChange={e => handleLegChange(index, e)} 
-                            handleClick={() => deleteLeg(index)}
-                            strategy={strategy}/>
-            ))}
-
-            <Button type="button"
-                      text="+ Add Option"
-                      className="buttonAdd"
-                      handleClick={addLeg} /> */}
-            {/* <button type="submit">Submit</button> */}
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />

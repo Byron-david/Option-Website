@@ -1,18 +1,50 @@
 import Button from '../Button/Button.jsx'
+import { useState } from 'react'
+import OptionLeg from './OptionLeg.jsx'
 import styles from './AddTrade.module.css'; 
 
-function AddLeg({ strategy, inputs, handleClick, handleChange }) {
-  let button;
+function AddLeg({ leg, setLeg, strategy }) {
+  const addNewLeg = () => {
+    let newLeg = {
+                    strike: '', 
+                    tradeValue: '', 
+                    expDate: '', 
+                    quantity: '', 
+                  }
+
+    // 3 legs max
+    if (leg.length <= 2) setLeg([...leg, newLeg])
+  }
+
+  const deleteLeg = (index) => {
+    let data = [...leg];
+    data.splice(index, 1)
+    setLeg(data)
+  }
+
+  const handleLegChange = (index, event) => {
+    let data = [...leg];
+    data[index][event.target.name] = event.target.value;
+    setLeg(data);
+  }
+
+  let addButton;
   if (strategy === "custom") {
-    button = <Button handleClick={handleClick} className="buttonRemove" />
+    addButton = <Button handleClick={addNewLeg}
+                      className="buttonAdd"
+                      text="+ Add Option" />
   }
 
   return (
     <>
-      <div className={styles.addOption}>
-        {button}
-        {/* <Button handleClick={handleClick} className="buttonRemove" /> */}
-          <label>Strike Price: 
+        {leg.map((option, index) => (
+                  <OptionLeg key={index}
+                            inputs={option}
+                            handleChange={e => handleLegChange(index, e)} 
+                            handleClick={() => deleteLeg(index)}
+                            strategy={strategy}/>
+            ))}
+          {/* <label>Strike Price: 
             <input 
               required="required"
               placeholder="50"
@@ -50,8 +82,12 @@ function AddLeg({ strategy, inputs, handleClick, handleChange }) {
               value={inputs.expDate || ""} 
               onChange={handleChange}
             />
-          </label>
-      </div>
+          </label> */}
+      {/* <Button type="button"
+                      text="+ Add Option"
+                      className="buttonAdd"
+                      handleClick={addNewLeg} /> */}
+      {addButton}
     </>
   );
 }

@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 import ImportCsvModal from './components/ImportCsvModal.jsx'
 import Button from './components/Button/Button.jsx'
-import AddOption from './components/AddTrade/AddLeg.jsx'
+import AddOption from './components/AddTrade/OptionLeg.jsx'
 import DropdownOptions from './components/Input/DropdownOptions.jsx'
 import { v4 as uuid } from 'uuid';
 import AddTradeForm from './components/AddTrade/AddTradeForm.jsx'

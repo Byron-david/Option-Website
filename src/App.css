@@ -125,8 +125,7 @@ fieldset {
 }
 
 label {
-  padding: 0.5rem;
-  margin: 0.5rem;
+  padding: var(--padding);
 }
 /* legend
 {
