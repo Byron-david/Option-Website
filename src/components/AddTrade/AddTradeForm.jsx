@@ -1,25 +1,23 @@
 import { useState } from 'react'
-import TextInput from '../Input/TextInput.jsx'
-import DateInput from '../Input/DateInput.jsx'
 import DropdownOptions from '../Input/DropdownOptions.jsx'
 import Button from '../Button/Button.jsx'
+import AddLeg from './AddLeg.jsx'
 import AddOption from './AddOption.jsx'
-import StrategiesDropdown from '../Input/StrategiesDropdown.jsx'
-import styles from './AddTrade.module.css'; 
 import { v4 as uuid } from 'uuid';
+import AddLegCustom from './AddLegCustom.jsx'
 
 function AddTradeForm({ setNewTrade, handleClickClose }) {
   const [trade, setTrade] = useState({ 
     symbol: '', 
     strike: '', 
-    priceValue: '', 
+    tradeValue: '', 
     expDate: '', 
     quantity: '', 
     dateExec: '' },
   )
 
   const [leg, setLeg] = useState([])
-  const [strategy, setStrategy] = useState("");
+  const [strategy, setStrategy] = useState("stock");
 
   const dropdownOptions = [
     { id: uuid(), value: "stock", text: "Stock" },
@@ -70,6 +68,26 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     setStrategy(event.target.value)
   }
 
+  const strategyDisplay = () => {
+    let newLeg = {
+      strike: '', 
+      tradeValue: '', 
+      expDate: '', 
+      quantity: '', 
+    }
+
+    switch(strategy) {
+      case "stock":
+        return setLeg([])
+      case "singleOption":
+        return setLeg([...leg, newLeg])
+      case "ironCondor":
+        return setLeg([...leg, newLeg * 3])
+      default:
+        return setLeg([])
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // const objectString = JSON.stringify(trade);
@@ -79,7 +97,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   const addLeg = () => {
     let newLeg = {
                     strike: '', 
-                    priceValue: '', 
+                    tradeValue: '', 
                     expDate: '', 
                     quantity: '', 
                   }
@@ -120,30 +138,17 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                       <DropdownOptions items={dropdownOptions}/>
                   </select>
                 </label>
-                <label>Strike Price: 
-                  <input 
-                    type="number" 
-                    name="strike" 
-                    value={trade.strike || ""} 
-                    onChange={handleTrade}
-                  />
-                </label>
                 <label>Value: 
                   <input 
                     type="number" 
-                    name="value" 
-                    value={trade.value || ""} 
+                    name="tradeValue" 
+                    value={trade.tradeValue || ""} 
                     onChange={handleTrade}
                   />
                 </label>
-                <label>Expiration:
-                  <input 
-                    type="date" 
-                    name="expDate" 
-                    value={trade.expDate || ""} 
-                    onChange={handleTrade}
-                  />
-                </label>
+
+                {strategy !== "stock" && <AddOption inputs={trade} handleChange={handleTrade}/>}
+                
                 <label>Quantity: 
                   <input 
                     type="number" 
@@ -162,19 +167,22 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
             </div>
-            <div>
-              {leg.map((option, index) => (
-                    <AddOption key={index}
-                              inputs={option}
-                              handleChange={e => handleLegChange(index, e)} 
-                              handleClick={() => deleteLeg(index)}/>
-              ))}
+            {/* <AddLegCustom leg={leg} setLeg={setLeg} strategy={strategy}/> */}
+            {/* {strategy === "custom" && 
+            
+            } */}
+            {/* {leg.map((option, index) => (
+                  <AddLeg key={index}
+                            inputs={option}
+                            handleChange={e => handleLegChange(index, e)} 
+                            handleClick={() => deleteLeg(index)}
+                            strategy={strategy}/>
+            ))}
 
-            </div>
             <Button type="button"
                       text="+ Add Option"
                       className="buttonAdd"
-                      handleClick={addLeg} />
+                      handleClick={addLeg} /> */}
             {/* <button type="submit">Submit</button> */}
           </div>
           <div className="footerTemplate">

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import TextInput from '../Input/TextInput.jsx'
 import DateInput from '../Input/DateInput.jsx'
 import Button from '../Button/Button.jsx'
-import AddOption from './AddOption.jsx'
+import AddOption from './AddLeg.jsx'
 import StrategiesDropdown from '../Input/StrategiesDropdown.jsx'
 import ContainerTemplate from '../Templates/ContainerTemplate.jsx'
 import styles from './AddTrade.module.css'; 
