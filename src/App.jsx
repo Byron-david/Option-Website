@@ -17,7 +17,7 @@ const dropdownOptions = [
 ]
 
 function App() {
-  const [newTrade, setNewTrade] = useState([{}])
+  const [newTrade, setNewTrade] = useState({})
 
   const handleButtonClickAdd = () => {
     // const newOption = [ ...addOption,
@@ -42,8 +42,8 @@ function App() {
           <div>
             {JSON.stringify(newTrade)}
           </div>
-          <AddTradeForm  />
-          {/* <AddTradeModal addTrade={addTrade} handleChange={handleChange} newTrade={newTrade}/> */}
+          {/* <AddTradeForm  /> */}
+          <AddTradeModal setNewTrade={setNewTrade}/>
           {/* <ImportCsvModal />
           <PositionsTable data={trades}/> */}
         </main>

@@ -54,7 +54,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   const handleTrade = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setTrade(values => ({...values, [name]: value}))
+    setTrade(values => ({...values, [name]: value.toUpperCase()}))
   }
 
   const handleStrategy = (event) => {
@@ -78,14 +78,26 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const objectString = JSON.stringify(trade);
-    // alert(`${objectString}`);
+    
+    let objectString;
+    let newLeg = leg
+
+    if (leg.length !== 0) {
+      newLeg.unshift([trade])
+      console.log(newLeg)
+      objectString = JSON.stringify({[strategy]: [newLeg]})
+    }
+    else {
+      objectString = JSON.stringify({[strategy]: [trade]})
+    }
+
+    setNewTrade(objectString)
   }
 
   return (
     <>
       <div className="containerTemplate">
-        <form onSubmit={submitTrade}>
+        <form onSubmit={handleSubmit}>
         <div className="titleTemplate">Add Trade</div>
           <div className="bodyTemplate">
             <div className="formContainer">
@@ -117,7 +129,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
 
-                {strategy !== "stock" || strategy !== "coveredCall" && <AddOption inputs={trade} handleChange={handleTrade}/>}
+                {(strategy !== "stock" && strategy !== "coveredCall") && <AddOption inputs={trade} handleChange={handleTrade}/>}
                 
                 <label>Quantity: 
                   <input 
