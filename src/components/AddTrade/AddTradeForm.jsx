@@ -92,6 +92,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     }
 
     setNewTrade(objectString)
+    alert(objectString)
   }
 
   return (
@@ -153,7 +154,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
-            <Button type="submit" text="Save" className="buttonAdd" handleClick={handleButtonSave} />
+            <Button type="submit" text="Save" className="buttonAdd" handleClick={handleClickClose} />
           </div>
         </form>
       </div>
