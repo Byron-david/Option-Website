@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import DropdownOptions from '../Input/DropdownOptions.jsx'
+import OptionItems from '../Input/OptionItems.jsx'
 import Button from '../Button/Button.jsx'
 import AddOption from './AddOption.jsx'
 import { v4 as uuid } from 'uuid';
@@ -9,6 +9,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   const [trade, setTrade] = useState({ 
     symbol: '', 
     strike: '', 
+    posType: '', 
     tradeValue: '', 
     expDate: '', 
     quantity: '', 
@@ -31,17 +32,10 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
-  // const addTrade = (event) => {
-  //   event.preventDefault()
-  //   const noteObject = {
-  //     content: newNote,
-  //     important: Math.random() < 0.5,
-  //     id: notes.length + 1,
-  //   }
-  
-  //   setNotes(notes.concat(noteObject))
-  //   setNewNote('')
-  // }
+  const positionType = [
+    { id: uuid(), value: "BUY", text: "Buy" },
+    { id: uuid(), value: "SELL", text: "Sell" },
+  ]
 
   const submitTrade = (event) => {
     event.preventDefault()
@@ -60,10 +54,11 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   const handleStrategy = (event) => {
     const currentStrategy = event.target.value
 
-    setStrategy(event.target.value)
+    setStrategy(currentStrategy)
 
     let newLeg = {
       strike: '', 
+      posType: '', 
       tradeValue: '', 
       expDate: '', 
       quantity: '', 
@@ -75,6 +70,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     setLeg([])
     setLeg(legQuantity)
   }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -118,7 +114,16 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                       name="strategy"
                       value={strategy}
                       onChange={handleStrategy}> 
-                      <DropdownOptions items={strategyOptions}/>
+                      <OptionItems items={strategyOptions}/>
+                  </select>
+                </label>
+                <label >Type: 
+                  <select 
+                      className="inputSelect"
+                      name="posType"
+                      value={trade.posType}
+                      onChange={handleTrade}>
+                      <OptionItems items={positionType}/>
                   </select>
                 </label>
                 <label>Value: 
@@ -150,7 +155,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
             </div>
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} />
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} items={positionType} />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />

@@ -1,6 +1,3 @@
-import Button from '../Button/Button.jsx'
-import styles from './AddTrade.module.css'; 
-
 function AddOption({ inputs, handleChange }) {
   return (
     <>
