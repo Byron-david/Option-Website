@@ -2,11 +2,13 @@ import Button from '../Button/Button.jsx'
 import { useState } from 'react'
 import OptionLeg from './OptionLeg.jsx'
 import styles from './AddTrade.module.css'; 
+import OptionItems from '../Input/OptionItems.jsx'
 
-function AddLeg({ leg, setLeg, strategy }) {
+function AddLeg({ leg, setLeg, strategy, itemTypes }) {
   const addNewLeg = () => {
     let newLeg = {
                     strike: '', 
+                    posType: '', 
                     tradeValue: '', 
                     expDate: '', 
                     quantity: '', 
@@ -23,9 +25,10 @@ function AddLeg({ leg, setLeg, strategy }) {
   }
 
   const handleLegChange = (index, event) => {
-    let data = [...leg];
-    data[index][event.target.name] = event.target.value;
-    setLeg(data);
+    let { name, value } = event.target;
+    let onChangeValue = [...leg];
+    onChangeValue[index][name] = value;
+    setLeg(onChangeValue);
   }
 
   let addButton;
@@ -38,11 +41,59 @@ function AddLeg({ leg, setLeg, strategy }) {
   return (
     <>
         {leg.map((option, index) => (
-                  <OptionLeg key={index}
-                            inputs={option}
-                            handleChange={e => handleLegChange(index, e)} 
-                            handleClick={() => deleteLeg(index)}
-                            strategy={strategy}/>
+                  <div className={styles.addOption} key={index}>
+
+                    {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null}
+
+                    <label>Type: 
+                      <select 
+                          className="inputSelect"
+                          name="posType"
+                          value={option.posType || ""}
+                          onChange={e => handleLegChange(index, e)}>
+                          <OptionItems items={itemTypes}/>
+                      </select>
+                    </label>
+                    <label>Strike Price: 
+                      <input 
+                        required="required"
+                        placeholder="50"
+                        type="number" 
+                        name="strike" 
+                        value={option.strike || ""} 
+                        onChange={e => handleLegChange(index, e)}
+                      />
+                    </label>
+                    <label>Value: 
+                      <input 
+                        required="required"
+                        placeholder="1,000"
+                        type="number" 
+                        name="tradeValue" 
+                        value={option.tradeValue || ""} 
+                        onChange={e => handleLegChange(index, e)}
+                      />
+                    </label>
+                    <label>Quantity: 
+                      <input 
+                        placeholder="1"
+                        required="required"
+                        type="number" 
+                        name="quantity" 
+                        value={option.quantity || ""} 
+                        onChange={e => handleLegChange(index, e)}
+                      />
+                    </label>
+                    <label>Expiration:
+                      <input 
+                        required="required"
+                        type="date" 
+                        name="expDate" 
+                        value={option.expDate || ""} 
+                        onChange={e => handleLegChange(index, e)}
+                      />
+                    </label>
+                  </div>
             ))}
       {addButton}
     </>

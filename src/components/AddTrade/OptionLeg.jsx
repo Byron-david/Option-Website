@@ -13,11 +13,11 @@ function OptionLeg({ strategy, inputs, handleClick, handleChange, items }) {
       <div className={styles.addOption}>
         {button}
         {/* <Button handleClick={handleClick} className="buttonRemove" /> */}
-        <label >Type: 
+        <label>Type: 
           <select 
               className="inputSelect"
               name="posType"
-              value={inputs.posType}
+              value={inputs.posType || ""}
               onChange={handleChange}>
               <OptionItems items={items}/>
           </select>

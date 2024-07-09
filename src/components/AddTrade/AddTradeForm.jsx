@@ -52,25 +52,26 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   }
 
   const handleStrategy = (event) => {
-    const currentStrategy = event.target.value
+    setStrategy(event.target.value)
 
-    setStrategy(currentStrategy)
-
-    let newLeg = {
-      strike: '', 
-      posType: '', 
-      tradeValue: '', 
-      expDate: '', 
-      quantity: '', 
-    }
-
-    const findQty = strategyOptions.find(element => element.value === currentStrategy)
-    let legQuantity = Array(findQty.quantity).fill(newLeg)
+    const findQty = strategyOptions.find(element => element.value === event.target.value)
 
     setLeg([])
-    setLeg(legQuantity)
+    for (let i = 0; i < findQty.quantity; i++ ) {
+      setLeg((prev) => {
+        let newLeg = {
+          strike: '', 
+          posType: '', 
+          tradeValue: '', 
+          expDate: '', 
+          quantity: '', 
+        }
+        const newState = [...prev, newLeg]
+  
+        return newState
+      })
+    }
   }
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -155,7 +156,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                   />
                 </label>
             </div>
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} items={positionType} />
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={positionType} />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
