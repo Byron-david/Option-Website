@@ -21,6 +21,7 @@
 dialog {
     border: none;
     background-color: transparent;
+    min-width: 0%;
 }
 
 /* dialog::backdrop {

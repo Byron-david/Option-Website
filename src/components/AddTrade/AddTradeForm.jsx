@@ -98,10 +98,10 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
   return (
     <>
       <div className="containerTemplate">
-        <form onSubmit={handleSubmit}>
         <div className="titleTemplate">Add Trade</div>
+        <form onSubmit={handleSubmit}>
           <div className="bodyTemplate">
-            <div className="formContainer">
+            <div className="inputContainer">
                 <label>Symbol: 
                   <input 
                     type="text" 
