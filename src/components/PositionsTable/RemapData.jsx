@@ -2,9 +2,9 @@ import CsvFileInput from '../Input/CsvFileInput.jsx'
 
 const tableHeadNames = [
   "Symbol", 
-  "Qty", 
   "Action", 
   "Type", 
+  "Qty", 
   "Value", 
   "Strike",  
   "Exp. Date", 
@@ -14,9 +14,9 @@ const tableHeadNames = [
 
 const tastyMapping = {
   "Symbol": 4,
-  "Quantity": 8,
   "Sub Type": 2,
   "Call or Put": 17,
+  "Quantity": 8,
   "Value": 7,
   "Strike Price": 16,
   "Expiration Date": 15,

@@ -1,31 +1,48 @@
 {
   "trades": [
     {
-      "id": "1",
-      "content": "HTML is easy",
-      "important": true
-    },
-    {
-      "id": "2",
-      "content": "Browser can execute only JavaScript",
-      "important": false
-    },
-    {
-      "id": "3",
-      "content": "GET and POST are the most important methods of HTTP protocol",
-      "important": true
-    },
-    {
       "id": "4f5f",
       "stock": [
         {
           "symbol": "AAPL",
-          "strike": "",
+          "strike": "140",
           "posType": "BUY",
+          "tradeValue": "-130",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-09-01"
+        },
+        {
+          "symbol": "AAPL",
+          "strike": "120",
+          "posType": "Sell",
           "tradeValue": "150",
           "expDate": "",
           "quantity": "1",
           "dateExec": "2024-07-12"
+        }
+      ]
+    },
+    {
+      "id": "3i6d",
+      "stock": [
+        {
+          "symbol": "TSLA",
+          "strike": "220",
+          "posType": "BUY",
+          "tradeValue": "-260",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-10-01"
+        },
+        {
+          "symbol": "TSLA",
+          "strike": "230",
+          "posType": "Sell",
+          "tradeValue": "250",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-11-12"
         }
       ]
     }

@@ -8,22 +8,35 @@ import axios from 'axios'
 import styles from './AddTrade.module.css'; 
 import OptionAction from './OptionAction.jsx';
 
+const tableHeadNames = [
+  "Symbol", 
+  "Action", 
+  "Type", 
+  "Qty", 
+  "Value", 
+  "Strike",  
+  "Exp. Date", 
+  "Date",
+  "Time"
+];
+
 const defaultTrade = { symbol: '', 
-                      strike: '', 
                       action: 'BUY', 
                       posType: '', 
-                      tradeValue: '', 
-                      expDate: '', 
                       quantity: '', 
+                      tradeValue: '', 
+                      strike: '', 
+                      expDate: '', 
                       dateExec: '' 
                     }
 
-const newLeg = { strike: '', 
+const newLeg = { 
                 action: 'BUY',
                 posType: '', 
-                tradeValue: '', 
-                expDate: '', 
                 quantity: '', 
+                tradeValue: '', 
+                strike: '', 
+                expDate: '', 
               }
 
 function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
@@ -70,7 +83,6 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     for (let i = 0; i < findQty.quantity; i++ ) {
       setLeg((prev) => {
         const newState = [...prev, newLeg]
-  
         return newState
       })
     }
@@ -113,15 +125,8 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
       .post('http://localhost:3001/trades', tradeObject)
       .then(response => {
         console.log(response.data);
-      //   setTrades(trades.concat(response.data))
-      //   setNewTrade({ 
-      //     symbol: '', 
-      //     strike: '', 
-      //     posType: '', 
-      //     tradeValue: '', 
-      //     expDate: '', 
-      //     quantity: '', 
-      //     dateExec: '' })
+        setTrades(trades.concat(response.data))
+        setNewTrade(defaultTrade)
       })
       handleClickClose()
   }

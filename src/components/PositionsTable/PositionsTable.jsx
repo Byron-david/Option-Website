@@ -3,20 +3,9 @@ import styles from './PositionsTable.module.css';
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
+import Trades from './Trades.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
 import axios from 'axios'
-
-function Trades(tradeData) {
-    // get trade data
-
-    // remove time or other columns
-
-    // Combine individual trades to strategies
-    const trades = tradeData;
-
-    // loop through array
-    
-}
 
 function RowButtons() {
     return (
@@ -29,15 +18,26 @@ function RowButtons() {
 
 const tableHeadNames = [
     "Symbol", 
-    "Qty", 
     "Action", 
     "Type", 
+    "Qty", 
     "Value", 
     "Strike",  
     "Exp. Date", 
     "Date",
     "Time"
   ];
+
+//   const defaultTrade = [
+//     symbol,
+//     strike,
+//     action,
+//     posType,
+//     tradeValue,
+//     expDate,
+//     quantity,
+//     dateExec
+//   ]
 
 const MapRows = ({data}) => {
 
@@ -89,18 +89,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {trades.map((row) => (
-                            console.log(row)
-                            // <tr key={uuid()}>
-                            //     {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
-                            // </tr>
-                            ))
-                        }
-                        {/* {data.map((row) => (
-                            <tr key={uuid()}>
-                                {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
-                            </tr>
-                        ))} */}
+                        <Trades trades={trades} />
                     </tbody>
                 </table>  
             </div>

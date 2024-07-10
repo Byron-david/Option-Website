@@ -115,7 +115,75 @@ for (let i = 0; i < data.length; i++) {
 let strArray = [ "q", "w", "w", "w", "e", "i", "i", "u", "r"];
 let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
 
-console.log(findDuplicates(strArray)) // All duplicates
-console.log([...new Set(findDuplicates(strArray))]) // Unique duplicates
+// console.log(findDuplicates(strArray)) // All duplicates
+// console.log([...new Set(findDuplicates(strArray))]) // Unique duplicates
+
+
+const trades = [
+    {
+      "id": "4f5f",
+      "stock": [
+        {
+          "symbol": "AAPL",
+          "strike": "140",
+          "posType": "BUY",
+          "tradeValue": "-130",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-09-01"
+        },
+        {
+          "symbol": "AAPL",
+          "strike": "120",
+          "posType": "Sell",
+          "tradeValue": "150",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-07-12"
+        }
+      ]
+    },
+    {
+      "id": "3i6d",
+      "stock": [
+        {
+          "symbol": "TSLA",
+          "strike": "220",
+          "posType": "BUY",
+          "tradeValue": "-260",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-10-01"
+        },
+        {
+          "symbol": "TSLA",
+          "strike": "230",
+          "posType": "Sell",
+          "tradeValue": "250",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-11-12"
+        }
+      ]
+    }
+  ]
+
+  const headers = Object.keys(data[0]);
+//   const rows = trades.map(item => Object.values(item))
+  const rows = trades.map(item => Object.values(item)[1])
+
+//   const result = trades.map(row => {
+//     // console.log(row)
+//     console.log(row.stock.map((option, index) => option.map(value => value)))
+//     // return {[row.symbol]: row.strike}
+//   })
+  
+  const result = rows.map((row, index) => {
+    // console.log(row)
+    row.map((cell, index) => Object.keys(cell).map((value, index) => console.log(`${cell}: ${value}`)))
+    // return {[row.symbol]: row.strike}
+  })
+
+result
 
 // console.log(newArray)
