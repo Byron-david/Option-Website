@@ -1,0 +1,4 @@
+Todo:
+-Add Trade button in positionsTable
+
+Changes:

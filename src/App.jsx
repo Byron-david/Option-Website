@@ -4,7 +4,6 @@ import AddTradeModal from './components/AddTrade/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 import { v4 as uuid } from 'uuid';
-import axios from 'axios'
 
 const dropdownOptions = [
   { id: uuid(), value: "ironCondor", text: "Iron Condor" },
@@ -13,17 +12,7 @@ const dropdownOptions = [
 ]
 
 function App() {
-  const [newTrade, setNewTrade] = useState([])
-  const [trades, setTrades] = useState([])
 
-  useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/trades')
-      .then(response => {
-        setTrades(response.data)
-      })
-  }, [])
 
   return (
     <>
@@ -31,12 +20,12 @@ function App() {
       <div id="mainContainer">
         <main>
           <div>
-            {JSON.stringify(newTrade)}
+            {/* {JSON.stringify(newTrade)} */}
           </div>
           {/* <AddTradeForm  /> */}
-          <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/>
-          {/* <ImportCsvModal />
-          <PositionsTable data={trades}/> */}
+          {/* <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/> */}
+          {/* <ImportCsvModal /> */}
+          <PositionsTable />
         </main>
       </div>
     </>

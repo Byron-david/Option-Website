@@ -1,6 +1,6 @@
 import OptionItems from '../Input/OptionItems.jsx'
 
-function OptionType({ option, items, handleChange }) {
+function OptionAction({ option, items, handleChange }) {
   const buyStyle = {
     backgroundColor: `var(--background-color-button)`,
     color: `var(--background-color-main)`
@@ -11,18 +11,14 @@ function OptionType({ option, items, handleChange }) {
     color: `var(--background-color-main)`
   }
 
-  // option.posType === "BUY" ? dropdownStyle.backgroundColor = 
-
-
   return (
     <>
-      <label>Type: 
+      <label>Action: 
         <select 
-            // className={option.posType === BUY ? `inputSelect ${styles.buySellButton}` : `inputSelect ${styles.buySellButton}`}
             className="inputSelect"
-            style={option.posType === "BUY" ? buyStyle : sellStyle}
-            name="posType"
-            value={option.posType || ""}
+            style={option.action === "BUY" ? buyStyle : sellStyle}
+            name="action"
+            value={option.action || ""}
             onChange={handleChange}>
             <OptionItems items={items}/>
         </select>
@@ -32,4 +28,4 @@ function OptionType({ option, items, handleChange }) {
   );
 }
 
-export default OptionType
+export default OptionAction

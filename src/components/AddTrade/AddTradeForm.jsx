@@ -6,18 +6,28 @@ import { v4 as uuid } from 'uuid';
 import AddLeg from './AddLeg.jsx'
 import axios from 'axios'
 import styles from './AddTrade.module.css'; 
-import OptionType from './OptionType.jsx';
+import OptionAction from './OptionAction.jsx';
+
+const defaultTrade = { symbol: '', 
+                      strike: '', 
+                      action: 'BUY', 
+                      posType: '', 
+                      tradeValue: '', 
+                      expDate: '', 
+                      quantity: '', 
+                      dateExec: '' 
+                    }
+
+const newLeg = { strike: '', 
+                action: 'BUY',
+                posType: '', 
+                tradeValue: '', 
+                expDate: '', 
+                quantity: '', 
+              }
 
 function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
-  const [trade, setTrade] = useState({ 
-    symbol: '', 
-    strike: '', 
-    posType: 'BUY', 
-    tradeValue: '', 
-    expDate: '', 
-    quantity: '', 
-    dateExec: '' }
-  )
+  const [trade, setTrade] = useState(defaultTrade)
 
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("stock");
@@ -35,11 +45,15 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
-  const positionType = [
+  const action = [
     { id: uuid(), value: "BUY", text: "Buy" },
     { id: uuid(), value: "SELL", text: "Sell" },
   ]
 
+  const posType = [
+    { id: uuid(), value: "PUT", text: "Put" },
+    { id: uuid(), value: "CALL", text: "Call" },
+  ]
 
   const handleTrade = (event) => {
     const name = event.target.name;
@@ -55,13 +69,6 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     setLeg([])
     for (let i = 0; i < findQty.quantity; i++ ) {
       setLeg((prev) => {
-        let newLeg = {
-          strike: '', 
-          posType: '', 
-          tradeValue: '', 
-          expDate: '', 
-          quantity: '', 
-        }
         const newState = [...prev, newLeg]
   
         return newState
@@ -145,9 +152,18 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                       <OptionItems items={strategyOptions}/>
                   </select>
                 </label>
-                <OptionType option={trade}
-                            items={positionType}
+                <OptionAction option={trade}
+                            items={action}
                             handleChange={handleTrade} />
+                <label>Type: 
+                  <select 
+                      className="inputSelect"
+                      name="posType"
+                      value={trade.posType || ""}
+                      onChange={handleTrade}>
+                      <OptionItems items={posType}/>
+                  </select>
+                </label>
                 <label>Value: 
                   <input 
                     type="number" 
@@ -177,7 +193,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                   />
                 </label>
             </div>
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={positionType} />
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action}  />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />

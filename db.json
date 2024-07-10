@@ -14,7 +14,20 @@
       "id": "3",
       "content": "GET and POST are the most important methods of HTTP protocol",
       "important": true
+    },
+    {
+      "id": "4f5f",
+      "stock": [
+        {
+          "symbol": "AAPL",
+          "strike": "",
+          "posType": "BUY",
+          "tradeValue": "150",
+          "expDate": "",
+          "quantity": "1",
+          "dateExec": "2024-07-12"
+        }
+      ]
     }
-
   ]
 }
