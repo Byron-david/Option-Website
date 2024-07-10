@@ -3,12 +3,13 @@ import { useState } from 'react'
 import OptionLeg from './OptionLeg.jsx'
 import styles from './AddTrade.module.css'; 
 import OptionItems from '../Input/OptionItems.jsx'
+import OptionType from './OptionType.jsx';
 
 function AddLeg({ leg, setLeg, strategy, itemTypes }) {
   const addNewLeg = () => {
     let newLeg = {
                     strike: '', 
-                    posType: '', 
+                    posType: 'BUY', 
                     tradeValue: '', 
                     expDate: '', 
                     quantity: '', 
@@ -45,15 +46,20 @@ function AddLeg({ leg, setLeg, strategy, itemTypes }) {
 
                     {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null}
 
-                    <label>Type: 
+                    <OptionType option={option}
+                                items={itemTypes}
+                                handleChange={e => handleLegChange(index, e)} />
+                    {/* <label>Type: 
                       <select 
+                          // className={option.posType === BUY ? `inputSelect ${styles.buySellButton}` : `inputSelect ${styles.buySellButton}`}
                           className="inputSelect"
+                          style={option.posType === "BUY" ? {backgroundColor: `var(--background-color-button)`} : {backgroundColor: `var(--background-color-button-red)`}}
                           name="posType"
                           value={option.posType || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemTypes}/>
                       </select>
-                    </label>
+                    </label> */}
                     <label>Strike Price: 
                       <input 
                         required="required"

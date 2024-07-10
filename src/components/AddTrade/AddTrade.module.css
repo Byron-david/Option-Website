@@ -14,6 +14,11 @@
     flex-direction: column;
   }
 
+.buySellButton {
+  background-color: var(--background-color-button);
+  color: var(--background-color-main);
+}
+
 .addOption {
     display: flex;
     flex-wrap: nowrap;

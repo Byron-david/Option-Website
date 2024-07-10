@@ -3,11 +3,8 @@ import './App.css'
 import AddTradeModal from './components/AddTrade/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
-import ImportCsvModal from './components/ImportCsvModal.jsx'
-import Button from './components/Button/Button.jsx'
-import AddOption from './components/AddTrade/OptionLeg.jsx'
 import { v4 as uuid } from 'uuid';
-import AddTradeForm from './components/AddTrade/AddTradeForm.jsx'
+import axios from 'axios'
 
 const dropdownOptions = [
   { id: uuid(), value: "ironCondor", text: "Iron Condor" },
@@ -16,22 +13,17 @@ const dropdownOptions = [
 ]
 
 function App() {
-  const [newTrade, setNewTrade] = useState({})
+  const [newTrade, setNewTrade] = useState([])
+  const [trades, setTrades] = useState([])
 
-  const handleButtonClickAdd = () => {
-    // const newOption = [ ...addOption,
-    //   { id: nextId++,
-    //     strikePrice: "strikePrice" + nextId, 
-    //     optionValue: "optionValue" + nextId, 
-    //     quantity: "quantity" + nextId, 
-    //     exp: "exp" + nextId }
-    // ];
-    
-    // // Prevents more than 3 additional legs
-    // if (addOption.length < 3) {
-    //   setAddOption(newOption);
-    // }
-  };
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/trades')
+      .then(response => {
+        setTrades(response.data)
+      })
+  }, [])
 
   return (
     <>
@@ -42,7 +34,7 @@ function App() {
             {JSON.stringify(newTrade)}
           </div>
           {/* <AddTradeForm  /> */}
-          <AddTradeModal setNewTrade={setNewTrade}/>
+          <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/>
           {/* <ImportCsvModal />
           <PositionsTable data={trades}/> */}
         </main>

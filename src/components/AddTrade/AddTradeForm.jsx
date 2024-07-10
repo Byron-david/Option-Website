@@ -4,16 +4,19 @@ import Button from '../Button/Button.jsx'
 import AddOption from './AddOption.jsx'
 import { v4 as uuid } from 'uuid';
 import AddLeg from './AddLeg.jsx'
+import axios from 'axios'
+import styles from './AddTrade.module.css'; 
+import OptionType from './OptionType.jsx';
 
-function AddTradeForm({ setNewTrade, handleClickClose }) {
+function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   const [trade, setTrade] = useState({ 
     symbol: '', 
     strike: '', 
-    posType: '', 
+    posType: 'BUY', 
     tradeValue: '', 
     expDate: '', 
     quantity: '', 
-    dateExec: '' },
+    dateExec: '' }
   )
 
   const [leg, setLeg] = useState([])
@@ -37,13 +40,6 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     { id: uuid(), value: "SELL", text: "Sell" },
   ]
 
-  const submitTrade = (event) => {
-    event.preventDefault()
-  }
-
-  const handleButtonSave = () => {
-    console.log("Saving...");  
-  }
 
   const handleTrade = (event) => {
     const name = event.target.name;
@@ -92,11 +88,42 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
     alert(objectString)
   }
 
+  const addTrade = event => {
+    event.preventDefault()
+    let newTrade
+
+    if (leg.length !== 0) {
+      newTrade = leg
+      newTrade.unshift([trade])
+    }
+    else {
+      newTrade = trade
+    }
+  
+    const tradeObject = {[strategy]: [newTrade]}
+
+    axios
+      .post('http://localhost:3001/trades', tradeObject)
+      .then(response => {
+        console.log(response.data);
+      //   setTrades(trades.concat(response.data))
+      //   setNewTrade({ 
+      //     symbol: '', 
+      //     strike: '', 
+      //     posType: '', 
+      //     tradeValue: '', 
+      //     expDate: '', 
+      //     quantity: '', 
+      //     dateExec: '' })
+      })
+      handleClickClose()
+  }
+
   return (
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={addTrade}>
           <div className="bodyTemplate">
             <div className="inputContainer">
                 <label>Symbol: 
@@ -118,15 +145,9 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
                       <OptionItems items={strategyOptions}/>
                   </select>
                 </label>
-                <label >Type: 
-                  <select 
-                      className="inputSelect"
-                      name="posType"
-                      value={trade.posType}
-                      onChange={handleTrade}>
-                      <OptionItems items={positionType}/>
-                  </select>
-                </label>
+                <OptionType option={trade}
+                            items={positionType}
+                            handleChange={handleTrade} />
                 <label>Value: 
                   <input 
                     type="number" 
@@ -160,7 +181,7 @@ function AddTradeForm({ setNewTrade, handleClickClose }) {
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
-            <Button type="submit" text="Save" className="buttonAdd" handleClick={handleClickClose} />
+            <Button type="submit" text="Save" className="buttonAdd" />
           </div>
         </form>
       </div>
