@@ -30,7 +30,7 @@ const defaultTrade = { symbol: '',
                       dateExec: '' 
                     }
 
-const newLeg = { 
+const defaultLeg = { 
                 action: 'BUY',
                 posType: '', 
                 quantity: '', 
@@ -47,14 +47,14 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
 
   const strategyOptions = [
     { id: uuid(), value: "stock", text: "Stock", quantity: 0 },
-    { id: uuid(), value: "singleOption", text: "Single Option", quantity: 0 },
+    { id: uuid(), value: "singleOption", text: "Single Option", quantity: 1 },
     { id: uuid(), value: "coveredCall", text: "Covered Call", quantity: 1 },
-    { id: uuid(), value: "verticalSpread", text: "Vertical Spread", quantity: 1 },
-    { id: uuid(), value: "strangle", text: "Strangle", quantity: 1 },
-    { id: uuid(), value: "straddle", text: "Straddle", quantity: 1 },
-    { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 3 },
-    { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 3 },
-    { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 2 },
+    { id: uuid(), value: "verticalSpread", text: "Vertical Spread", quantity: 2 },
+    { id: uuid(), value: "strangle", text: "Strangle", quantity: 2 },
+    { id: uuid(), value: "straddle", text: "Straddle", quantity: 2 },
+    { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 4 },
+    { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 4 },
+    { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
     { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
@@ -81,6 +81,14 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
 
     setLeg([])
     for (let i = 0; i < findQty.quantity; i++ ) {
+      const newLeg = { 
+        action: 'BUY',
+        posType: '', 
+        quantity: '', 
+        tradeValue: '', 
+        strike: '', 
+        expDate: '', 
+      }
       setLeg((prev) => {
         const newState = [...prev, newLeg]
         return newState
@@ -92,12 +100,12 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     event.preventDefault();
     
     let objectString;
-    let newLeg = leg
+    let defaultLeg = leg
 
     if (leg.length !== 0) {
-      newLeg.unshift([trade])
-      console.log(newLeg)
-      objectString = JSON.stringify({[strategy]: [newLeg]})
+      defaultLeg.unshift([trade])
+      console.log(defaultLeg)
+      objectString = JSON.stringify({[strategy]: [defaultLeg]})
     }
     else {
       objectString = JSON.stringify({[strategy]: [trade]})
@@ -157,38 +165,31 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                       <OptionItems items={strategyOptions}/>
                   </select>
                 </label>
-                <OptionAction option={trade}
-                            items={action}
-                            handleChange={handleTrade} />
-                <label>Type: 
-                  <select 
-                      className="inputSelect"
-                      name="posType"
-                      value={trade.posType || ""}
-                      onChange={handleTrade}>
-                      <OptionItems items={posType}/>
-                  </select>
-                </label>
-                <label>Value: 
-                  <input 
-                    type="number" 
-                    name="tradeValue" 
-                    value={trade.tradeValue || ""} 
-                    onChange={handleTrade}
-                  />
-                </label>
-
-                {(strategy !== "stock" && strategy !== "coveredCall") && <AddOption inputs={trade} handleChange={handleTrade}/>}
+                {(strategy === "stock" || strategy === "coveredCall") &&
+                <>
+                  <OptionAction option={trade}
+                    items={action}
+                    handleChange={handleTrade} />
                 
-                <label>Quantity: 
-                  <input 
-                    type="number" 
-                    name="quantity" 
-                    value={trade.quantity || ""} 
-                    onChange={handleTrade}
-                    placeholder="1"
-                  />
-                </label>
+                  <label>Value: 
+                    <input 
+                      type="number" 
+                      name="tradeValue" 
+                      value={trade.tradeValue || ""} 
+                      onChange={handleTrade}
+                    />
+                  </label>
+                  <label>Quantity: 
+                    <input 
+                      type="number" 
+                      name="quantity" 
+                      value={trade.quantity || ""} 
+                      onChange={handleTrade}
+                      placeholder="1"
+                    />
+                  </label>
+                </>
+                }
                 <label>Date Exec.:
                   <input 
                     type="date" 
@@ -197,6 +198,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                     onChange={handleTrade}
                   />
                 </label>
+
             </div>
             <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action}  />
           </div>
