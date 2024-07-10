@@ -180,7 +180,7 @@ const trades = [
   
   const result = rows.map((row, index) => {
     // console.log(row)
-    row.map((cell, index) => Object.keys(cell).map((value, index) => console.log(`${cell}: ${value}`)))
+    row.map((cell, index) => Object.values(cell).map((value, index) => console.log(`${Object.keys(cell)[index]}: ${value}`)))
     // return {[row.symbol]: row.strike}
   })
 

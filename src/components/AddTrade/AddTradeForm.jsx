@@ -22,17 +22,14 @@ const tableHeadNames = [
 
 const defaultTrade = { symbol: '', 
                       action: 'BUY', 
-                      posType: '', 
                       quantity: '', 
                       tradeValue: '', 
-                      strike: '', 
-                      expDate: '', 
                       dateExec: '' 
                     }
 
 const defaultLeg = { 
                 action: 'BUY',
-                posType: '', 
+                posType: 'PUT', 
                 quantity: '', 
                 tradeValue: '', 
                 strike: '', 
@@ -81,14 +78,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
 
     setLeg([])
     for (let i = 0; i < findQty.quantity; i++ ) {
-      const newLeg = { 
-        action: 'BUY',
-        posType: '', 
-        quantity: '', 
-        tradeValue: '', 
-        strike: '', 
-        expDate: '', 
-      }
+      const newLeg = { ...defaultLeg }
       setLeg((prev) => {
         const newState = [...prev, newLeg]
         return newState

@@ -28,17 +28,20 @@ const tableHeadNames = [
 
 
 export default function Trades({ trades }) {
-
+    const rows = trades.map(item => Object.values(item)[1])
+    // row.map((option) => Object.values(option).map((value, index) => console.log(`${Object.keys(option)[index]}: ${value}`)))
 
     return (
         <>
-            {trades.map((row) => {
+            {rows.map((row) => {
                 // console.log(Object.values(row.stock).map((option) => option.symbol)
-                console.log(Object.values(row.stock).map((option, index) => [option.symbol, index]))
+                // console.log(Object.values(row.stock).map((option, index) => [option.symbol, index]))
                 return (
                     <tr key={uuid()}>
-                        {Object.values(row.stock).map((option) => (<td key={uuid()}>{Object.values(option)}</td>) )}
+                        {row.map((option) => Object.values(option).map((value, index) => (<td key={uuid()}>{Object.values(value)}</td>)))}
                     </tr>
+                        // {Object.values(row.stock).map((option) => (<td key={uuid()}>{Object.values(option)}</td>) )}
+
                 )   
                 })
                 // const strategyName = Object.keys(row)[1]

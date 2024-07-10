@@ -1,49 +1,51 @@
 {
   "trades": [
     {
-      "id": "4f5f",
-      "stock": [
-        {
-          "symbol": "AAPL",
-          "strike": "140",
-          "posType": "BUY",
-          "tradeValue": "-130",
-          "expDate": "",
-          "quantity": "1",
-          "dateExec": "2024-09-01"
-        },
-        {
-          "symbol": "AAPL",
-          "strike": "120",
-          "posType": "Sell",
-          "tradeValue": "150",
-          "expDate": "",
-          "quantity": "1",
-          "dateExec": "2024-07-12"
-        }
-      ]
-    },
-    {
-      "id": "3i6d",
-      "stock": [
-        {
-          "symbol": "TSLA",
-          "strike": "220",
-          "posType": "BUY",
-          "tradeValue": "-260",
-          "expDate": "",
-          "quantity": "1",
-          "dateExec": "2024-10-01"
-        },
-        {
-          "symbol": "TSLA",
-          "strike": "230",
-          "posType": "Sell",
-          "tradeValue": "250",
-          "expDate": "",
-          "quantity": "1",
-          "dateExec": "2024-11-12"
-        }
+      "id": "cdd9",
+      "ironCondor": [
+        [
+          [
+            {
+              "symbol": "AAPL",
+              "action": "BUY",
+              "quantity": "",
+              "tradeValue": "",
+              "dateExec": "2024-07-10"
+            }
+          ],
+          {
+            "action": "BUY",
+            "posType": "PUT",
+            "quantity": "1",
+            "tradeValue": "-100",
+            "strike": "50",
+            "expDate": "2024-08-09"
+          },
+          {
+            "action": "SELL",
+            "posType": "PUT",
+            "quantity": "1",
+            "tradeValue": "120",
+            "strike": "55",
+            "expDate": "2024-08-09"
+          },
+          {
+            "action": "SELL",
+            "posType": "CALL",
+            "quantity": "1",
+            "tradeValue": "125",
+            "strike": "95",
+            "expDate": "2024-08-09"
+          },
+          {
+            "action": "BUY",
+            "posType": "CALL",
+            "quantity": "1",
+            "tradeValue": "-105",
+            "strike": "100",
+            "expDate": "2024-08-09"
+          }
+        ]
       ]
     }
   ]
