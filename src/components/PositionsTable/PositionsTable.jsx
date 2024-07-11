@@ -54,7 +54,6 @@ export default function PositionsTable({ data }) {
     // const [data, setData] = useState([]);
     // const [importData, setImportData] = useState([]);
     const [header, setHeader] = useState([]);
-    const [newTrade, setNewTrade] = useState([])
     const [trades, setTrades] = useState([])
   
     useEffect(() => {
@@ -75,7 +74,7 @@ export default function PositionsTable({ data }) {
             <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
                     {/* <RemapData onFileLoad={handleFileLoad} /> */}
-                    <AddTradeModal trades={trades} />
+                    <AddTradeModal trades={trades} setTrades={setTrades} />
                 </div>
                 <hr/>
                 <table>

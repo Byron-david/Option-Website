@@ -31,6 +31,11 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions }) {
                       text="+ Add Option" />
   }
 
+  // let tradeValueAdjust
+  // if (option.action === "BUY") {
+  //   tradeValueAdjust = option.tradeValue * -1
+  // }
+
   return (
     <>
         {leg.map((option, index) => (

@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import OptionItems from '../Input/OptionItems.jsx'
 import Button from '../Button/Button.jsx'
-import AddOption from './AddOption.jsx'
 import { v4 as uuid } from 'uuid';
 import AddLeg from './AddLeg.jsx'
-import axios from 'axios'
-import styles from './AddTrade.module.css'; 
-import OptionAction from './OptionAction.jsx';
+import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
 const tableHeadNames = [
@@ -42,8 +39,8 @@ const defaultLeg = {
                 expDate: '', 
               }
 
-function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
-  const [trade, setTrade] = useState(defaultTrade)
+function AddTradeForm({ trades, setTrades, handleClickClose }) {
+  const [newTrade, setNewTrade] = useState(defaultTrade)
   const [stock, setStock] = useState(defaultStock)
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("stock");
@@ -71,7 +68,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   ]
 
   const handleTrade = (event) => {
-    setTrade(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
+    setNewTrade(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
   }
 
   const handleStock = (event) => {
@@ -117,35 +114,36 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     }
   }
 
+  const valueAdjust = (combinedTrade) => {
+    combinedTrade.map(t => t.action === "BUY" ? t.tradeValue = `${t.tradeValue * -1}` : t.tradeValue )
+  }
+
   const addTrade = event => {
     event.preventDefault()
-    let newTrade = []
+    let combinedTrade = []
     
     if (leg.length !== 0 && stock.tradePrice !== '') {
-      const newStock = {...trade, ...stock}
-      const newLeg = leg.map(prev => ({...trade, ...prev}))
-      newTrade = newTrade.concat(newStock, ...newLeg)
+      const newStock = {...newTrade, ...stock}
+      const newLeg = leg.map(prev => ({...newTrade, ...prev}))
+      combinedTrade = combinedTrade.concat(newStock, ...newLeg)
     }
     else if (leg.length !== 0) {
-      newTrade = leg.map(prev => ({...trade, ...prev}))
-      // newTrade = [trade, ...leg]
+      combinedTrade = leg.map(prev => ({...newTrade, ...prev}))
     }
     else {
-      newTrade = [{...trade, ...stock}]
+      combinedTrade = [{...newTrade, ...stock}]
     }
   
-    const tradeObject = {[strategy]: newTrade}
-    console.log("Trade:", trade);
-    console.log("Stock:", stock);
-    console.log("Leg:", leg);
-    console.log(tradeObject);
-    // axios
-    //   .post('http://localhost:3001/trades', tradeObject)
-    //   .then(response => {
-    //     setTrades(trades.concat(response.data))
-    //     setNewTrade(defaultTrade)
-    //   })
-    //   handleClickClose()
+    valueAdjust(combinedTrade)
+    const tradeObject = {[strategy]: combinedTrade}
+
+    tradeService
+      .create(tradeObject)
+      .then(returnedTrade => {
+        setTrades(trades.concat(returnedTrade))
+        setNewTrade(defaultTrade)
+      })
+      handleClickClose()
   }
 
   return (
@@ -159,7 +157,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                   <input 
                     type="text" 
                     name="symbol" 
-                    value={trade.symbol || ""} 
+                    value={newTrade.symbol || ""} 
                     onChange={handleTrade}
                     placeholder="AAPL"
                     maxLength="4"
@@ -178,7 +176,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                   <input 
                     type="date" 
                     name="dateExec" 
-                    value={trade.dateExec || ""} 
+                    value={newTrade.dateExec || ""} 
                     onChange={handleTrade}
                   />
                 </label>

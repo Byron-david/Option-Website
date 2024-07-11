@@ -1,113 +1,110 @@
 {
   "trades": [
     {
-      "id": "cdd9",
-      "ironCondor": [
-        [
-          {
-            "symbol": "AAPL",
-            "action": "BUY",
-            "quantity": "",
-            "tradeValue": "",
-            "dateExec": "2024-07-10"
-          },
-          {
-            "action": "BUY",
-            "posType": "PUT",
-            "quantity": "1",
-            "tradeValue": "-100",
-            "strike": "50",
-            "expDate": "2024-08-09"
-          },
-          {
-            "action": "SELL",
-            "posType": "PUT",
-            "quantity": "1",
-            "tradeValue": "120",
-            "strike": "55",
-            "expDate": "2024-08-09"
-          },
-          {
-            "action": "SELL",
-            "posType": "CALL",
-            "quantity": "1",
-            "tradeValue": "125",
-            "strike": "95",
-            "expDate": "2024-08-09"
-          },
-          {
-            "action": "BUY",
-            "posType": "CALL",
-            "quantity": "1",
-            "tradeValue": "-105",
-            "strike": "100",
-            "expDate": "2024-08-09"
-          }
-        ]
-      ]
-    },
-    {
-      "id": "9f92",
-      "verticalSpread": [
-        [
-          {
-            "symbol": "TSLA",
-            "action": "BUY",
-            "quantity": "",
-            "tradeValue": "",
-            "dateExec": "2024-07-10",
-            "name": "T"
-          },
-          {
-            "action": "SELL",
-            "posType": "PUT",
-            "quantity": "1",
-            "tradeValue": "300",
-            "strike": "200",
-            "expDate": "2024-08-02"
-          },
-          {
-            "action": "BUY",
-            "posType": "PUT",
-            "quantity": "1",
-            "tradeValue": "-250",
-            "strike": "190",
-            "expDate": "2024-08-02"
-          }
-        ]
-      ]
-    },
-    {
-      "id": "9edf",
-      "coveredCall": [
-        [
-          {
-            "symbol": "META",
-            "action": "BUY",
-            "quantity": "1",
-            "tradeValue": "20000",
-            "dateExec": "2024-07-10"
-          },
-          {
-            "action": "SELL",
-            "posType": "CALL",
-            "quantity": "1",
-            "tradeValue": "200",
-            "strike": "175",
-            "expDate": "2024-08-09"
-          }
-        ]
-      ]
-    },
-    {
-      "id": "0a2d",
+      "id": "f899",
       "stock": [
         {
-          "symbol": "DKNG",
+          "symbol": "AAPL",
+          "dateExec": "2024-07-01",
           "action": "BUY",
+          "posType": "STOCK",
           "quantity": "1",
-          "tradeValue": "150",
-          "dateExec": "2024-07-04"
+          "tradeValue": 100,
+          "tradePrice": "100"
+        }
+      ]
+    },
+    {
+      "id": "c8fe",
+      "coveredCall": [
+        {
+          "symbol": "TSLA",
+          "dateExec": "2024-07-05",
+          "action": "BUY",
+          "posType": "STOCK",
+          "quantity": "100",
+          "tradeValue": 25000,
+          "tradePrice": "250"
+        },
+        {
+          "symbol": "TSLA",
+          "dateExec": "2024-07-05",
+          "action": "SELL",
+          "posType": "CALL",
+          "quantity": "1",
+          "tradeValue": "400",
+          "strike": "280",
+          "expDate": "2024-08-09"
+        }
+      ]
+    },
+    {
+      "id": "0b5c",
+      "ironCondor": [
+        {
+          "symbol": "CHWY",
+          "dateExec": "2024-07-09",
+          "action": "BUY",
+          "posType": "PUT",
+          "quantity": "1",
+          "tradeValue": "90",
+          "strike": "15",
+          "expDate": "2024-08-09"
+        },
+        {
+          "symbol": "CHWY",
+          "dateExec": "2024-07-09",
+          "action": "SELL",
+          "posType": "PUT",
+          "quantity": "1",
+          "tradeValue": "100",
+          "strike": "20",
+          "expDate": "2024-08-09"
+        },
+        {
+          "symbol": "CHWY",
+          "dateExec": "2024-07-09",
+          "action": "SELL",
+          "posType": "CALL",
+          "quantity": "1",
+          "tradeValue": "10",
+          "strike": "30",
+          "expDate": "2024-08-09"
+        },
+        {
+          "symbol": "CHWY",
+          "dateExec": "2024-07-09",
+          "action": "BUY",
+          "posType": "CALL",
+          "quantity": "1",
+          "tradeValue": "100",
+          "strike": "35",
+          "expDate": "2024-08-09"
+        }
+      ]
+    },
+    {
+      "id": "b969",
+      "verticalSpread": [
+        {
+          "symbol": "META",
+          "dateExec": "2024-07-19",
+          "action": "BUY",
+          "posType": "CALL",
+          "quantity": "1",
+          "tradeValue": "100",
+          "strike": "50",
+          "expDate": "2024-08-09"
+        },
+        {
+          "symbol": "META",
+          "dateExec": "2024-07-19",
+          "action": "SELL",
+          "posType": "CALL",
+          "quantity": "1",
+          "tradeValue": "90",
+          "strike": "55",
+          "expDate": "2024-08-09"
         }
       ]
     }
