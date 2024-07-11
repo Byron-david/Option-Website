@@ -7,6 +7,7 @@ import AddLeg from './AddLeg.jsx'
 import axios from 'axios'
 import styles from './AddTrade.module.css'; 
 import OptionAction from './OptionAction.jsx';
+import AddStock from './AddStock.jsx';
 
 const tableHeadNames = [
   "Symbol", 
@@ -21,11 +22,14 @@ const tableHeadNames = [
 ];
 
 const defaultTrade = { symbol: '', 
-                      action: 'BUY', 
-                      quantity: '', 
-                      tradeValue: '', 
                       dateExec: '' 
                     }
+
+const defaultStock = {
+  action: 'BUY', 
+  quantity: '', 
+  tradeValue: '', 
+}
 
 const defaultLeg = { 
                 action: 'BUY',
@@ -38,7 +42,7 @@ const defaultLeg = {
 
 function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   const [trade, setTrade] = useState(defaultTrade)
-
+  const [stock, setStock] = useState(defaultStock)
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("stock");
 
@@ -71,6 +75,12 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     setTrade(values => ({...values, [name]: value.toUpperCase()}))
   }
 
+  const handleStock = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setTrade(values => ({...values, [name]: value.toUpperCase()}))
+  }
+
   const handleStrategy = (event) => {
     setStrategy(event.target.value)
 
@@ -86,35 +96,16 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    let objectString;
-    let defaultLeg = leg
-
-    if (leg.length !== 0) {
-      defaultLeg.unshift([trade])
-      console.log(defaultLeg)
-      objectString = JSON.stringify({[strategy]: [defaultLeg]})
-    }
-    else {
-      objectString = JSON.stringify({[strategy]: [trade]})
-    }
-
-    setNewTrade(objectString)
-    alert(objectString)
-  }
-
   const addTrade = event => {
     event.preventDefault()
     let newTrade
 
     if (leg.length !== 0) {
-      newTrade = leg
-      newTrade.unshift([trade])
+      newTrade = [trade, ...leg]
+      newTrade.unshift(trade)
     }
     else {
-      newTrade = trade
+      newTrade = [...trade]
     }
   
     const tradeObject = {[strategy]: [newTrade]}
@@ -122,7 +113,6 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     axios
       .post('http://localhost:3001/trades', tradeObject)
       .then(response => {
-        console.log(response.data);
         setTrades(trades.concat(response.data))
         setNewTrade(defaultTrade)
       })
@@ -155,31 +145,6 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                       <OptionItems items={strategyOptions}/>
                   </select>
                 </label>
-                {(strategy === "stock" || strategy === "coveredCall") &&
-                <>
-                  <OptionAction option={trade}
-                    items={action}
-                    handleChange={handleTrade} />
-                
-                  <label>Value: 
-                    <input 
-                      type="number" 
-                      name="tradeValue" 
-                      value={trade.tradeValue || ""} 
-                      onChange={handleTrade}
-                    />
-                  </label>
-                  <label>Quantity: 
-                    <input 
-                      type="number" 
-                      name="quantity" 
-                      value={trade.quantity || ""} 
-                      onChange={handleTrade}
-                      placeholder="1"
-                    />
-                  </label>
-                </>
-                }
                 <label>Date Exec.:
                   <input 
                     type="date" 
@@ -190,6 +155,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                 </label>
 
             </div>
+            <AddStock strategy={strategy} items={action} handleChange={handleStock} trade={stock} />
             <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action}  />
           </div>
           <div className="footerTemplate">
