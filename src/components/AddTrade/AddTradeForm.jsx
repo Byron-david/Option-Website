@@ -35,7 +35,7 @@ const defaultStock = {
 
 const defaultLeg = { 
                 action: 'BUY',
-                posType: 'PUT', 
+                posType: 'CALL', 
                 quantity: '', 
                 tradeValue: '', 
                 strike: '', 
@@ -54,10 +54,9 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     { id: uuid(), value: "coveredCall", text: "Covered Call", quantity: 1 },
     { id: uuid(), value: "verticalSpread", text: "Vertical Spread", quantity: 2 },
     { id: uuid(), value: "strangle", text: "Strangle", quantity: 2 },
-    { id: uuid(), value: "straddle", text: "Straddle", quantity: 2 },
     { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 4 },
     { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 4 },
-    { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
+    // { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
     // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
@@ -80,13 +79,36 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   }
 
   const handleStrategy = (event) => {
-    setStrategy(event.target.value)
+    const newStrategy = event.target.value
+    setStrategy(newStrategy)
 
-    const findQty = strategyOptions.find(element => element.value === event.target.value)
+    const findQty = strategyOptions.find(element => element.value === newStrategy)
 
     setLeg([])
     for (let i = 0; i < findQty.quantity; i++ ) {
       const newLeg = { ...defaultLeg }
+
+      if (i > 0 && i < 3) {
+        newLeg.action = "SELL"
+      }
+
+      if (newStrategy === "ironCondor") {
+        if (i < 2) {
+          newLeg.posType = "PUT"
+        }
+      }
+
+      if (newStrategy === "coveredCall") {
+        newLeg.action = "SELL"
+      }
+
+      if (newStrategy === "strangle" ) {
+        newLeg.action = "SELL"
+        if (i < 1) {
+          newLeg.posType = "PUT"
+        }
+      }
+
       setLeg((prev) => {
         const newState = [...prev, newLeg]
         return newState
