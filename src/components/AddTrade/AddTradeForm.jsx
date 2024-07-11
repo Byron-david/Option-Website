@@ -27,8 +27,10 @@ const defaultTrade = { symbol: '',
 
 const defaultStock = {
   action: 'BUY', 
+  posType: 'STOCK', 
   quantity: '', 
   tradeValue: '', 
+  price: '', 
 }
 
 const defaultLeg = { 
@@ -56,7 +58,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 4 },
     { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 4 },
     { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
-    { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
+    // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
 
   const action = [
@@ -70,15 +72,11 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   ]
 
   const handleTrade = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setTrade(values => ({...values, [name]: value.toUpperCase()}))
+    setTrade(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
   }
 
   const handleStock = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setTrade(values => ({...values, [name]: value.toUpperCase()}))
+    setStock(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
   }
 
   const handleStrategy = (event) => {
@@ -99,24 +97,27 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   const addTrade = event => {
     event.preventDefault()
     let newTrade
+    const stockKeys = Object.keys(stock)
 
-    if (leg.length !== 0) {
+    if (leg.length !== 0 && stockKeys.length !== 0) {
+      newTrade = [trade, {...stock},...leg]
+    }
+    else if (leg.length !== 0) {
       newTrade = [trade, ...leg]
-      newTrade.unshift(trade)
     }
     else {
-      newTrade = [...trade]
+      newTrade = {...stock}
     }
   
     const tradeObject = {[strategy]: [newTrade]}
-
-    axios
-      .post('http://localhost:3001/trades', tradeObject)
-      .then(response => {
-        setTrades(trades.concat(response.data))
-        setNewTrade(defaultTrade)
-      })
-      handleClickClose()
+    console.log(tradeObject);
+    // axios
+    //   .post('http://localhost:3001/trades', tradeObject)
+    //   .then(response => {
+    //     setTrades(trades.concat(response.data))
+    //     setNewTrade(defaultTrade)
+    //   })
+    //   handleClickClose()
   }
 
   return (
@@ -155,8 +156,8 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
                 </label>
 
             </div>
-            <AddStock strategy={strategy} items={action} handleChange={handleStock} trade={stock} />
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action}  />
+            <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} />
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
