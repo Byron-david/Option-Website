@@ -30,7 +30,7 @@ const defaultStock = {
   posType: 'STOCK', 
   quantity: '', 
   tradeValue: '', 
-  price: '', 
+  tradePrice: '', 
 }
 
 const defaultLeg = { 
@@ -75,7 +75,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
   }
 
   const handleStock = (event) => {
-    setStock(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
+    setStock(values => ({...values, [event.target.name]: event.target.value}))
   }
 
   const handleStrategy = (event) => {
@@ -85,6 +85,7 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
     const findQty = strategyOptions.find(element => element.value === newStrategy)
 
     setLeg([])
+    setStock(defaultStock)
     for (let i = 0; i < findQty.quantity; i++ ) {
       const newLeg = { ...defaultLeg }
 
@@ -118,20 +119,25 @@ function AddTradeForm({ trades, setTrades, setNewTrade, handleClickClose }) {
 
   const addTrade = event => {
     event.preventDefault()
-    let newTrade
-    const stockKeys = Object.keys(stock)
-
-    if (leg.length !== 0 && stockKeys.length !== 0) {
-      newTrade = [trade, {...stock},...leg]
+    let newTrade = []
+    
+    if (leg.length !== 0 && stock.tradePrice !== '') {
+      const newStock = {...trade, ...stock}
+      const newLeg = leg.map(prev => ({...trade, ...prev}))
+      newTrade = newTrade.concat(newStock, ...newLeg)
     }
     else if (leg.length !== 0) {
-      newTrade = [trade, ...leg]
+      newTrade = leg.map(prev => ({...trade, ...prev}))
+      // newTrade = [trade, ...leg]
     }
     else {
-      newTrade = {...stock}
+      newTrade = [{...trade, ...stock}]
     }
   
-    const tradeObject = {[strategy]: [newTrade]}
+    const tradeObject = {[strategy]: newTrade}
+    console.log("Trade:", trade);
+    console.log("Stock:", stock);
+    console.log("Leg:", leg);
     console.log(tradeObject);
     // axios
     //   .post('http://localhost:3001/trades', tradeObject)

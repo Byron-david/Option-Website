@@ -6,6 +6,7 @@ function AddStock({ strategy, stock, handleChange, items }) {
   if (stock.tradePrice !== '' && stock.quantity !== '') {
     stockValue = stock.tradePrice * stock.quantity
   }
+  stock.tradeValue = stockValue
 
   if (strategy === "stock" || strategy === "coveredCall") 
   return (
@@ -27,7 +28,7 @@ function AddStock({ strategy, stock, handleChange, items }) {
             <input 
             type="number" 
             name="tradeValue" 
-            value={stockValue} 
+            value={stock.tradeValue || ""} 
             onChange={handleChange}
             placeholder="10,000"
             />
