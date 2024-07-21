@@ -16,29 +16,7 @@ function RowButtons() {
     )
 }
 
-const tableHeadNames = [
-    "Symbol", 
-    "Date",
-    "Action", 
-    "Type", 
-    "Qty", 
-    "Price", 
-    "Strike",  
-    "Value", 
-    "Exp. Date", 
-    // "Time"
-  ];
 
-//   const defaultTrade = [
-//     symbol,
-//     strike,
-//     action,
-//     posType,
-//     tradeValue,
-//     expDate,
-//     quantity,
-//     dateExec
-//   ]
 
 const MapRows = ({data}) => {
 
@@ -54,7 +32,20 @@ const MapRows = ({data}) => {
 export default function PositionsTable({ data }) {
     // const [data, setData] = useState([]);
     // const [importData, setImportData] = useState([]);
-    const [header, setHeader] = useState([]);
+
+    const tableHeader = {
+        "Symbol": "symbol", 
+        "Date": "dateExec",
+        "Action": "action", 
+        "Type": "posType", 
+        "Qty": "quantity", 
+        "Price": "stockPrice", 
+        "Strike": "strike",  
+        "Value": "tradeValue", 
+        "Exp. Date": "expDate", 
+    }
+
+    const headers = Object.keys(tableHeader)
     const [trades, setTrades] = useState([])
   
     useEffect(() => {
@@ -82,14 +73,14 @@ export default function PositionsTable({ data }) {
                     <caption>All Positions</caption>
                     <thead>
                         <tr>
-                            {tableHeadNames.map((element) => (
+                            {headers.map((element) => (
                                 <th scope="col" key={element}>{element}</th>
                             ))
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        <Trades trades={trades} />
+                        <Trades trades={trades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>
