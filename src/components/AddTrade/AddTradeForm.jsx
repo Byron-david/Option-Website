@@ -6,19 +6,6 @@ import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
-const tableHeadNames = [
-  "Symbol", 
-  "Action", 
-  "Type", 
-  "Qty", 
-  "Price", 
-  "Value", 
-  "Strike",  
-  "Exp. Date", 
-  "Date",
-  "Time"
-];
-
 const defaultTrade = { symbol: '', 
                       dateExec: '' 
                     }
@@ -189,7 +176,6 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
                     onChange={handleTrade}
                   />
                 </label>
-
             </div>
             <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} itemSubAction={subAction} />
             <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />

@@ -43,6 +43,7 @@ export default function PositionsTable({ data }) {
         "Strike": "strike",  
         "Value": "tradeValue", 
         "Exp. Date": "expDate", 
+        "Edit": "", 
     }
 
     const headers = Object.keys(tableHeader)
@@ -80,7 +81,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        <Trades trades={trades} tableHeader={tableHeader} />
+                        <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>

@@ -39,3 +39,6 @@
     /* white-space: nowrap; */
 }
 
+.editButtons {
+  display: flex;
+}
