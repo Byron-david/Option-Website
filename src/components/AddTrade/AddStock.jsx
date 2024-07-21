@@ -1,7 +1,8 @@
 import styles from './AddTrade.module.css'; 
 import OptionAction from './OptionAction.jsx';
+import OptionItems from '../Input/OptionItems.jsx';
 
-function AddStock({ strategy, stock, handleChange, items }) {
+function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
   let stockValue = 0;
   if (stock.stockPrice !== '' && stock.quantity !== '') {
     stockValue = stock.stockPrice * stock.quantity
@@ -15,6 +16,15 @@ function AddStock({ strategy, stock, handleChange, items }) {
         <OptionAction option={stock}
             items={items}
             handleChange={handleChange} />
+        <label>Open/Close: 
+            <select 
+                className="inputSelect"
+                name="subAction"
+                value={stock.subAction || ""}
+                onChange={handleChange}>
+                <OptionItems items={itemSubAction}/>
+            </select>
+          </label>
         <label>Price: 
             <input 
             type="number" 
@@ -42,6 +52,7 @@ function AddStock({ strategy, stock, handleChange, items }) {
             placeholder="1"
             />
         </label>
+
       </div>
     </>
   );

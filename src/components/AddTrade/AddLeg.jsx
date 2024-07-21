@@ -5,7 +5,7 @@ import styles from './AddTrade.module.css';
 import OptionItems from '../Input/OptionItems.jsx'
 import OptionAction from './OptionAction.jsx';
 
-function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions }) {
+function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSubAction }) {
   const addNewLeg = () => {
     // 3 legs max
     if (leg.length <= 2) setLeg([...leg, newLeg])
@@ -46,6 +46,15 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions }) {
                     <OptionAction option={option}
                                 items={itemActions}
                                 handleChange={e => handleLegChange(index, e)} />
+                    <label>Open/Close: 
+                      <select 
+                          className="inputSelect"
+                          name="subAction"
+                          value={option.subAction || ""}
+                          onChange={e => handleLegChange(index, e)}>
+                          <OptionItems items={itemSubAction}/>
+                      </select>
+                    </label>
                     <label>Type: 
                       <select 
                           className="inputSelect"

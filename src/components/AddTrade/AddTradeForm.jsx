@@ -25,6 +25,7 @@ const defaultTrade = { symbol: '',
 
 const defaultStock = {
   action: 'BUY', 
+  subAction: '', 
   posType: 'STOCK', 
   quantity: '', 
   stockPrice: '', 
@@ -34,6 +35,7 @@ const defaultStock = {
 
 const defaultLeg = { 
                 action: 'BUY',
+                subAction: '', 
                 posType: 'CALL', 
                 quantity: '', 
                 strike: '', 
@@ -62,6 +64,11 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
   const action = [
     { id: uuid(), value: "BUY", text: "Buy" },
     { id: uuid(), value: "SELL", text: "Sell" },
+  ]
+
+  const subAction = [
+    { id: uuid(), value: "OPEN", text: "Open" },
+    { id: uuid(), value: "CLOSE", text: "Close" },
   ]
 
   const posType = [
@@ -184,8 +191,8 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
                 </label>
 
             </div>
-            <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} />
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} />
+            <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} itemSubAction={subAction} />
+            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
           </div>
           <div className="footerTemplate">
             <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
