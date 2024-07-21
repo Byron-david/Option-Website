@@ -21,21 +21,17 @@ export default function Trades({ trades }) {
 
     return (
         <>
-            {rows.map((row) => {
-            row.map((option) => (
-                <tr key={uuid()}>
-                    {Object.keys(tableHeadNames).map((value) => {
-                        const tableValue = option[tableHeadNames[value]]
-                        return (
-                            <td key={uuid()}>{tableValue}</td>
-                        )
+            {rows.map((row) => row.map((option) => (
+                    <tr key={uuid()}>
+                        {Object.keys(tableHeadNames).map((value) => {
+                            const tableValue = option[tableHeadNames[value]]
+                            return (
+                                <td key={uuid()}>{tableValue}</td>
+                            )})
                         }
-                    )
-                }
-                </tr>
-            )
-                )
-            })}
+                    </tr>
+                )))
+            }
         </>
 
     )
