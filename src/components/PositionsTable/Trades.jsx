@@ -24,7 +24,11 @@ export default function Trades({ trades }) {
             {rows.map((row) => row.map((option) => (
                     <tr key={uuid()}>
                         {Object.keys(tableHeadNames).map((value) => {
-                            const tableValue = option[tableHeadNames[value]]
+                            let tableValue = option[tableHeadNames[value]]
+                            if (value === "Action") {
+                                const subAction = option["subAction"]
+                                tableValue = `${tableValue} to ${subAction}`
+                            }
                             return (
                                 <td key={uuid()}>{tableValue}</td>
                             )})

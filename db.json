@@ -7,6 +7,7 @@
           "symbol": "AAPL",
           "dateExec": "2024-07-21",
           "action": "BUY",
+          "subAction": "OPEN",
           "posType": "STOCK",
           "quantity": "100",
           "stockPrice": "100",
@@ -17,10 +18,38 @@
           "symbol": "AAPL",
           "dateExec": "2024-07-21",
           "action": "SELL",
+          "subAction": "OPEN",
           "posType": "CALL",
           "quantity": "1",
           "strike": "120",
           "tradeValue": "2.50",
+          "expDate": "2024-08-09"
+        }
+      ]
+    },
+    {
+      "id": "06a5",
+      "verticalSpread": [
+        {
+          "symbol": "TSLA",
+          "dateExec": "2024-07-21",
+          "action": "BUY",
+          "subAction": "OPEN",
+          "posType": "CALL",
+          "quantity": "1",
+          "strike": "50",
+          "tradeValue": "-100",
+          "expDate": "2024-08-09"
+        },
+        {
+          "symbol": "TSLA",
+          "dateExec": "2024-07-21",
+          "action": "SELL",
+          "subAction": "OPEN",
+          "posType": "CALL",
+          "quantity": "1",
+          "strike": "50",
+          "tradeValue": "100",
           "expDate": "2024-08-09"
         }
       ]

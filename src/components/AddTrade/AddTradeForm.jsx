@@ -25,7 +25,7 @@ const defaultTrade = { symbol: '',
 
 const defaultStock = {
   action: 'BUY', 
-  subAction: '', 
+  subAction: 'OPEN', 
   posType: 'STOCK', 
   quantity: '', 
   stockPrice: '', 
@@ -35,7 +35,7 @@ const defaultStock = {
 
 const defaultLeg = { 
                 action: 'BUY',
-                subAction: '', 
+                subAction: 'OPEN', 
                 posType: 'CALL', 
                 quantity: '', 
                 strike: '', 
