@@ -11,6 +11,7 @@ const tableHeadNames = [
   "Action", 
   "Type", 
   "Qty", 
+  "Price", 
   "Value", 
   "Strike",  
   "Exp. Date", 
@@ -26,8 +27,8 @@ const defaultStock = {
   action: 'BUY', 
   posType: 'STOCK', 
   quantity: '', 
+  stockPrice: '', 
   tradeValue: '', 
-  tradePrice: '', 
 }
 
 const defaultLeg = { 
@@ -122,7 +123,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
     event.preventDefault()
     let combinedTrade = []
     
-    if (leg.length !== 0 && stock.tradePrice !== '') {
+    if (leg.length !== 0 && stock.stockPrice !== '') {
       const newStock = {...newTrade, ...stock}
       const newLeg = leg.map(prev => ({...newTrade, ...prev}))
       combinedTrade = combinedTrade.concat(newStock, ...newLeg)

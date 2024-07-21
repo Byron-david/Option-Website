@@ -11,7 +11,7 @@ const tableHeadNames = [
     "Strike",  
     "Exp. Date", 
     "Date",
-    "Time"
+    // "Time"
   ];
 
 //   const defaultTrade = [

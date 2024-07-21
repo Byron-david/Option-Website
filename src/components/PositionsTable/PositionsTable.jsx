@@ -21,11 +21,12 @@ const tableHeadNames = [
     "Action", 
     "Type", 
     "Qty", 
+    "Price", 
     "Value", 
     "Strike",  
     "Exp. Date", 
     "Date",
-    "Time"
+    // "Time"
   ];
 
 //   const defaultTrade = [

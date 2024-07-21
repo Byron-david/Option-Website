@@ -3,8 +3,8 @@ import OptionAction from './OptionAction.jsx';
 
 function AddStock({ strategy, stock, handleChange, items }) {
   let stockValue = 0;
-  if (stock.tradePrice !== '' && stock.quantity !== '') {
-    stockValue = stock.tradePrice * stock.quantity
+  if (stock.stockPrice !== '' && stock.quantity !== '') {
+    stockValue = stock.stockPrice * stock.quantity
   }
   stock.tradeValue = stockValue
 
@@ -18,8 +18,8 @@ function AddStock({ strategy, stock, handleChange, items }) {
         <label>Price: 
             <input 
             type="number" 
-            name="tradePrice" 
-            value={stock.tradePrice || ""} 
+            name="stockPrice" 
+            value={stock.stockPrice || ""} 
             onChange={handleChange}
             placeholder="100"
             />
@@ -31,7 +31,7 @@ function AddStock({ strategy, stock, handleChange, items }) {
             value={stock.tradeValue || ""} 
             onChange={handleChange}
             placeholder="10,000"
-            />
+            readOnly/>
         </label>
         <label>Quantity: 
             <input 
