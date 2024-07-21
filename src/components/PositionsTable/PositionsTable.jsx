@@ -18,14 +18,14 @@ function RowButtons() {
 
 const tableHeadNames = [
     "Symbol", 
+    "Date",
     "Action", 
     "Type", 
     "Qty", 
     "Price", 
-    "Value", 
     "Strike",  
+    "Value", 
     "Exp. Date", 
-    "Date",
     // "Time"
   ];
 
@@ -89,7 +89,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <Trades trades={trades} /> */}
+                        <Trades trades={trades} />
                     </tbody>
                 </table>  
             </div>

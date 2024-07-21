@@ -2,3 +2,5 @@ Todo:
 -Add Trade button in positionsTable
 
 Changes:
+-readonly values for stockValue
+-Added price to table heading

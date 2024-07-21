@@ -29,14 +29,15 @@ const defaultStock = {
   quantity: '', 
   stockPrice: '', 
   tradeValue: '', 
+  expDate: null, 
 }
 
 const defaultLeg = { 
                 action: 'BUY',
                 posType: 'CALL', 
                 quantity: '', 
-                tradeValue: '', 
                 strike: '', 
+                tradeValue: '', 
                 expDate: '', 
               }
 

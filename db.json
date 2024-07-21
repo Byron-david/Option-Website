@@ -10,7 +10,8 @@
           "posType": "STOCK",
           "quantity": "100",
           "stockPrice": "100",
-          "tradeValue": "-10000"
+          "tradeValue": "-10000",
+          "expDate": null
         },
         {
           "symbol": "AAPL",
@@ -18,8 +19,8 @@
           "action": "SELL",
           "posType": "CALL",
           "quantity": "1",
-          "tradeValue": "2.50",
           "strike": "120",
+          "tradeValue": "2.50",
           "expDate": "2024-08-09"
         }
       ]
