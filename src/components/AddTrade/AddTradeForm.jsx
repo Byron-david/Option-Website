@@ -34,16 +34,16 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
   const [newTrade, setNewTrade] = useState(defaultTrade)
   const [stock, setStock] = useState(defaultStock)
   const [leg, setLeg] = useState([])
-  const [strategy, setStrategy] = useState("stock");
+  const [strategy, setStrategy] = useState("Stock");
 
   const strategyOptions = [
-    { id: uuid(), value: "stock", text: "Stock", quantity: 0 },
-    { id: uuid(), value: "singleOption", text: "Single Option", quantity: 1 },
-    { id: uuid(), value: "coveredCall", text: "Covered Call", quantity: 1 },
-    { id: uuid(), value: "verticalSpread", text: "Vertical Spread", quantity: 2 },
-    { id: uuid(), value: "strangle", text: "Strangle", quantity: 2 },
-    { id: uuid(), value: "ironCondor", text: "Iron Condor", quantity: 4 },
-    { id: uuid(), value: "butterfly", text: "Butterfly", quantity: 4 },
+    { id: uuid(), value: "Stock", text: "Stock", quantity: 0 },
+    { id: uuid(), value: "Option", text: "Single Option", quantity: 1 },
+    { id: uuid(), value: "Covered Call", text: "Covered Call", quantity: 1 },
+    { id: uuid(), value: "Vertical Spread", text: "Vertical Spread", quantity: 2 },
+    { id: uuid(), value: "Strangle", text: "Strangle", quantity: 2 },
+    { id: uuid(), value: "Iron Condor", text: "Iron Condor", quantity: 4 },
+    { id: uuid(), value: "Butterfly", text: "Butterfly", quantity: 4 },
     // { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
     // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]
@@ -110,8 +110,8 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
     }
   }
 
-  const valueAdjust = (combinedTrade) => {
-    combinedTrade.map(t => t.action === "BUY" ? t.tradeValue = `${t.tradeValue * -1}` : t.tradeValue )
+  const valueAdjust = (combinedTrade, value) => {
+    combinedTrade.map(t => t.action === "BUY" ? t[value] = `${t[value] * -1}` : t[value] )
   }
 
   const addTrade = event => {
@@ -130,7 +130,8 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
       combinedTrade = [{...newTrade, ...stock}]
     }
   
-    valueAdjust(combinedTrade)
+    valueAdjust(combinedTrade, "tradeValue")
+    valueAdjust(combinedTrade, "stockPrice")
     const tradeObject = {[strategy]: combinedTrade}
 
     tradeService
