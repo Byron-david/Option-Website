@@ -62,6 +62,7 @@ export default function Trades({ trades, tableHeader, setTrades }) {
                             const headerKey = tableHeader[value]
                             let strikes = []
                             let exp = ""
+                            let tradeVal = []
                             strategy.forEach(item => {
                                 if (item[headerKey]) {
                                     if (value === "Strike(s)") {
@@ -75,6 +76,10 @@ export default function Trades({ trades, tableHeader, setTrades }) {
                                         if (item[headerKey] !== exp) {
                                             exp = item[headerKey]
                                         }
+                                    }
+
+                                    if (value === "Value") {
+                                        tradeVal.push(item[headerKey])
                                     }
                                 }
                             })
@@ -102,6 +107,11 @@ export default function Trades({ trades, tableHeader, setTrades }) {
                             if (value === "Exp. Date") {
                                 tableData = exp
                             }
+                            if (value === "Value") {
+                                tableData = tradeVal.join(' / ')
+                            }
+
+
                             // if (value === "Action") {
                             //     const subAction = option["subAction"]
                             //     tableData = `${tableData} to ${subAction}`
