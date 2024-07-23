@@ -3,7 +3,7 @@ import styles from './PositionsTable.module.css';
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
-import Trades from './Trades.jsx'
+import FormatTrade from './FormatTrade.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
 import axios from 'axios'
 
@@ -94,7 +94,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
+                        <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>
