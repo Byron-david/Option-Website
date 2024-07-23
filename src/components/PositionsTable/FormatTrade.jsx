@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import styles from './PositionsTable.module.css'; 
 
 export default function FormatTrade({ trades, tableHeader }) {
     const strategyNames = trades.map(item => Object.keys(item)[1])
@@ -17,6 +18,7 @@ export default function FormatTrade({ trades, tableHeader }) {
             {trades.map((trade, index) => {
                 const stratName = strategyNames[index]
                 const strategy = trade[stratName]
+                
 
                 return (
                     <tr key={uuid()}>
@@ -24,6 +26,8 @@ export default function FormatTrade({ trades, tableHeader }) {
                             let strikes = []
                             let exp = []
                             let tradeVal = []
+                            let className = null
+                             
                             strategy.forEach(item => {
                                 let stratVal = item[key]
 
@@ -65,6 +69,10 @@ export default function FormatTrade({ trades, tableHeader }) {
                                 if (open && closed) {
                                     tableData = "ROLL"
                                 }
+                                if (open) {
+                                    className = styles["actionOpen"]
+                                    tableData = <span className={className}>{"Open"}</span>
+                                }
                             }
                             if (key === "strategy") {
                                 tableData = stratName.split()
@@ -77,7 +85,25 @@ export default function FormatTrade({ trades, tableHeader }) {
                             }
 
                             if (key === "strikes") {
-                                tableData = strikes.join(' / ')
+                                // const strikeFormat = strikes.join(' / ')
+                                // tableData = strikeFormat
+                                tableData = strikes.map((strike, index) => {
+                                    let addSlash = null
+                                    if (index !== (strikes.length - 1)) {
+                                        addSlash = <span key={uuid()} className={styles.slash} >{"/"}</span>
+                                    }
+                                    if (strike[strike.length - 1].toLowerCase() === "c") {
+                                        className = styles["callStrike"]
+                                    }
+                                    else {
+                                        className = styles["putStrike"]
+                                    }
+                                    return (
+                                        <>
+                                            <div key={uuid()} className={className}>{strike}</div> {addSlash}
+                                        </>
+                                    )
+                                })
                             }
 
                             if (key === "expDate") {
@@ -89,7 +115,7 @@ export default function FormatTrade({ trades, tableHeader }) {
                             }
 
                             return (
-                                <td key={uuid()}>{tableData}</td>
+                                <td key={uuid()}  >{tableData}</td>
                             )
                         }
                         )

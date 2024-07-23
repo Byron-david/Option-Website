@@ -42,3 +42,54 @@
 .editButtons {
   display: flex;
 }
+
+.slash {
+  padding: var(--padding);
+}
+
+.callStrike {
+  /* color: var(--background-color-button) */
+  border: 1px solid  var(--background-color-button); 
+  /* background-color:  var(--background-color-button);  */
+  padding: var(--padding-small);
+  /* color: var(--background-color-main); */
+  border-radius: var(--border-radius-main);
+  display: inline-block;
+}
+
+.putStrike {
+  /* color: var(--background-color-button) */
+  border: 1px solid  var(--background-color-button-red); 
+  /* background-color:  var(--background-color-button-red);  */
+  padding: var(--padding-small);
+  /* color: var(--background-color-main); */
+  border-radius: var(--border-radius-main);
+  display: inline-block;
+}
+
+.actionOpen {
+  /* color: var(--background-color-button) */
+  background-color:  var(--background-color-button); 
+  color: var(--background-color-main);
+  /* border: 1px solid  var(--background-color-button);  */
+  padding: var(--padding-small);
+  border-radius: var(--border-radius-main);
+}
+
+.actionClose {
+  /* color: var(--background-color-button) */
+  background-color:  var(--background-color-button-red); 
+  color: var(--background-color-main);
+  /* border: 1px solid  var(--background-color-button-red);  */
+  padding: var(--padding-small);
+  border-radius: var(--border-radius-main);
+}
+
+.actionRoll {
+  /* color: var(--background-color-button) */
+  background-color:  var(--background-color-button-blue); 
+  color: var(--background-color-main);
+  /* border: 1px solid  var(--background-color-button-blue);  */
+  padding: var(--padding-small);
+  border-radius: var(--border-radius-main);
+}
