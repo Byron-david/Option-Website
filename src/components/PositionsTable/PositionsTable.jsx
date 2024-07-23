@@ -42,7 +42,7 @@ export default function PositionsTable({ data }) {
     //     "Price": "stockPrice", 
     //     "Strike(s)": "strike",  
     //     "Value": "tradeValue", 
-    //     "Exp. Date": "expDate", 
+    //     "Exp. Date": "exp", 
     //     "Edit": "", 
     // }
 
@@ -80,7 +80,7 @@ export default function PositionsTable({ data }) {
             <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
                     {/* <RemapData onFileLoad={handleFileLoad} /> */}
-                    <AddTradeModal trades={trades} setTrades={setTrades} />
+                    <AddTradeModal trades={trades} setTrades={setTrades} header={tableHeader} />
                 </div>
                 <hr/>
                 <table>

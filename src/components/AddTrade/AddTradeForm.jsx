@@ -6,19 +6,6 @@ import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
-const tableHeader = [
-  "Symbol", 
-  "Date",
-  "Action",
-  "Strategy",
-  "Qty",
-  "Price",
-  "Strikes",
-  "Value",
-  "Exp. Date",
-  "Edit"
-]
-
 const defaultTrade = { symbol: '', 
                       date: '' 
                     }
@@ -30,7 +17,7 @@ const defaultStock = {
   qty: '', 
   price: '', 
   value: '', 
-  expDate: null, 
+  exp: null, 
 }
 
 const defaultLeg = { 
@@ -40,10 +27,10 @@ const defaultLeg = {
                 qty: '', 
                 strikes: '', 
                 value: '', 
-                expDate: '', 
+                exp: '', 
               }
 
-function AddTradeForm({ trades, setTrades, handleClickClose }) {
+function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
   const [newTrade, setNewTrade] = useState(defaultTrade)
   const [stock, setStock] = useState(defaultStock)
   const [leg, setLeg] = useState([])
@@ -145,15 +132,54 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
   
     valueAdjust(combinedTrade, "value")
     valueAdjust(combinedTrade, "price")
+
+    const keys = header.map(key =>  { 
+      let lowerKey = key.toLowerCase()
+      if (key === "Exp. Date") {
+        lowerKey = key.split(". ")
+        lowerKey = lowerKey[0].toLowerCase()
+      }
+      return (lowerKey)
+    })
+
+    combinedTrade.map((pos) => 
+      keys.forEach((item) => { 
+        const key = pos[item]
+        const strikes = []
+        const exp = []
+        const val = []
+
+        if (key) {
+          if (item === "strikes") {
+              let strike = `${key}${item.strategy[0]}`
+              if (item.action === "SELL") {
+                  strike = '-' + strike
+              }
+              strikes.push(strike)
+          }
+          if (value === "exp") {
+              if (key !== exp) {
+                  exp = key
+              }
+          }
+
+          if (value === "value") {
+              tradeVal.push(key)
+          }
+          }
+        }
+      )
+    )
+    
     const tradeObject = {[strategy]: combinedTrade}
 
-    tradeService
-      .create(tradeObject)
-      .then(returnedTrade => {
-        setTrades(trades.concat(returnedTrade))
-        setNewTrade(defaultTrade)
-      })
-      handleClickClose()
+    // tradeService
+    //   .create(tradeObject)
+    //   .then(returnedTrade => {
+    //     setTrades(trades.concat(returnedTrade))
+    //     setNewTrade(defaultTrade)
+    //   })
+    //   handleClickClose()
   }
 
   return (
@@ -185,7 +211,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
                 <label>Date Exec.:
                   <input 
                     type="date" 
-                    name="dateExec" 
+                    name="date" 
                     value={newTrade.date || ""} 
                     onChange={handleTrade}
                   />

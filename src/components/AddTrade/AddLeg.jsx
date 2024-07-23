@@ -98,8 +98,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                       <input 
                         required="required"
                         type="date" 
-                        name="expDate" 
-                        value={option.expDate || ""} 
+                        name="exp" 
+                        value={option.exp || ""} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
