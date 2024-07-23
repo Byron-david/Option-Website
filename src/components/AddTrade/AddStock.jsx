@@ -6,8 +6,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
   let stockValue = 0;
   if (stock.price !== '' && stock.qty !== '') {
     stockValue = stock.price * stock.qty
+    stock.value = stockValue
   }
-  stock.value = stockValue
 
   if (strategy === "Stock" || strategy === "Covered Call") 
   return (

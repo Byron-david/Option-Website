@@ -32,7 +32,7 @@ const defaultLeg = {
 
 function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
   const [newTrade, setNewTrade] = useState(defaultTrade)
-  const [stock, setStock] = useState(defaultStock)
+  const [stock, setStock] = useState({})
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("Stock");
 
@@ -77,8 +77,14 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
 
     const findQty = strategyOptions.find(element => element.value === newStrategy)
 
+    if (newStrategy === "Stock" || newStrategy === "Covered Call") {
+      setStock({...defaultStock})
+    }
+    else {
+      setStock({})
+    }
+
     setLeg([])
-    setStock(defaultStock)
     for (let i = 0; i < findQty.quantity; i++ ) {
       const newLeg = { ...defaultLeg }
 
@@ -118,15 +124,18 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
     event.preventDefault()
     let combinedTrade = []
     
-    if (leg.length !== 0 && stock.price !== '') {
+    if (leg.length !== 0 && Object.keys(stock).length !== 0) {
       const newStock = {...newTrade, ...stock}
       const newLeg = leg.map(prev => ({...newTrade, ...prev}))
       combinedTrade = combinedTrade.concat(newStock, ...newLeg)
+      console.log(Object.keys(stock));
     }
     else if (leg.length !== 0) {
+      console.log(2);
       combinedTrade = leg.map(prev => ({...newTrade, ...prev}))
     }
     else {
+      console.log(3);
       combinedTrade = [{...newTrade, ...stock}]
     }
   
@@ -142,35 +151,77 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
       return (lowerKey)
     })
 
-    combinedTrade.map((pos) => 
-      keys.forEach((item) => { 
-        const key = pos[item]
-        const strikes = []
-        const exp = []
-        const val = []
+    const tradesToStrategy = () => {
+      const tradeObj = {}
+      const strikes = []
+      const exp = []
+      const val = []
+      const qty = []
+      const subAction = []
 
-        if (key) {
-          if (item === "strikes") {
-              let strike = `${key}${item.strategy[0]}`
-              if (item.action === "SELL") {
-                  strike = '-' + strike
-              }
-              strikes.push(strike)
-          }
-          if (value === "exp") {
-              if (key !== exp) {
-                  exp = key
-              }
-          }
+      combinedTrade.map((pos) => {
+        subAction.push(pos["subAction"])
 
-          if (value === "value") {
-              tradeVal.push(key)
-          }
-          }
+        keys.forEach((item) => { 
+          const itemValue = pos[item]
+          if (itemValue) {
+            if (item === "strikes") {
+                // let strike = `${itemValue}${item.strategy[0]}`
+                // if (item.action === "SELL") {
+                //     strike = '-' + strike
+                // }
+                strikes.push(itemValue)
+            }
+            if (item === "exp") {
+              exp.push(itemValue)
+            }
+
+            if (item === "qty") {
+              qty.push(itemValue)
+            }
+
+            if (item === "value") {
+              val.push(itemValue)
+            }
+            }
+          })
+      })
+
+      keys.forEach(item => {
+        let data = combinedTrade[1][item]
+        if (item === "action") {
+          data = subAction[0]
         }
-      )
-    )
-    
+        if (item === "strategy") {
+            data = strategy
+        }
+        if (item === "qty") {
+            data = qty.join(' / ')
+        }
+
+        if (item === "strikes") {
+            data = strikes.join(' / ')
+        }
+
+        if (item === "exp") {
+            data = exp.join(' / ')
+        }
+        if (item === "price") {
+          data = combinedTrade[0][item]
+          console.log(data);
+        }
+
+        if (item === "value") {
+          data = val.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
+          // data = val.join(' / ')
+        }
+
+        tradeObj[item] = data
+      })
+      return tradeObj
+      }
+
+    console.log(tradesToStrategy());
     const tradeObject = {[strategy]: combinedTrade}
 
     // tradeService
