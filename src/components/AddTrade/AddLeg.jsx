@@ -58,8 +58,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                     <label>Type: 
                       <select 
                           className="inputSelect"
-                          name="posType"
-                          value={option.posType || ""}
+                          name="strategy"
+                          value={option.strategy || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemTypes}/>
                       </select>
@@ -69,8 +69,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                         required="required"
                         placeholder="50"
                         type="number" 
-                        name="strike" 
-                        value={option.strike || ""} 
+                        name="strikes" 
+                        value={option.strikes || ""} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
@@ -79,8 +79,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                         required="required"
                         placeholder="1,000"
                         type="number" 
-                        name="tradeValue" 
-                        value={option.tradeValue || ""} 
+                        name="value" 
+                        value={option.value || ""} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
@@ -89,8 +89,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                         placeholder="1"
                         required="required"
                         type="number" 
-                        name="quantity" 
-                        value={option.quantity || ""} 
+                        name="qty" 
+                        value={option.qty || ""} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>

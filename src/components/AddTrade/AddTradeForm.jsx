@@ -6,27 +6,40 @@ import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
+const tableHeader = [
+  "Symbol", 
+  "Date",
+  "Action",
+  "Strategy",
+  "Qty",
+  "Price",
+  "Strikes",
+  "Value",
+  "Exp. Date",
+  "Edit"
+]
+
 const defaultTrade = { symbol: '', 
-                      dateExec: '' 
+                      date: '' 
                     }
 
 const defaultStock = {
   action: 'BUY', 
   subAction: 'OPEN', 
-  posType: 'STOCK', 
-  quantity: '', 
-  stockPrice: '', 
-  tradeValue: '', 
+  strategy: 'STOCK', 
+  qty: '', 
+  price: '', 
+  value: '', 
   expDate: null, 
 }
 
 const defaultLeg = { 
                 action: 'BUY',
                 subAction: 'OPEN', 
-                posType: 'CALL', 
-                quantity: '', 
-                strike: '', 
-                tradeValue: '', 
+                strategy: 'CALL', 
+                qty: '', 
+                strikes: '', 
+                value: '', 
                 expDate: '', 
               }
 
@@ -86,17 +99,17 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
         newLeg.action = "SELL"
       }
 
-      if (newStrategy === "ironCondor") {
+      if (newStrategy === "Iron Condor") {
         if (i < 2) {
           newLeg.posType = "PUT"
         }
       }
 
-      if (newStrategy === "coveredCall") {
+      if (newStrategy === "Covered Call") {
         newLeg.action = "SELL"
       }
 
-      if (newStrategy === "strangle" ) {
+      if (newStrategy === "Strangle" ) {
         newLeg.action = "SELL"
         if (i < 1) {
           newLeg.posType = "PUT"
@@ -118,7 +131,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
     event.preventDefault()
     let combinedTrade = []
     
-    if (leg.length !== 0 && stock.stockPrice !== '') {
+    if (leg.length !== 0 && stock.price !== '') {
       const newStock = {...newTrade, ...stock}
       const newLeg = leg.map(prev => ({...newTrade, ...prev}))
       combinedTrade = combinedTrade.concat(newStock, ...newLeg)
@@ -130,8 +143,8 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
       combinedTrade = [{...newTrade, ...stock}]
     }
   
-    valueAdjust(combinedTrade, "tradeValue")
-    valueAdjust(combinedTrade, "stockPrice")
+    valueAdjust(combinedTrade, "value")
+    valueAdjust(combinedTrade, "price")
     const tradeObject = {[strategy]: combinedTrade}
 
     tradeService
@@ -173,7 +186,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose }) {
                   <input 
                     type="date" 
                     name="dateExec" 
-                    value={newTrade.dateExec || ""} 
+                    value={newTrade.date || ""} 
                     onChange={handleTrade}
                   />
                 </label>

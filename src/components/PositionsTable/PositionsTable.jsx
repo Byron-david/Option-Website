@@ -33,18 +33,31 @@ export default function PositionsTable({ data }) {
     // const [data, setData] = useState([]);
     // const [importData, setImportData] = useState([]);
 
-    const tableHeader = {
-        "Symbol": "symbol", 
-        "Date": "dateExec",
-        "Action": "action", 
-        "Strategy": "posType", 
-        "Qty": "quantity", 
-        "Price": "stockPrice", 
-        "Strike(s)": "strike",  
-        "Value": "tradeValue", 
-        "Exp. Date": "expDate", 
-        "Edit": "", 
-    }
+    // const tableHeader = {
+    //     "Symbol": "symbol", 
+    //     "Date": "dateExec",
+    //     "Action": "action", 
+    //     "Strategy": "posType", 
+    //     "Qty": "quantity", 
+    //     "Price": "stockPrice", 
+    //     "Strike(s)": "strike",  
+    //     "Value": "tradeValue", 
+    //     "Exp. Date": "expDate", 
+    //     "Edit": "", 
+    // }
+
+    const tableHeader = [
+        "Symbol", 
+        "Date",
+        "Action",
+        "Strategy",
+        "Qty",
+        "Price",
+        "Strikes",
+        "Value",
+        "Exp. Date",
+        "Edit"
+    ]
 
     const headers = Object.keys(tableHeader)
     const [trades, setTrades] = useState([])
@@ -74,14 +87,14 @@ export default function PositionsTable({ data }) {
                     <caption>All Positions</caption>
                     <thead>
                         <tr>
-                            {headers.map((element) => (
+                            {tableHeader.map((element) => (
                                 <th scope="col" key={element}>{element}</th>
                             ))
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
+                        {/* <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} /> */}
                     </tbody>
                 </table>  
             </div>

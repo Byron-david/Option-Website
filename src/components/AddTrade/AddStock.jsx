@@ -4,12 +4,12 @@ import OptionItems from '../Input/OptionItems.jsx';
 
 function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
   let stockValue = 0;
-  if (stock.stockPrice !== '' && stock.quantity !== '') {
-    stockValue = stock.stockPrice * stock.quantity
+  if (stock.price !== '' && stock.qty !== '') {
+    stockValue = stock.price * stock.qty
   }
-  stock.tradeValue = stockValue
+  stock.value = stockValue
 
-  if (strategy === "stock" || strategy === "coveredCall") 
+  if (strategy === "Stock" || strategy === "Covered Call") 
   return (
     <>
       <div className={styles.addOption}>
@@ -28,8 +28,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
         <label>Price: 
             <input 
             type="number" 
-            name="stockPrice" 
-            value={stock.stockPrice || ""} 
+            name="price" 
+            value={stock.price || ""} 
             onChange={handleChange}
             placeholder="100"
             />
@@ -37,8 +37,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
         <label>Value: 
             <input 
             type="number" 
-            name="tradeValue" 
-            value={stock.tradeValue || ""} 
+            name="value" 
+            value={stock.value || ""} 
             onChange={handleChange}
             placeholder="10,000"
             readOnly/>
@@ -46,8 +46,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
         <label>Quantity: 
             <input 
             type="number" 
-            name="quantity" 
-            value={stock.quantity || ""} 
+            name="qty" 
+            value={stock.qty || ""} 
             onChange={handleChange}
             placeholder="1"
             />
