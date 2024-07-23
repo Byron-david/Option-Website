@@ -34,9 +34,90 @@ const IndividualTrade = (strategies, tableHeader) => {
 }
 
 
+
+//   const tradesToStrategy = () => {
+//     const tradeObj = {}
+//     const strikes = []
+//     const exp = []
+//     const val = []
+//     const qty = []
+//     const subAction = []
+
+//     combinedTrade.map((pos) => {
+//       subAction.push(pos["subAction"])
+
+//       keys.forEach((item) => { 
+//         const itemValue = pos[item]
+//         if (itemValue) {
+//           if (item === "strikes") {
+//               // let strike = `${itemValue}${item.strategy[0]}`
+//               // if (item.action === "SELL") {
+//               //     strike = '-' + strike
+//               // }
+//               strikes.push(itemValue)
+//           }
+//           if (item === "exp") {
+//             exp.push(itemValue)
+//           }
+
+//           if (item === "qty") {
+//             qty.push(itemValue)
+//           }
+
+//           if (item === "value") {
+//             val.push(itemValue)
+//           }
+//           }
+//         })
+//     })
+
+//     keys.forEach(item => {
+//       let data = combinedTrade[1][item]
+//       if (item === "action") {
+//         data = subAction[0]
+//       }
+//       if (item === "strategy") {
+//           data = strategy
+//       }
+//       if (item === "qty") {
+//           data = qty.join(' / ')
+//       }
+
+//       if (item === "strikes") {
+//           data = strikes.join(' / ')
+//       }
+
+//       if (item === "exp") {
+//           data = exp.join(' / ')
+//       }
+//       if (item === "price") {
+//         data = combinedTrade[0][item]
+//         console.log(data);
+//       }
+
+//       if (item === "value") {
+//         data = val.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
+//         // data = val.join(' / ')
+//       }
+
+//       tradeObj[item] = data
+//     })
+//     return tradeObj
+//     }
+
+
 export default function Trades({ trades, tableHeader, setTrades }) {
     const strategies = trades.map(item => Object.values(item)[1])
     const strategyNames = trades.map(item => Object.keys(item)[1])
+    const keys = tableHeader.map(key =>  { 
+        let lowerKey = key.toLowerCase()
+        if (key === "Exp. Date") {
+          lowerKey = key.split(". ")
+          lowerKey = lowerKey.join("")
+          lowerKey = lowerKey[0].toLowerCase() + lowerKey.slice(1)
+        }
+        return (lowerKey)
+      })
 
     const handleDelete = id => {
         console.log(id);
@@ -58,61 +139,63 @@ export default function Trades({ trades, tableHeader, setTrades }) {
 
                 return (
                     <tr key={uuid()}>
-                        {Object.keys(tableHeader).map(value =>  {
-                            const headerKey = tableHeader[value]
+                        {keys.map(key =>  {
                             let strikes = []
-                            let exp = ""
+                            let exp = []
                             let tradeVal = []
                             strategy.forEach(item => {
-                                if (item[headerKey]) {
-                                    if (value === "Strike(s)") {
-                                        let strike = `${item[headerKey]}${item.posType[0]}`
+                                let stratVal = item[key]
+                                if (stratVal) {
+                                    if (key === "strikes") {
+                                        let strike = `${stratVal}${item.strategy[0]}`
                                         if (item.action === "SELL") {
                                             strike = '-' + strike
                                         }
                                         strikes.push(strike)
                                     }
-                                    if (value === "Exp. Date") {
-                                        if (item[headerKey] !== exp) {
-                                            exp = item[headerKey]
-                                        }
+                                    if (key === "expDate") {
+                                        exp.push(stratVal)
+
                                     }
 
-                                    if (value === "Value") {
-                                        tradeVal.push(item[headerKey])
+                                    if (key === "value") {
+                                        if (item.strikes) {
+                                            stratVal *= 100
+                                            console.log("option", stratVal);
+                                        }
+                                        tradeVal.push(stratVal)
                                     }
                                 }
                             })
 
-                            let tableData = strategy[0][headerKey]
-
-                            if (value === "Action") {
+                            let tableData = strategy[0][key]
+                            if (key === "action") {
                                 const subAction = strategy[0]["subAction"]
                                 tableData = `${subAction}`
                             }
-                            if (value === "Strategy") {
+                            if (key === "strategy") {
                                 tableData = stratName.split()
                             }
-                            if (value === "Qty") {
+                            if (key === "qty") {
                                 let quantity = []
-                                strategy.forEach(strat => quantity.push(strat[headerKey]))
+                                strategy.forEach(strat => quantity.push(strat[key]))
                                 
                                 tableData = quantity.join(' / ')
                             }
 
-                            if (value === "Strike(s)") {
+                            if (key === "strikes") {
                                 tableData = strikes.join(' / ')
                             }
 
-                            if (value === "Exp. Date") {
-                                tableData = exp
+                            if (key === "expDate") {
+                                tableData = exp.join(' / ')
                             }
-                            if (value === "Value") {
-                                tableData = tradeVal.join(' / ')
+                            if (key === "value") {
+                                tableData = tradeVal.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
+                                tableData = tableData.toFixed(2)
                             }
 
-
-                            // if (value === "Action") {
+                            // if (key === "Action") {
                             //     const subAction = option["subAction"]
                             //     tableData = `${tableData} to ${subAction}`
                             // }

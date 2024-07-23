@@ -94,7 +94,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} /> */}
+                        <Trades trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>

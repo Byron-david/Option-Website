@@ -12,7 +12,7 @@
           "qty": "100",
           "price": "-200",
           "value": "-20000",
-          "expDate": null
+          "expDate": "2024-08-09"
         },
         {
           "symbol": "AAPL",
@@ -39,8 +39,7 @@
           "qty": "1",
           "strikes": "105",
           "value": "-1.5",
-          "expDate": "2024-08-09",
-          "price": "NaN"
+          "expDate": "2024-08-09"
         },
         {
           "symbol": "TSLA",

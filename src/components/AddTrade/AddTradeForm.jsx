@@ -128,109 +128,26 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
       const newStock = {...newTrade, ...stock}
       const newLeg = leg.map(prev => ({...newTrade, ...prev}))
       combinedTrade = combinedTrade.concat(newStock, ...newLeg)
-      console.log(Object.keys(stock));
     }
     else if (leg.length !== 0) {
-      console.log(2);
       combinedTrade = leg.map(prev => ({...newTrade, ...prev}))
     }
     else {
-      console.log(3);
       combinedTrade = [{...newTrade, ...stock}]
     }
   
     valueAdjust(combinedTrade, "value")
     valueAdjust(combinedTrade, "price")
 
-    const keys = header.map(key =>  { 
-      let lowerKey = key.toLowerCase()
-      if (key === "Exp. Date") {
-        lowerKey = key.split(". ")
-        lowerKey = lowerKey[0].toLowerCase()
-      }
-      return (lowerKey)
-    })
-
-    const tradesToStrategy = () => {
-      const tradeObj = {}
-      const strikes = []
-      const exp = []
-      const val = []
-      const qty = []
-      const subAction = []
-
-      combinedTrade.map((pos) => {
-        subAction.push(pos["subAction"])
-
-        keys.forEach((item) => { 
-          const itemValue = pos[item]
-          if (itemValue) {
-            if (item === "strikes") {
-                // let strike = `${itemValue}${item.strategy[0]}`
-                // if (item.action === "SELL") {
-                //     strike = '-' + strike
-                // }
-                strikes.push(itemValue)
-            }
-            if (item === "exp") {
-              exp.push(itemValue)
-            }
-
-            if (item === "qty") {
-              qty.push(itemValue)
-            }
-
-            if (item === "value") {
-              val.push(itemValue)
-            }
-            }
-          })
-      })
-
-      keys.forEach(item => {
-        let data = combinedTrade[1][item]
-        if (item === "action") {
-          data = subAction[0]
-        }
-        if (item === "strategy") {
-            data = strategy
-        }
-        if (item === "qty") {
-            data = qty.join(' / ')
-        }
-
-        if (item === "strikes") {
-            data = strikes.join(' / ')
-        }
-
-        if (item === "exp") {
-            data = exp.join(' / ')
-        }
-        if (item === "price") {
-          data = combinedTrade[0][item]
-          console.log(data);
-        }
-
-        if (item === "value") {
-          data = val.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
-          // data = val.join(' / ')
-        }
-
-        tradeObj[item] = data
-      })
-      return tradeObj
-      }
-
-    console.log(tradesToStrategy());
     const tradeObject = {[strategy]: combinedTrade}
 
-    // tradeService
-    //   .create(tradeObject)
-    //   .then(returnedTrade => {
-    //     setTrades(trades.concat(returnedTrade))
-    //     setNewTrade(defaultTrade)
-    //   })
-    //   handleClickClose()
+    tradeService
+      .create(tradeObject)
+      .then(returnedTrade => {
+        setTrades(trades.concat(returnedTrade))
+        setNewTrade(defaultTrade)
+      })
+      handleClickClose()
   }
 
   return (
