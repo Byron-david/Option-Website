@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/trades'
+const baseUrl = 'http://localhost:3000/trades'
+// const baseUrl = 'http://localhost:3001/trades'
 
 const getAll = () => {
     const request = axios.get(baseUrl)

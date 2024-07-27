@@ -1,101 +1,27 @@
-/////// app.js
-
 const { Pool } = require("pg");
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const path = require("path");
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require('passport-local').Strategy;
+const config = require('./utils/config')
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const tradesRouter = require('./controllers/trades')
+const middleware = require('./utils/middleware')
+const logger = require('./utils/logger')
+require('express-async-errors')
+
+logger.info('connecting to', config.DATABASE_URL)
 
 const pool = new Pool({
-  connectionString: "postgresql://byrondavid:we372fgk@localhost:5432/users"
+  connectionString: config.DATABASE_URL
 });
 
-const app = express();
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+app.use(cors())
+app.use(express.static('dist'))
+app.use(express.json())
+app.use(middleware.requestLogger)
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+app.use('/api/notes', tradesRouter)
 
-app.get("/", (req, res) => {
-  res.render("index", { user: req.user });
-});
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
-
-app.get("/sign-up", (req, res) => res.render("sign-up-form"));
-
-app.post("/sign-up", async (req, res, next) => {
-  bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-    // if err, do something
-  try {
-    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
-      req.body.username,
-      hashedPassword,
-    ]);
-    res.redirect("/");
-  } catch(err) {
-    return next(err);
-  };
-    // otherwise, store hashedPassword in DB
-  });
-});
-
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
-      const user = rows[0];
-
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      };
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        // passwords do not match!
-        return done(null, false, { message: "Incorrect password" })
-      }
-      
-      return done(null, user);
-    } catch(err) {
-      return done(err);
-    };
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-    const user = rows[0];
-
-    done(null, user);
-  } catch(err) {
-    done(err);
-  };
-});
-
-app.post(
-  "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/"
-  })
-);
-
-app.get("/log-out", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
-
-
-app.listen(3000, () => console.log("app listening on port 3000!"));
+module.exports = app

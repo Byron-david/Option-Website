@@ -1,0 +1,6 @@
+Todo:
+-Add Trade button in positionsTable
+
+Changes:
+
+SPY Sold to Open Iron Condor 520P / -525P / -575C / 580C 1.00 9/20/24
