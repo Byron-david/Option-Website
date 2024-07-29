@@ -1,49 +1,56 @@
 const tradesRouter = require('express').Router()
+// const Trade = require('../models/trade')
+const db = require("../db/queries");
 
-tradesRouter.get('/', async (request, response) => { 
-  const notes = await Note.find({})
-  response.json(notes)
+tradesRouter.get('/trades', async (request, response) => { 
+  const trades = await db.getAllTrades()
+  response.json(trades)
 })
 
-tradesRouter.post('/', async (request, response) => {
-  const body = request.body
+// tradesRouter.get('/', async (request, response) => { 
+//   const trades = await Trade.find({})
+//   response.json(trades)
+// })
 
-  const note = new Note({
-    content: body.content,
-    important: body.important || false,
-  })
+// tradesRouter.post('/', async (request, response) => {
+//   const body = request.body
 
-  const savedNote = await note.save()
-  response.status(201).json(savedNote)
-})
+//   const trade = new Trade({
+//     content: body.content,
+//     important: body.important || false,
+//   })
 
-tradesRouter.get('/:id', async (request, response) => {
-  const note = await Note.findById(request.params.id)
-  if (note) {
-    response.json(note)
-  } else {
-    response.status(404).end()
-  }
-})
+//   const savedTrade = await trade.save()
+//   response.status(201).json(savedTrade)
+// })
 
-tradesRouter.delete('/:id', async (request, response) => {
-  await Note.findByIdAndDelete(request.params.id)
-  response.status(204).end()
-})
+// tradesRouter.get('/:id', async (request, response) => {
+//   const trade = await Trade.findById(request.params.id)
+//   if (trade) {
+//     response.json(trade)
+//   } else {
+//     response.status(404).end()
+//   }
+// })
 
-tradesRouter.put('/:id', (request, response, next) => {
-  const body = request.body
+// tradesRouter.delete('/:id', async (request, response) => {
+//   await Trade.findByIdAndDelete(request.params.id)
+//   response.status(204).end()
+// })
 
-  const note = {
-    content: body.content,
-    important: body.important,
-  }
+// tradesRouter.put('/:id', (request, response, next) => {
+//   const body = request.body
 
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote)
-    })
-    .catch(error => next(error))
-})
+//   const trade = {
+//     content: body.content,
+//     important: body.important,
+//   }
+
+//   Trade.findByIdAndUpdate(request.params.id, trade, { new: true })
+//     .then(updatedTrade => {
+//       response.json(updatedTrade)
+//     })
+//     .catch(error => next(error))
+// })
 
 module.exports = tradesRouter

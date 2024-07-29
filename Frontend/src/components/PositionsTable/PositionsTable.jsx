@@ -6,6 +6,7 @@ import Button from '../Button/Button.jsx'
 import FormatTrade from './FormatTrade.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
 import axios from 'axios'
+import tradeService from './services/trades'
 
 function RowButtons() {
     return (
@@ -61,14 +62,15 @@ export default function PositionsTable({ data }) {
 
     const headers = Object.keys(tableHeader)
     const [trades, setTrades] = useState([])
-  
+
     useEffect(() => {
-      axios
-        .get('http://localhost:3001/trades')
-        .then(response => {
-          setTrades(response.data)
-        })
-    }, [])
+        tradeService
+          .getAll()
+          .then(initialTrades => {
+            setNotes(initialTrades)
+          })
+      }, [])
+
     // const handleFileLoad = (csvData) => {
     //   setData(csvData);
     //   let newHeader = Object.keys(csvData[0]);

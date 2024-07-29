@@ -21,7 +21,6 @@ app.use(middleware.requestLogger)
 
 app.use('/dashboard', tradesRouter)
 
-// app.get('/', (req, res) => res.send("Hello"));
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
