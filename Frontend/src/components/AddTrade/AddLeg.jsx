@@ -58,8 +58,8 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                     <label>Type: 
                       <select 
                           className="inputSelect"
-                          name="strategy"
-                          value={option.strategy || ""}
+                          name="tradeType"
+                          value={option.tradeType || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemTypes}/>
                       </select>

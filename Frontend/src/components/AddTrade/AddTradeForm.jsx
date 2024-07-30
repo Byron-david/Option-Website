@@ -6,14 +6,15 @@ import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
-const defaultTrade = { symbol: '', 
-                      date: '' 
+const defaultTrade = { strategy: '',
+                      symbol: '', 
+                      date: ''
                     }
 
 const defaultStock = {
   action: 'BUY', 
   subAction: 'OPEN', 
-  strategy: 'STOCK', 
+  tradeType: 'STOCK', 
   qty: '', 
   price: '', 
   value: '', 
@@ -23,7 +24,7 @@ const defaultStock = {
 const defaultLeg = { 
                 action: 'BUY',
                 subAction: 'OPEN', 
-                strategy: 'CALL', 
+                tradeType: 'CALL', 
                 qty: '', 
                 strikes: '', 
                 value: '', 
@@ -94,7 +95,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
 
       if (newStrategy === "Iron Condor") {
         if (i < 2) {
-          newLeg.posType = "PUT"
+          newLeg.tradeType = "PUT"
         }
       }
 
@@ -105,7 +106,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
       if (newStrategy === "Strangle" ) {
         newLeg.action = "SELL"
         if (i < 1) {
-          newLeg.posType = "PUT"
+          newLeg.tradeType = "PUT"
         }
       }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3000/dashboard'
+const baseUrl = 'http://localhost:3000/dashboard/trades'
 // const baseUrl = 'http://localhost:3001/trades'
 
 const getAll = () => {

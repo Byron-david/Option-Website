@@ -5,8 +5,7 @@ import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
 import FormatTrade from './FormatTrade.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
-import axios from 'axios'
-import tradeService from './services/trades'
+import tradeService from '../../services/trades'
 
 function RowButtons() {
     return (
@@ -16,8 +15,6 @@ function RowButtons() {
         </div>
     )
 }
-
-
 
 const MapRows = ({data}) => {
 
@@ -67,7 +64,7 @@ export default function PositionsTable({ data }) {
         tradeService
           .getAll()
           .then(initialTrades => {
-            setNotes(initialTrades)
+            setTrades(initialTrades)
           })
       }, [])
 
@@ -96,7 +93,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
+                        {/* <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} /> */}
                     </tbody>
                 </table>  
             </div>
