@@ -10,14 +10,29 @@ async function getAllStrategies() {
   return rows;
 }
 
-async function insertTrade(tradeObj) {
-  await pool.query(`INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expiration) 
-  VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7)`, 
-  [tradeObj.symbol], to_date([tradeObj.date], 'MM/DD/YYYY'), [tradeObj.strategy], [tradeObj.qty], [tradeObj.strikes], [tradeObj.value], [tradeObj.expiration]);
+async function insertStrategy(tradeObj) {
+  const strategyID = await pool.query(`INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expiration) 
+                    VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7) RETURNING strategyID`, 
+  [tradeObj.symbol], (DATE [tradeObj.date]), [tradeObj.strategy], [tradeObj.qty], [tradeObj.strikes], [tradeObj.value], (DATE [tradeObj.expiration]));
 
-  // ('SPY', to_date('07/29/2024', 'MM/DD/YYYY'), 'Vertical Spread', 1, '150 / 160', 180, to_date('08/30/2024', 'MM/DD/YYYY')),
-  // ('TSLA', to_date('07/29/2024', 'MM/DD/YYYY'), 'Vertical Spread', 1, '240 / 250', 600, to_date('08/30/2024', 'MM/DD/YYYY'));
-  await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
+  return strategyID
+}
+async function insertTrade(tradeObj, id) {
+  await pool.query(`INSERT INTO trades (symbol, date, action, strategy, qty, price, strikes, value, expiration) 
+    VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)`), 
+    [tradeObj.symbol], (DATE [tradeObj.date]), [tradeObj.action],
+    [tradeObj.strategy], [tradeObj.qty], [tradeObj.price],
+    [tradeObj.strikes], [tradeObj.value], (DATE [tradeObj.expiration], [id])
+
+    // ('SPY', (DATE '07/29/2024'), 'SELL', 'PUT', 1, 1.50, 160, 150, (DATE '08/30/2024')),
+  // await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
+}
+
+async function getLastID() {
+  const id = await pool.query(`SELECT * FROM strategies
+                    ORDER BY strategyID DESC
+                    LIMIT 1;`)
+  return id;
 }
 
 // symbol VARCHAR ( 255 ),
@@ -33,5 +48,6 @@ async function insertTrade(tradeObj) {
 module.exports = {
   getAllTrades,
   getAllStrategies,
-  insertTrade
+  insertTrade,
+  insertStrategy
 };
