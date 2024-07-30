@@ -3,9 +3,9 @@ const tradesRouter = require('express').Router()
 const db = require("../db/queries");
 
 tradesRouter.get('/trades', async (request, response) => { 
-  const strategies = await db.getAllTrades()
+  const strategies = await db.getAllStrategies()
   // const strategies = await db.getAllStrategies()
-  response.json(strategies)
+  // response.json(strategies)
 })
 
 tradesRouter.post('/trades', async (request, response) => {
@@ -13,10 +13,10 @@ tradesRouter.post('/trades', async (request, response) => {
 
   console.log(body);
 
-  const strategyID = await db.insertStrategy(body);
-  await db.insertTrade(body, strategyID);
+  const strategy = await db.insertStrategy(body);
+  const trade = await db.insertTrade(body, strategy);
 
-  response.status(201).json(savedTrade)
+  // response.status(201).json(trade)
 })
 
 // tradesRouter.get('/', async (request, response) => { 
