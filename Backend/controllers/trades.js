@@ -5,7 +5,7 @@ const db = require("../db/queries");
 tradesRouter.get('/trades', async (request, response) => { 
   const strategies = await db.getAllStrategies()
   // const strategies = await db.getAllStrategies()
-  // response.json(strategies)
+  response.json(strategies)
 })
 
 tradesRouter.post('/trades', async (request, response) => {

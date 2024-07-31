@@ -7,46 +7,70 @@ async function getAllTrades() {
 
 async function getAllStrategies() {
   const { rows } = await pool.query("SELECT * FROM trades, strategies WHERE strategies.strategyID = trades.strategyID");
-  // const { rows } = await pool.query("SELECT * FROM strategies");
+  const { strats } = await pool.query("SELECT * FROM strategies");
   // const { rows } = await pool.query("SELECT strategy, strategyID FROM strategies");
   // const { rows } = await pool.query("SELECT * FROM trades");
+  const allTrades = []
+  let tradeArray = []
   let formatTrades = {};
-  let tradeArray = [];
-  // console.log({["strategy"]: rows});
-  let id;
-  for (const row of rows) {
-    const strategy = row.strategy;
-    console.log(id);
-    if (!id || row.id !== id) {
-      id = row.id;
-      if (!formatTrades[strategy]) {
-        formatTrades = {};
-        formatTrades[strategy] = [row];
-        console.log("key exist");
-      } else {
-        formatTrades[strategy].push(row);
-        console.log("doesn't exist");
-        
-      }
-
-    }
+//   let tradeArray = [];
+//   // console.log({["strategy"]: rows});
+//   let id;
+//   for (const row of rows) {
+//     const strategy = row.strategy;
+//     const rowId = row.strategyid
+//     if (!id || rowId !== id) {
+//       id = rowId;
+//       if (!formatTrades[strategy]) {
+//         formatTrades = {};
+//         formatTrades[strategy] = [row];
+//       } else {
+//         formatTrades[strategy].push(row);
+//       }
+//     } else {
+//       formatTrades[strategy].push(row);
+//     }
     
-    // if (!formatTrades[id]) {
-    //     formatTrades["strategy"] = [row];
-    // } else {
-    //     formatTrades["strategy"].push(row);
-    // }
-}
-console.log(formatTrades);
+//     // if (!formatTrades[id]) {
+//     //     formatTrades["strategy"] = [row];
+//     // } else {
+//     //     formatTrades["strategy"].push(row);
+//     // }
+// }
+// console.log(formatTrades);
+  let id
+  let strategy
+  rows.forEach((trades) => {
+    if (!id || id !== trades.strategyid) {
+      id = trades.strategyid;
+      if (tradeArray.length !== 0) {
+        console.log('length !== 0');
+        formatTrades[strategy] = tradeArray;
+        allTrades.push(formatTrades)
+        formatTrades = {}
+        tradeArray = []
+      }
+      strategy = trades.strategy;
+      tradeArray.push(trades);
+
+    } else {
+
+      tradeArray.push(trades)
+    }
+    // console.log('==================');
+    // console.log(tradeArray);
+    // console.log('==================');
+    });
 
   // rows.forEach((trades) => {
   //   const id = trades.strategyid;
   //   const strategy = trades.strategy;
+  //   if (formatTrades.length)
   //   formatTrades[id] = formatTrades[id] || [];
   //   formatTrades[id].push(trades);
   //   });
     
-  // console.log(formatTrades);
+  // console.log(allTrades);
   // const resultArray = Object.values(formatTrades);
   // console.log(resultArray);
 
@@ -58,7 +82,9 @@ console.log(formatTrades);
 
   // console.log(completeStrategy);
   // const resultArray = Object.values(completeStrategy);
-  return rows;
+  console.log({ "Trades" : allTrades });
+  // console.log({ "Trades" : allTrades });
+  return allTrades;
 }
 
 async function insertStrategy(tradeObj) {
