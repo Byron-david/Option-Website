@@ -11,79 +11,32 @@ async function getAllStrategies() {
   // const { rows } = await pool.query("SELECT strategy, strategyID FROM strategies");
   // const { rows } = await pool.query("SELECT * FROM trades");
   const allTrades = []
-  let tradeArray = []
-  let formatTrades = {};
-//   let tradeArray = [];
-//   // console.log({["strategy"]: rows});
-//   let id;
-//   for (const row of rows) {
-//     const strategy = row.strategy;
-//     const rowId = row.strategyid
-//     if (!id || rowId !== id) {
-//       id = rowId;
-//       if (!formatTrades[strategy]) {
-//         formatTrades = {};
-//         formatTrades[strategy] = [row];
-//       } else {
-//         formatTrades[strategy].push(row);
-//       }
-//     } else {
-//       formatTrades[strategy].push(row);
-//     }
-    
-//     // if (!formatTrades[id]) {
-//     //     formatTrades["strategy"] = [row];
-//     // } else {
-//     //     formatTrades["strategy"].push(row);
-//     // }
-// }
-// console.log(formatTrades);
+  let groupTrades = []
+  let combineTrade = {};
   let id
   let strategy
-  rows.forEach((trades) => {
+  rows.forEach((trades, index) => {
     if (!id || id !== trades.strategyid) {
       id = trades.strategyid;
-      if (tradeArray.length !== 0) {
-        console.log('length !== 0');
-        formatTrades[strategy] = tradeArray;
-        allTrades.push(formatTrades)
-        formatTrades = {}
-        tradeArray = []
+
+      if (groupTrades.length !== 0) {
+        combineTrade[strategy] = groupTrades;
+        allTrades.push(combineTrade)
+        combineTrade = {}
+        groupTrades = []
       }
+
       strategy = trades.strategy;
-      tradeArray.push(trades);
-
-    } else {
-
-      tradeArray.push(trades)
     }
-    // console.log('==================');
-    // console.log(tradeArray);
-    // console.log('==================');
+
+    groupTrades.push(trades)
+
+    if (index === rows.length - 1) {
+      combineTrade[strategy] = groupTrades;
+      allTrades.push(combineTrade)
+    }
     });
 
-  // rows.forEach((trades) => {
-  //   const id = trades.strategyid;
-  //   const strategy = trades.strategy;
-  //   if (formatTrades.length)
-  //   formatTrades[id] = formatTrades[id] || [];
-  //   formatTrades[id].push(trades);
-  //   });
-    
-  // console.log(allTrades);
-  // const resultArray = Object.values(formatTrades);
-  // console.log(resultArray);
-
-  // const completeStrategy = rows.reduce((acc, trade) => {
-  //   const id = trade.strategyid;
-  //   (trade.strategy = acc[id] || []).push(trade);
-  //   return acc;
-  // }, {});
-
-  // console.log(completeStrategy);
-  // const resultArray = Object.values(completeStrategy);
-  console.log({ "Trades" : allTrades });
-  // console.log({ "Trades" : allTrades });
   return allTrades;
 }
 
