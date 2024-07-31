@@ -7,9 +7,6 @@ async function getAllTrades() {
 
 async function getAllStrategies() {
   const { rows } = await pool.query("SELECT * FROM trades, strategies WHERE strategies.strategyID = trades.strategyID");
-  const { strats } = await pool.query("SELECT * FROM strategies");
-  // const { rows } = await pool.query("SELECT strategy, strategyID FROM strategies");
-  // const { rows } = await pool.query("SELECT * FROM trades");
   const allTrades = []
   let groupTrades = []
   let combineTrade = {};
@@ -25,10 +22,8 @@ async function getAllStrategies() {
         combineTrade = {}
         groupTrades = []
       }
-
       strategy = trades.strategy;
     }
-
     groupTrades.push(trades)
 
     if (index === rows.length - 1) {

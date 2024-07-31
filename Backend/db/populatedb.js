@@ -50,12 +50,14 @@ declare
 begin
   INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expiration) 
   VALUES
-    ('TSLA', (DATE '07/29/2024'), 'Vertical Spread', 1, '240 / 250', 600, (DATE '08/30/2024')) RETURNING strategyID into new_id;
+    ('META', (DATE '07/29/2024'), 'Iron Condor', 1, '405 / 415 / 540 / 550', 350, (DATE '08/30/2024')) RETURNING strategyID into new_id;
 
   INSERT INTO trades (symbol, date, action, tradeType, qty, price, strikes, value, expiration, strategyID) 
   VALUES
-    ('TSLA', (DATE '07/29/2024'), 'SELL', 'CALL', 1, 3.10, 240, 310, (DATE '08/30/2024'), new_id),
-    ('TSLA', (DATE '07/29/2024'), 'BUY', 'CALL', 1, 2.90, 250, 290, (DATE '08/30/2024'), new_id);
+    ('META', (DATE '07/29/2024'), 'SELL', 'CALL', 1, 8.80, 540, 880, (DATE '08/30/2024'), new_id),
+    ('META', (DATE '07/29/2024'), 'BUY', 'CALL', 1, -7.10, 550, -710, (DATE '08/30/2024'), new_id),
+    ('META', (DATE '07/29/2024'), 'SELL', 'PUT', 1, 7.80, 415, 780, (DATE '08/30/2024'), new_id),
+    ('META', (DATE '07/29/2024'), 'BUY', 'PUT', 1, -6.00, 405, -600, (DATE '08/30/2024'), new_id);
 end $$;
 `;
 
