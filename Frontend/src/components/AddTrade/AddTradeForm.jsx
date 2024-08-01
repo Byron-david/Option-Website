@@ -6,9 +6,8 @@ import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
 
-const defaultTrade = { strategy: '',
-                      symbol: '', 
-                      date: ''
+const defaultTrade = { symbol: '', 
+                       date: ''
                     }
 
 const defaultStock = {
@@ -33,7 +32,7 @@ const defaultLeg = {
 
 function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
   const [newTrade, setNewTrade] = useState(defaultTrade)
-  const [stock, setStock] = useState({})
+  const [stock, setStock] = useState({...defaultStock})
   const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("Stock");
 
@@ -148,14 +147,14 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
         setTrades(trades.concat(returnedTrade))
         setNewTrade(defaultTrade)
       })
-      handleClickClose()
+      // handleClickClose()
   }
 
   return (
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        <form onSubmit={addTrade}>
+        <form action ="/dashboard/trades" onSubmit={addTrade} method="POST">
           <div className="bodyTemplate">
             <div className="inputContainer">
                 <label>Symbol: 

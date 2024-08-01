@@ -13,8 +13,8 @@ tradesRouter.post('/trades', async (request, response) => {
 
   console.log(body);
 
-  const strategy = await db.insertStrategy(body);
-  const trade = await db.insertTrade(body, strategy);
+  // const strategy = await db.insertStrategy(body);
+  // const trade = await db.insertTrade(body, strategy);
 
   // response.status(201).json(trade)
 })

@@ -93,7 +93,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} /> */}
+                        <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>
