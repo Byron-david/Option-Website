@@ -92,7 +92,7 @@ export default function TableRow({ trade, stratName }) {
             <td>{qty}</td>
             <td>{firstLeg.price}</td>
             <td>
-                <FormatStrikes strikes={strikes} />
+                <FormatStrikes key={uuid()} strikes={strikes} />
             </td>
             <td>{strikesData}</td>
             <td>{firstLeg.value}</td>
