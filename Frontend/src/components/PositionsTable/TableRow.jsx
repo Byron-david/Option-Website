@@ -20,23 +20,10 @@ const subActionFormat = (subAction, className) => {
     return tableData
 }
 
-const strikesFormat = (strikes, className) => {
-    strikes.map((strike, index) => {
-        let addSlash = null
-        if (index !== (strikes.length - 1)) {
-            addSlash = <span className={styles.slash} >{"/"}</span>
-        }
-        if (strike[strike.length - 1].toLowerCase() === "c") {
-            className = styles["callStrike"]
-        }
-        else {
-            className = styles["putStrike"]
-        }
-        return strike
-            // <>
-            //     <div className={className}>{strike}</div> {addSlash}
-            // </>
-    })
+const addPrices = (prices) => {
+    let total = prices.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
+    total = total.toFixed(2)
+    return total
 }
 
 export default function TableRow({ trade, stratName }) {
@@ -45,8 +32,8 @@ export default function TableRow({ trade, stratName }) {
 
     let strikes = []
     let exp = []
-    let tradeVal = []
-    let totalPrice = []
+    let tradeValues = []
+    let prices = []
     const subAction = []
     const quantity = []
     let className = null
@@ -73,15 +60,18 @@ export default function TableRow({ trade, stratName }) {
         // Create array for value, price and subAction
         subAction.push(leg.subaction)
         quantity.push(leg.qty)
-        totalPrice.push(leg.price)
-        tradeVal.push(leg.value)
+        prices.push(leg.price)
+        tradeValues.push(leg.value)
     })
 
     const strategy = stratName.split()
     const qty = quantity.join(' / ')
 
     const subActionData = subActionFormat(subAction, className)
-    const strikesData = strikesFormat(strikes, className)
+
+    const totalPrice = addPrices(prices)
+    const totalValue = addPrices(tradeValues)
+    const expdates = exp.join(' / ')
 
     return (
         <tr>
@@ -90,13 +80,12 @@ export default function TableRow({ trade, stratName }) {
             <td>{subActionData}</td>
             <td>{strategy}</td>
             <td>{qty}</td>
-            <td>{firstLeg.price}</td>
+            <td>{totalPrice}</td>
             <td>
                 <FormatStrikes key={uuid()} strikes={strikes} />
             </td>
-            <td>{strikesData}</td>
-            <td>{firstLeg.value}</td>
-            <td>{firstLeg.expdate}</td>
+            <td>{totalValue}</td>
+            <td>{expdates}</td>
         </tr>
     )
 }
