@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
-import FormatStrikes from './FormatStrikes'
+import CombineStrikes from './CombineStrikes'
 import Button from '../Button/Button.jsx'
 import { useState } from 'react';
 import TableExpansion from './TableExpansion'
@@ -106,7 +106,7 @@ export default function TableRow({ trade, stratName }) {
                 <td>{qty}</td>
                 <td>{price}</td>
                 <td>
-                    <FormatStrikes key={uuid()} strikes={strikes} />
+                    <CombineStrikes key={uuid()} strikes={strikes} />
                 </td>
                 <td>{totalValue}</td>
                 <td>{expdates}</td>

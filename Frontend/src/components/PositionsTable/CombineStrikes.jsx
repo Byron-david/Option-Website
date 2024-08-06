@@ -3,7 +3,7 @@ import styles from './PositionsTable.module.css';
 import AddSlash from './AddSlash'
 import React, { Fragment } from "react"
 
-export default function FormatStrikes({ strikes }) {
+export default function CombineStrikes({ strikes }) {
     return (
         <>
             {strikes.map((strike, index) => {
