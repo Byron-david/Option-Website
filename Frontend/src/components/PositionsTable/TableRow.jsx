@@ -34,6 +34,15 @@ const formatDate = (date) => {
     return `${mm}/${dd}/${yyyy.slice(-2)}`
 }
 
+const formatExpDate = (dates) => {
+    const allEqual = (arr => dates.every( v => v === arr[0] ))
+    if (allEqual) {
+        return dates[0]
+    } else {
+        return dates.join(' / ')
+    }
+}
+
 export default function TableRow({ trade, stratName }) {
     const tradeLeg = trade[stratName]
     const firstLeg = tradeLeg[0]
@@ -73,9 +82,11 @@ export default function TableRow({ trade, stratName }) {
     const subActionData = subActionFormat(subAction, className)
 
     const totalPrice = addPrices(prices)
+    const price = prices.join(' / ')
     const totalValue = addPrices(tradeValues)
-    const expdates = exp.join(' / ')
-
+    // const expdates = exp.join(' / ')
+    const expdates = formatExpDate(exp)
+    
     return (
         <tr>
             <td>{firstLeg.symbol}</td>
@@ -83,12 +94,13 @@ export default function TableRow({ trade, stratName }) {
             <td>{subActionData}</td>
             <td>{strategy}</td>
             <td>{qty}</td>
-            <td>{totalPrice}</td>
+            <td>{price}</td>
             <td>
                 <FormatStrikes key={uuid()} strikes={strikes} />
             </td>
             <td>{totalValue}</td>
             <td>{expdates}</td>
+            <td>{"WIP"}</td>
         </tr>
     )
 }
