@@ -3,7 +3,8 @@ import styles from './PositionsTable.module.css';
 import TableData from './TableData'
 import TableRow from './TableRow'
 
-export default function FormatTrade({ trades, tableHeader }) {
+export default function FormatTrade({ trades, setTrades, tableHeader }) {
+
     const strategyNames = trades.map(item => Object.keys(item)[0])
     const keys = tableHeader.map(key =>  { 
         let lowerKey = key.toLowerCase()
@@ -19,7 +20,6 @@ export default function FormatTrade({ trades, tableHeader }) {
         <>
             {trades.map((trade, index) => {
                 const stratName = strategyNames[index]
-                const strategy = trade[stratName]
 
                 return (
                     <TableRow stratName={stratName} trade={trade} key={uuid()} />

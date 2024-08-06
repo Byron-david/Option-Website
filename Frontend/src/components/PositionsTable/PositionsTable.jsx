@@ -64,7 +64,8 @@ export default function PositionsTable({ data }) {
         tradeService
           .getAll()
           .then(initialTrades => {
-            setTrades(initialTrades)
+            const addExpand = initialTrades.map(trade => ( {...trade, "expand": 0 }))
+            setTrades(addExpand)
           })
       }, [])
 

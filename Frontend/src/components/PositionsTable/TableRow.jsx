@@ -1,6 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
 import FormatStrikes from './FormatStrikes'
+import Button from '../Button/Button.jsx'
+import { useState } from 'react';
+import TableExpansion from './TableExpansion'
 
 const subActionFormat = (subAction, className) => {
     const open = subAction.find((element) => element === "OPEN")
@@ -44,6 +47,8 @@ const formatExpDate = (dates) => {
 }
 
 export default function TableRow({ trade, stratName }) {
+    const [expand, setExpand] = useState(0);
+
     const tradeLeg = trade[stratName]
     const firstLeg = tradeLeg[0]
 
@@ -86,21 +91,37 @@ export default function TableRow({ trade, stratName }) {
     const totalValue = addPrices(tradeValues)
     // const expdates = exp.join(' / ')
     const expdates = formatExpDate(exp)
+
+    const handleClick = () => {
+        expand === 0 ? setExpand(1) : setExpand(0);
+    }
     
     return (
-        <tr>
-            <td>{firstLeg.symbol}</td>
-            <td>{dateExec}</td>
-            <td>{subActionData}</td>
-            <td>{strategy}</td>
-            <td>{qty}</td>
-            <td>{price}</td>
-            <td>
-                <FormatStrikes key={uuid()} strikes={strikes} />
-            </td>
-            <td>{totalValue}</td>
-            <td>{expdates}</td>
-            <td>{"WIP"}</td>
-        </tr>
+        <>
+            <tr onClick={handleClick} >
+                <td>{firstLeg.symbol}</td>
+                <td>{dateExec}</td>
+                <td>{subActionData}</td>
+                <td>{strategy}</td>
+                <td>{qty}</td>
+                <td>{price}</td>
+                <td>
+                    <FormatStrikes key={uuid()} strikes={strikes} />
+                </td>
+                <td>{totalValue}</td>
+                <td>{expdates}</td>
+                <td>
+                    <div className={styles.editButtons}>
+                        <Button text="edit" backgroundColor={`var(--background-color-button-blue)`} />
+                        <Button text="del" backgroundColor={`var(--background-color-button-red)`} />
+                        {/* <Button text="del" backgroundColor={`var(--background-color-button-red)`} handleClick={() => handleDelete(person.id)} /> */}
+                    </div>
+                </td>
+            </tr>
+            {expand === 1 ?
+                <TableExpansion stratName={stratName} trade={trade} key={uuid()} />
+                : null
+            }
+        </>
     )
 }
