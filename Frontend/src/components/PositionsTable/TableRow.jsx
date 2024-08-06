@@ -26,6 +26,14 @@ const addPrices = (prices) => {
     return total
 }
 
+const formatDate = (date) => {
+    const newDate = new Date(date)
+    const yyyy = newDate.getFullYear().toString();
+    const mm = newDate.getMonth() + 1;
+    const dd = newDate.getDate();
+    return `${mm}/${dd}/${yyyy.slice(-2)}`
+}
+
 export default function TableRow({ trade, stratName }) {
     const tradeLeg = trade[stratName]
     const firstLeg = tradeLeg[0]
@@ -49,13 +57,7 @@ export default function TableRow({ trade, stratName }) {
 
         strikes.push(strike)
 
-        // Format Date
-        const newDate = new Date(leg.expdate)
-        const yyyy = newDate.getFullYear().toString();
-        const mm = newDate.getMonth();
-        const dd = newDate.getDate();
-
-        exp.push(`${mm}/${dd}/${yyyy.slice(-2)}`)
+        exp.push(formatDate(leg.expdate))
 
         // Create array for value, price and subAction
         subAction.push(leg.subaction)
@@ -64,6 +66,7 @@ export default function TableRow({ trade, stratName }) {
         tradeValues.push(leg.value)
     })
 
+    const dateExec = formatDate(firstLeg.date)
     const strategy = stratName.split()
     const qty = quantity.join(' / ')
 
@@ -76,7 +79,7 @@ export default function TableRow({ trade, stratName }) {
     return (
         <tr>
             <td>{firstLeg.symbol}</td>
-            <td>{firstLeg.date}</td>
+            <td>{dateExec}</td>
             <td>{subActionData}</td>
             <td>{strategy}</td>
             <td>{qty}</td>

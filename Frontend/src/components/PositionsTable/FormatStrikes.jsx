@@ -3,7 +3,7 @@ import styles from './PositionsTable.module.css';
 import AddSlash from './AddSlash'
 import React, { Fragment } from "react"
 
-export default function FormatStrikes({ strikes, children}) {
+export default function FormatStrikes({ strikes }) {
     return (
         <>
             {strikes.map((strike, index) => {
@@ -19,7 +19,7 @@ export default function FormatStrikes({ strikes, children}) {
                 return (
                     <Fragment key={uuid()}>
                         <div className={className}>{strike}</div>
-                        {index !== (strikes.length - 1) ? <AddSlash className={styles.addSlash} />: null}
+                        {/* {index !== (strikes.length - 1) ? <AddSlash className={styles.addSlash} />: null} */}
                     </Fragment >
                 )
             })}
