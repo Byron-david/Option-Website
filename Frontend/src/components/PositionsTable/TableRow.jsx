@@ -90,7 +90,6 @@ export default function TableRow({ trade, stratName }) {
     const totalPrice = addPrices(prices)
     const price = prices.join(' / ')
     const totalValue = addPrices(tradeValues)
-    // const expdates = exp.join(' / ')
     const expdates = formatExpDate(exp)
 
     const handleClick = () => {

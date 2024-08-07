@@ -57,11 +57,14 @@ async function getAllStrategies() {
 async function insertStrategy(tradeObj) {
   const strategyName = Object.keys(tradeObj)[0]
 
-  const strategyID = await pool.query(`INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expdate) 
-                    VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7) RETURNING strategyID`, 
+  const strategy = await pool.query(`INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expdate) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING strategyid`, 
   [tradeObj.symbol], [Date.parse(tradeObj.date)], [tradeObj.strategy], [tradeObj.qty], [tradeObj.strikes], [tradeObj.value], [Date.parse(tradeObj.expdate)]);
 
-  return strategyID
+  const id = strategy.rows[0]
+
+  console.log(id);
+  // return strategy
 }
 async function insertTrade(tradeObj, id) {
   await pool.query(`INSERT INTO trades (symbol, date, action, subaction strategy, qty, price, strikes, value, expdate) 

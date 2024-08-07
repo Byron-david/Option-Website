@@ -3,13 +3,14 @@ import OptionAction from './OptionAction.jsx';
 import OptionItems from '../Input/OptionItems.jsx';
 
 function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
+  if (strategy !== "Stock" && strategy !== "Covered Call") return null
+
   let stockValue = 0;
   if (stock.price !== '' && stock.qty !== '') {
     stockValue = stock.price * stock.qty
     stock.value = stockValue
   }
 
-  if (strategy === "Stock" || strategy === "Covered Call") 
   return (
     <>
       <div className={styles.addOption}>
