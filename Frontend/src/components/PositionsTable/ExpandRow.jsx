@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
 import Button from '../Button/Button.jsx'
+import FormatStrike from './FormatStrike'
 
 const subActionFormat = (action) => {
     let tableData
@@ -24,7 +25,7 @@ const strikeFormat = (leg) => {
         strikeClass = styles["putStrike"]
         strike = leg.strikes + 'P'
     }
-    return strike
+    return { strike, strikeClass }
 }
 
 const formatDate = (date) => {
@@ -35,55 +36,13 @@ const formatDate = (date) => {
     return `${mm}/${dd}/${yyyy.slice(-2)}`
 }
 
-export default function TableExpansion({ trade, stratName }) {
+export default function ExpandRow({ trade, stratName }) {
     const tradeLeg = trade[stratName]
-    // const firstLeg = tradeLeg[0]
-
-    // let strikes = []
-    // let exp = []
-    // let tradeValues = []
-    // let prices = []
-    // const subAction = []
-    // const quantity = []
-
-    // tradeLeg.forEach(leg => {
-    //     // Adds "C" or "P" to end of strike
-    //     let strike = `${leg.strikes}${leg.tradetype[0]}`
-
-    //     // Adds negative if 
-    //     if (leg.action === "SELL") {
-    //         strike = '-' + strike
-    //     }
-
-    //     strikes.push(strike)
-
-    //     exp.push(formatDate(leg.expdate))
-
-    //     // Create array for value, price and subAction
-    //     subAction.push(leg.subaction)
-    //     quantity.push(leg.qty)
-    //     prices.push(leg.price)
-    //     tradeValues.push(leg.value)
-    // })
-
-    // const strategy = stratName.split()
-    // const qty = quantity.join(' / ')
-
-    // const subActionData = subActionFormat(subAction, className)
-
-    // const totalPrice = addPrices(prices)
-    // const price = prices.join(' / ')
-    // const totalValue = addPrices(tradeValues)
-    // // const expdates = exp.join(' / ')
-    let strike
-
-    const strikeClass = strikeFormat(tradeLeg[0])
-    console.log(strikeClass);
     
     return (
         <>
             {tradeLeg.map(leg => (
-                <tr key={uuid()}>
+                <tr key={uuid()} className={styles.individualTrades} >
                     <td>{leg.symbol}</td>
                     <td>{formatDate(leg.date)}</td>
                     <td>{subActionFormat(leg.action)}</td>
@@ -91,7 +50,7 @@ export default function TableExpansion({ trade, stratName }) {
                     <td>{leg.qty}</td>
                     <td>{leg.price}</td>
                     <td>
-                        <div className={strikeFormat(leg)}>{strike}</div>
+                        <FormatStrike leg={leg} />
                     </td>
                     <td>{leg.value}</td>
                     <td>{formatDate(leg.expdate)}</td>

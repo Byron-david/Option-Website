@@ -3,7 +3,7 @@ import styles from './PositionsTable.module.css';
 import CombineStrikes from './CombineStrikes'
 import Button from '../Button/Button.jsx'
 import { useState } from 'react';
-import TableExpansion from './TableExpansion'
+import ExpandRow from './ExpandRow'
 
 const subActionFormat = (subAction, className) => {
     const open = subAction.find((element) => element === "OPEN")
@@ -119,7 +119,7 @@ export default function TableRow({ trade, stratName }) {
                 </td>
             </tr>
             {expand === 1 ?
-                <TableExpansion stratName={stratName} trade={trade} key={uuid()} />
+                <ExpandRow stratName={stratName} trade={trade} key={uuid()} />
                 : null
             }
         </>

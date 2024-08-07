@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
-import TableData from './TableData'
 import TableRow from './TableRow'
 
 export default function FormatTrade({ trades, setTrades, tableHeader }) {

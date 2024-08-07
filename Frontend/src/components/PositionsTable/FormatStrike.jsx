@@ -2,8 +2,9 @@ import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
 import React, { Fragment } from "react"
 
-export default function FormatStrike({ strikes }) {
+export default function FormatStrike({ leg }) {
     let strikeClass
+    let strike
     
     if (leg.tradetype[0].toLowerCase() === "c") {
         strikeClass = styles["callStrike"]
@@ -14,21 +15,6 @@ export default function FormatStrike({ strikes }) {
         strike = leg.strikes + 'P'
     }
     return (
-        <>
-            {strikes.map((strike, index) => {
-                let addSlash = null
-                let className = null
-
-                if (strike[strike.length - 1].toLowerCase() === "c") {
-                    className = styles["callStrike"]
-                }
-                else {
-                    className = styles["putStrike"]
-                }
-                return (
-                    <div className={className}>{strike}</div>
-                )
-            })}
-        </>
+        <div className={strikeClass}>{strike}</div>
     )
 }

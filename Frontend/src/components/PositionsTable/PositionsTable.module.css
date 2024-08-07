@@ -95,3 +95,11 @@
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
+
+/* .individualTrades {
+  background-color:  var(--background-color-main)
+} */
+
+.individualTrades td {
+  border-bottom: 2px solid var(--background-color-main);
+}
