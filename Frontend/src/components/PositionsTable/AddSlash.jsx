@@ -3,6 +3,6 @@ import styles from './PositionsTable.module.css';
 
 export default function AddSlash() {
     return (
-        <span>{" / "}</span>
+        <span className={styles.AddSlash}>{" / "}</span>
     )
 }

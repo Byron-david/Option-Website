@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import styles from './PositionsTable.module.css'; 
 import Button from '../Button/Button.jsx'
 import FormatStrike from './FormatStrike'
+import FormatPrice from './FormatPrice.jsx'
 
 const subActionFormat = (action) => {
     let tableData
@@ -48,7 +49,10 @@ export default function ExpandRow({ trade, stratName }) {
                     <td>{subActionFormat(leg.action)}</td>
                     <td>{leg.tradetype}</td>
                     <td>{leg.qty}</td>
-                    <td>{leg.price}</td>
+                    <td>
+                        <FormatPrice price={leg.price} />
+                        {/* {leg.price} */}
+                    </td>
                     <td>
                         <FormatStrike leg={leg} />
                     </td>

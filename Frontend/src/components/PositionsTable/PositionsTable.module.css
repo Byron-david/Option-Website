@@ -103,3 +103,11 @@
 .individualTrades td {
   border-bottom: 2px solid var(--background-color-main);
 }
+
+.debit {
+  color: var(--background-color-button-red)
+}
+
+.credit {
+  color: var(--background-color-button)
+}
