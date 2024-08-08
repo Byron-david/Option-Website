@@ -25,7 +25,6 @@ async function getAllStrategies() {
       FROM strategies, trades 
       WHERE strategies.strategyid = trades.strategyid`);
 
-      console.log(rows);
   const allTrades = []
   let groupTrades = []
   let combineTrade = {};
@@ -57,21 +56,30 @@ async function getAllStrategies() {
 async function insertStrategy(tradeObj) {
   const strategyName = Object.keys(tradeObj)[0]
 
-  const strategy = await pool.query(`INSERT INTO strategies (symbol, date, strategy, qty, strikes, value, expdate) 
-                    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING strategyid`, 
-  [tradeObj.symbol], [Date.parse(tradeObj.date)], [tradeObj.strategy], [tradeObj.qty], [tradeObj.strikes], [tradeObj.value], [Date.parse(tradeObj.expdate)]);
+  const strategy = await pool.query(`INSERT INTO strategies (strategy) 
+                    VALUES ($1) RETURNING strategyid`, [strategyName]);
 
-  const id = strategy.rows[0]
+  const id = strategy.rows[0].strategyid
 
-  console.log(id);
-  // return strategy
+  return id
 }
+
+async function insertTrades(tradeObj, id) {
+  const strategyName = Object.keys(tradeObj)[0]
+  const trades = tradeObj[strategyName]
+
+  for (const trade of trades) {
+    await insertTrade(trade, id)
+  }
+}
+
 async function insertTrade(tradeObj, id) {
   await pool.query(`INSERT INTO trades (symbol, date, action, subaction strategy, qty, price, strikes, value, expdate) 
     VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)`, 
     [tradeObj.symbol], [Date.parse(tradeObj.date)], [tradeObj.action],
-    [tradeObj.strategy], [tradeObj.qty], [tradeObj.price],
+    [tradeObj.tradeType], [tradeObj.qty], [tradeObj.price],
     [tradeObj.strikes], [tradeObj.value],  [Date.parse(tradeObj.expdate)], [id])
+
 
     // ('SPY', (DATE '07/29/2024'), 'SELL', 'PUT', 1, 1.50, 160, 150, (DATE '08/30/2024')),
   // await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
@@ -88,5 +96,6 @@ module.exports = {
   getAllTrades,
   getAllStrategies,
   insertTrade,
+  insertTrades,
   insertStrategy
 };

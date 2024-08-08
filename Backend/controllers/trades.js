@@ -10,13 +10,15 @@ tradesRouter.get('/trades', async (request, response) => {
 
 tradesRouter.post('/trades', async (request, response) => {
   const body = request.body
-  console.log(body);
 
   const strategy = await db.insertStrategy(body);
-  // const trade = await db.insertTrade(body, strategy);
-
-  console.log(strategy);
-  // response.status(201).json(strategy)
+  const trade = await db.insertTrades(body, strategy);
+  // const strategyName = Object.keys(body)[0]
+  // const trade = body[strategyName][0]
+  // const insertTrade = await db.insertTrade(trade, strategy);
+  
+  // console.log(trade);
+  response.status(201).json(trade)
 })
 
 // tradesRouter.get('/', async (request, response) => { 

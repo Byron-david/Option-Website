@@ -24,7 +24,7 @@ const defaultLeg = {
                 action: 'BUY',
                 subAction: 'OPEN', 
                 tradeType: 'CALL', 
-                qty: '', 
+                qty: 1, 
                 strikes: '', 
                 value: '', 
                 exp: '', 
@@ -128,17 +128,13 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
       const newStock = {...newTrade, ...stock}
       const newLeg = leg.map(prev => ({...newTrade, ...prev}))
       combinedTrade = combinedTrade.concat(newStock, ...newLeg)
-      console.log(1);
     }
     else if (leg.length !== 0) {
       combinedTrade = leg.map(prev => ({...newTrade, ...prev}))
-      console.log(2);
 
     }
     else {
       combinedTrade = [{...newTrade, ...stock}]
-      console.log(3);
-
     }
   
     valueAdjust(combinedTrade, "value")
@@ -146,13 +142,12 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
 
     const tradeObject = {[strategy]: combinedTrade}
 
-    console.log(tradeObject);
-    // tradeService
-    //   .create(tradeObject)
-    //   .then(returnedTrade => {
-    //     setTrades(trades.concat(returnedTrade))
-    //     setNewTrade(defaultTrade)
-    //   })
+    tradeService
+      .create(tradeObject)
+      .then(returnedTrade => {
+        setTrades(trades.concat(returnedTrade))
+        setNewTrade(defaultTrade)
+      })
       // handleClickClose()
   }
 
