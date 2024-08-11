@@ -1,25 +1,33 @@
-const tradesRouter = require('express').Router()
-// const Trade = require('../models/trade')
+
 const db = require("../db/queries");
 
-tradesRouter.get('/trades', async (request, response) => { 
-  const strategies = await db.getAllStrategies()
-  // const strategies = await db.getAllStrategies()
-  response.json(strategies)
-})
+async function routes (fastify, options) {
+  fastify.get('/', async (request, reply) => {
+    const strategies = await db.getAllStrategies()
+    response.json(strategies)
+  })
+}
+// const tradesRouter = require('express').Router()
+// const Trade = require('../models/trade')
 
-tradesRouter.post('/trades', async (request, response) => {
-  const body = request.body
+// tradesRouter.get('/trades', async (request, response) => { 
+//   const strategies = await db.getAllStrategies()
+//   // const strategies = await db.getAllStrategies()
+//   response.json(strategies)
+// })
 
-  const strategy = await db.insertStrategy(body);
-  const trade = await db.insertTrades(body, strategy);
-  // const strategyName = Object.keys(body)[0]
-  // const trade = body[strategyName][0]
-  // const insertTrade = await db.insertTrade(trade, strategy);
+// tradesRouter.post('/trades', async (request, response) => {
+//   const body = request.body
+
+//   const strategy = await db.insertStrategy(body);
+//   const trade = await db.insertTrades(body, strategy);
+//   // const strategyName = Object.keys(body)[0]
+//   // const trade = body[strategyName][0]
+//   // const insertTrade = await db.insertTrade(trade, strategy);
   
-  // console.log(trade);
-  response.status(201).json(trade)
-})
+//   // console.log(trade);
+//   response.status(201).json(trade)
+// })
 
 // tradesRouter.get('/', async (request, response) => { 
 //   const trades = await Trade.find({})
@@ -67,4 +75,4 @@ tradesRouter.post('/trades', async (request, response) => {
 //     .catch(error => next(error))
 // })
 
-module.exports = tradesRouter
+// module.exports = tradesRouter
