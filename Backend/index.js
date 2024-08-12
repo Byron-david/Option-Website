@@ -1,15 +1,33 @@
-const app = require("./app.js");
-const config = require('./utils/config')
-const logger = require('./utils/logger')
+// const app = require("./app.js");
+// const config = require('./utils/config')
+// const logger = require('./utils/logger')
 
 // app.listen(config.PORT, () => {
 //   logger.info(`Server running on port ${config.PORT}`)
 // })
 
+const { Pool } = require("pg");
+const config = require('./utils/config')
+const tradesRouter = require('./controllers/trades')
+const logger = require('./utils/logger')
+require("dotenv").config();
+
+const fastify = require("fastify")({
+  logger: true
+})
+
+logger.info('connecting to', config.DATABASE_URL)
+
+const pool = new Pool({
+  connectionString: config.DATABASE_URL
+});
+
+fastify.register(tradesRouter)
+
 // Run the server!
-app.listen({ port: config.PORT }, function (err, address) {
+fastify.listen({ port: config.PORT }, function (err, address) {
   if (err) {
-    app.log.error(err)
+    fastify.log.error(err)
     process.exit(1)
   }
   // Server is now listening on ${address}

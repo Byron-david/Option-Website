@@ -2,11 +2,18 @@
 const db = require("../db/queries");
 
 async function routes (fastify, options) {
-  fastify.get('/', async (request, reply) => {
-    const strategies = await db.getAllStrategies()
-    response.json(strategies)
+  fastify.get('/dashboard/trades', async (request, reply) => {
+    try {
+      const strategies = await db.getAllTrades()
+      reply.status(200).send(strategies)
+    } catch (error) {
+      console.error(error)
+    }
   })
 }
+
+module.exports = routes
+
 // const tradesRouter = require('express').Router()
 // const Trade = require('../models/trade')
 

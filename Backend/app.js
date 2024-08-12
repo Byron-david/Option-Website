@@ -14,8 +14,16 @@ const pool = new Pool({
   connectionString: config.DATABASE_URL
 });
 
-module.exports = app
+fastify.register(tradesRouter)
 
+// Run the server!
+fastify.listen({ port: config.PORT }, function (err, address) {
+  if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+  // Server is now listening on ${address}
+})
 // const express = require('express')
 // const app = express()
 // const cors = require('cors')

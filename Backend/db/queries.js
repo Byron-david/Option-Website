@@ -1,19 +1,9 @@
 const pool = require("./pool");
 
 async function getAllTrades() {
-  const { rows } = await pool.query("SELECT * FROM trades");
-  return rows;
+  const {rows} = await pool.query("SELECT * FROM trades");
+  return rows
 }
-
-// symbol VARCHAR ( 255 ),
-// date date,
-// action text NOT NULL,
-// tradeType text NOT NULL,
-// qty int NOT NULL,
-// price Numeric(10, 2) NOT NULL,
-// strikes int,
-// value int NOT NULL,
-// expiration date,
 
 async function getAllStrategies() {
   // const { rows } = await pool.query(
