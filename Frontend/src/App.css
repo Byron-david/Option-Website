@@ -285,7 +285,7 @@ tbody > tr:hover{
 th, td {
   background-color: transparent;
   text-align: left;
-  padding: 1rem 3rem 1rem .5rem;
+  padding: 0.5rem 0.5rem;
   min-width: 50px;
   border-bottom: 3px solid var(--background-color-main);
 }

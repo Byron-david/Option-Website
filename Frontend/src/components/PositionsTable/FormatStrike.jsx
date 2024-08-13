@@ -6,7 +6,7 @@ export default function FormatStrike({ leg }) {
     let strikeClass
     let strike
     
-    if (leg.tradetype[0].toLowerCase() === "c") {
+    if (leg.trade_type[0].toLowerCase() === "c") {
         strikeClass = styles["callStrike"]
         strike = leg.strikes + 'C'
     }

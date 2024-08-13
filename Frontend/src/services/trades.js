@@ -10,16 +10,6 @@ const getAll = () => {
 const create = async newObject => {
   const {data} = await axios.post(baseUrl, newObject)
   return data
-
-  // const request = axios.post(baseUrl, newObject)
-  // return request.then(response => response.data)
-  // axios.post(baseUrl, newObject)
-  // .then(response => {
-  //   console.log(response); 
-  // })
-  // .catch (err => {
-  //   console.log(err);
-  // })
 }
 
 const update = (id, newObject) => {
