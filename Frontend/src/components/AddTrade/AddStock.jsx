@@ -21,7 +21,7 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
             <select 
                 className="inputSelect"
                 name="subAction"
-                value={stock.subAction || ""}
+                value={stock.sub_action || ""}
                 onChange={handleChange}>
                 <OptionItems items={itemSubAction}/>
             </select>

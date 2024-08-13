@@ -17,7 +17,7 @@ async function getAllStrategies() {
   //     WHERE strategies.strategyid = trades.strategyid`);
   try {
     const { rows } = await pool.query(
-      `SELECT strategies.strategyid, strategy, symbol, date, action, subaction, subaction, tradeType, qty, price, strikes, value, expdate
+      `SELECT strategies.strategyid, strategy, symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate
         FROM strategies, trades 
         WHERE strategies.strategyid = trades.strategyid`);
   
@@ -82,10 +82,10 @@ async function insertTrades(tradeObj, id) {
 
 async function insertTrade(tradeObj, id) {
   try {
-    await pool.query(`INSERT INTO trades (symbol, date, action, subaction strategy, qty, price, strikes, value, expdate) 
+    await pool.query(`INSERT INTO trades (symbol, date, action, sub_action, strategy, qty, price, strikes, value, expdate) 
       VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)`, 
       [tradeObj.symbol], [Date.parse(tradeObj.date)], [tradeObj.action],
-      [tradeObj.tradeType], [tradeObj.qty], [tradeObj.price],
+      [tradeObj.sub_action], [tradeObj.qty], [tradeObj.price],
       [tradeObj.strikes], [tradeObj.value],  [Date.parse(tradeObj.expdate)], [id])
   
   

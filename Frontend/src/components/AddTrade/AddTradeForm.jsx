@@ -12,8 +12,8 @@ const defaultTrade = { symbol: '',
 
 const defaultStock = {
   action: 'BUY', 
-  subAction: 'OPEN', 
-  tradeType: 'STOCK', 
+  sub_action: 'OPEN', 
+  trade_type: 'STOCK', 
   qty: '', 
   price: '', 
   value: '', 
@@ -22,8 +22,8 @@ const defaultStock = {
 
 const defaultLeg = { 
                 action: 'BUY',
-                subAction: 'OPEN', 
-                tradeType: 'CALL', 
+                sub_action: 'OPEN', 
+                trade_type: 'CALL', 
                 qty: 1, 
                 strikes: '', 
                 value: '', 
@@ -94,7 +94,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
 
       if (newStrategy === "Iron Condor") {
         if (i < 2) {
-          newLeg.tradeType = "PUT"
+          newLeg.trade_type = "PUT"
         }
       }
 
@@ -105,7 +105,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
       if (newStrategy === "Strangle" ) {
         newLeg.action = "SELL"
         if (i < 1) {
-          newLeg.tradeType = "PUT"
+          newLeg.trade_type = "PUT"
         }
       }
 

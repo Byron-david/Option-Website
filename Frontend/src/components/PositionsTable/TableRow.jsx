@@ -39,6 +39,9 @@ const formatDate = (date) => {
 }
 
 const formatExpDate = (dates) => {
+    if (!dates) {
+        return null
+    }
     const allEqual = (arr => dates.every( v => v === arr[0] ))
     if (allEqual) {
         return dates[0]
@@ -63,19 +66,23 @@ export default function TableRow({ trade, stratName }) {
 
     tradeLeg.forEach(leg => {
         // Adds "C" or "P" to end of strike
-        let strike = `${leg.strikes}${leg.tradetype[0]}`
+        let strike = `${leg.strikes}${leg.trade_type[0]}`
 
         // Adds negative if 
         if (leg.action === "SELL") {
             strike = '-' + strike
         }
 
-        strikes.push(strike)
-
-        exp.push(formatDate(leg.expdate))
+        if (leg.strikes) {
+            strikes.push(strike)
+        }
+        
+        if (leg.expdate) {
+            exp.push(formatDate(leg.expdate))
+        }
 
         // Create array for value, price and subAction
-        subAction.push(leg.subaction)
+        subAction.push(leg.sub_action)
         quantity.push(leg.qty)
         prices.push(leg.price)
         tradeValues.push(leg.value)

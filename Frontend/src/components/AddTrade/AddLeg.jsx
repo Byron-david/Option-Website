@@ -50,7 +50,7 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                       <select 
                           className="inputSelect"
                           name="subAction"
-                          value={option.subAction || ""}
+                          value={option.sub_action || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemSubAction}/>
                       </select>
@@ -59,7 +59,7 @@ function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSub
                       <select 
                           className="inputSelect"
                           name="tradeType"
-                          value={option.tradeType || ""}
+                          value={option.trade_type || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemTypes}/>
                       </select>
