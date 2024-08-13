@@ -50,7 +50,7 @@ const formatExpDate = (dates) => {
 export default function TableRow({ trade, stratName }) {
     const [expand, setExpand] = useState(0);
 
-    const tradeLeg = trade[stratName]
+    const tradeLeg = trade[Object.keys(trade)[0]]
     const firstLeg = tradeLeg[0]
 
     let strikes = []

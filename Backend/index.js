@@ -11,6 +11,7 @@ const config = require('./utils/config')
 const tradesRouter = require('./controllers/trades')
 const logger = require('./utils/logger')
 require("dotenv").config();
+const cors = require('@fastify/cors')
 
 const fastify = require("fastify")({
   logger: true
@@ -22,10 +23,13 @@ const pool = new Pool({
   connectionString: config.DATABASE_URL
 });
 
+fastify.register(cors, {
+  origin: true
+})
 fastify.register(tradesRouter)
 
 // Run the server!
-fastify.listen({ port: config.PORT }, function (err, address) {
+fastify.listen({ port: config.PORT, host: "0.0.0.0" }, function (err, address) {
   if (err) {
     fastify.log.error(err)
     process.exit(1)

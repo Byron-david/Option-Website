@@ -3,12 +3,18 @@ const db = require("../db/queries");
 
 async function routes (fastify, options) {
   fastify.get('/dashboard/trades', async (request, reply) => {
-    try {
-      const strategies = await db.getAllTrades()
+      const strategies = await db.getAllStrategies()
       reply.status(200).send(strategies)
-    } catch (error) {
-      console.error(error)
-    }
+  })
+
+  fastify.post('/dashboard/trades', async (request, reply) => {
+      const body = request.body
+
+      // const strategy = await db.insertStrategy(body);
+      // const trade = await db.insertTrades(body, strategy);
+      // const insertTrade = await db.insertTrade(trade, strategy);
+  
+      reply.status(201).send(body)
   })
 }
 

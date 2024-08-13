@@ -2,11 +2,14 @@ const { Pool } = require("pg");
 const config = require('./utils/config')
 const tradesRouter = require('./controllers/trades')
 const logger = require('./utils/logger')
+// const cors = require('cors')
+import cors from '@fastify/cors'
 require("dotenv").config();
 
 const fastify = require("fastify")({
   logger: true
 })
+
 
 logger.info('connecting to', config.DATABASE_URL)
 
@@ -14,6 +17,9 @@ const pool = new Pool({
   connectionString: config.DATABASE_URL
 });
 
+fastify.register(cors, {
+  origin: true
+})
 fastify.register(tradesRouter)
 
 // Run the server!
@@ -26,7 +32,6 @@ fastify.listen({ port: config.PORT }, function (err, address) {
 })
 // const express = require('express')
 // const app = express()
-// const cors = require('cors')
 // const middleware = require('./utils/middleware')
 // require('express-async-errors')
 
