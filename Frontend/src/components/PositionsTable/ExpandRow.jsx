@@ -6,27 +6,12 @@ import FormatPrice from './FormatPrice.jsx'
 
 const subActionFormat = (action) => {
     let tableData
-    if (open) {
+    if (action === 'OPEN') {
         tableData = <span className={styles["actionOpen"]}>{"Open"}</span>
     } else {
         tableData = <span className={styles["actionClose"]}>{"Close"}</span>
     }
     return tableData
-}
-
-const strikeFormat = (leg) => {
-    let strikeClass = null
-    let strike = null
-
-    if (leg.tradetype[0].toLowerCase() === "c") {
-        strikeClass = styles["callStrike"]
-        strike = leg.strikes + 'C'
-    }
-    else {
-        strikeClass = styles["putStrike"]
-        strike = leg.strikes + 'P'
-    }
-    return { strike, strikeClass }
 }
 
 const formatDate = (date) => {
@@ -42,13 +27,17 @@ const formatDate = (date) => {
 
 export default function ExpandRow({ trade, stratName }) {
     const tradeLeg = trade[stratName]
+    if (tradeLeg.length === 1) {
+        
+    }
+
     return (
         <>
             {tradeLeg.map(leg => (
                 <tr key={uuid()} className={styles.individualTrades} >
                     <td>{leg.symbol}</td>
                     <td>{formatDate(leg.date)}</td>
-                    <td>{subActionFormat(leg.action)}</td>
+                    <td>{subActionFormat(leg.sub_action)}</td>
                     <td>{leg.tradetype}</td>
                     <td>{leg.qty}</td>
                     <td>

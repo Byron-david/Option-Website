@@ -100,7 +100,11 @@ export default function TableRow({ trade, stratName }) {
     const expdates = formatExpDate(exp)
 
     const handleClick = () => {
-        expand === 0 ? setExpand(1) : setExpand(0);
+        if (trade[stratName].length === 1) {
+            expand === 0
+        } else {
+            expand === 0 ? setExpand(1) : setExpand(0);
+        }
     }
     
     return (
