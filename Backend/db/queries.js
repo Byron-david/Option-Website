@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const client = pool.connect()
 
 async function getAllTrades() {
   try {
@@ -52,22 +53,22 @@ async function getAllStrategies() {
   }
 }
 
-async function insertStrategy(tradeObj) {
+const insertStrategy = async (tradeObj) => {
   try {
     const strategyName = Object.keys(tradeObj)[0]
 
-    const strategy = await pool.query(`INSERT INTO strategies (strategy) 
-                      VALUES ($1) RETURNING strategyid`, [strategyName]);
+    const strategy = `INSERT INTO strategies (strategy) 
+                      VALUES ($1) RETURNING strategyid`
+                      
+    const response = await pool.query(strategy, [strategyName]);
   
-    const id = strategy.rows[0].strategyid
-  
-    return id
+    return response.rows[0].strategyid
   } catch (error) {
     console.error(error)
   }
 }
 
-async function insertTrades(tradeObj, id) {
+const insertTrades = async (tradeObj, id) => {
   try {
     const strategyName = Object.keys(tradeObj)[0]
     const trades = tradeObj[strategyName]
@@ -80,14 +81,17 @@ async function insertTrades(tradeObj, id) {
   }
 }
 
-async function insertTrade(tradeObj, id) {
+const insertTrade = async (tradeObj, id) => {
   try {
-    await pool.query(`INSERT INTO trades (symbol, date, action, sub_action, strategy, qty, price, strikes, value, expdate) 
-      VALUES ($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)`, 
-      [tradeObj.symbol], [Date.parse(tradeObj.date)], [tradeObj.action],
-      [tradeObj.sub_action], [tradeObj.qty], [tradeObj.price],
-      [tradeObj.strikes], [tradeObj.value],  [Date.parse(tradeObj.expdate)], [id])
-  
+    const text = `INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyid) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+
+    const values =
+      [tradeObj.symbol, tradeObj.date, tradeObj.action,
+      tradeObj.sub_action, tradeObj.trade_type, tradeObj.qty, tradeObj.price,
+      tradeObj.strikes, tradeObj.value, tradeObj.expdate, id]
+      
+    const res = await pool.query(text, values)
   
       // ('SPY', (DATE '07/29/2024'), 'SELL', 'PUT', 1, 1.50, 160, 150, (DATE '08/30/2024')),
     // await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);

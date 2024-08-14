@@ -3,6 +3,9 @@ import styles from './PositionsTable.module.css';
 import React, { Fragment } from "react"
 
 export default function FormatStrike({ leg }) {
+    if (!leg) {
+        return null
+    }
     let strikeClass
     let strike
     

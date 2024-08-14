@@ -10,12 +10,17 @@ async function routes (fastify, options) {
   fastify.post('/dashboard/trades', async (request, reply) => {
       const body = request.body
 
-      // const strategy = await db.insertStrategy(body);
-      // const trade = await db.insertTrades(body, strategy);
-      // const insertTrade = await db.insertTrade(trade, strategy);
+      const id = await db.insertStrategy(body);
+      await db.insertTrades(body, id);
   
       reply.status(201).send(body)
   })
+
+  fastify.put('/dashboard/trades', async (request, reply) => {
+    const id = request.params
+    console.log(id);
+
+})
 }
 
 module.exports = routes
