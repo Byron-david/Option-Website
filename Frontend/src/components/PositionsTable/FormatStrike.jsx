@@ -13,7 +13,7 @@ export default function FormatStrike({ leg }) {
         strikeClass = styles["callStrike"]
         strike = leg.strikes + 'C'
     }
-    else {
+    else if (leg.trade_type[0].toLowerCase() === "p"){
         strikeClass = styles["putStrike"]
         strike = leg.strikes + 'P'
     }

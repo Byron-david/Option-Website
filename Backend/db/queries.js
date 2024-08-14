@@ -33,6 +33,7 @@ async function getAllStrategies() {
   
         if (groupTrades.length !== 0) {
           combineTrade[strategy] = groupTrades;
+          combineTrade = {...combineTrade, id: id}
           allTrades.push(combineTrade)
           combineTrade = {}
           groupTrades = []
@@ -43,6 +44,7 @@ async function getAllStrategies() {
   
       if (index === rows.length - 1) {
         combineTrade[strategy] = groupTrades;
+        combineTrade = {...combineTrade, id: id}
         allTrades.push(combineTrade)
       }
       });

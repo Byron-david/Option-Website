@@ -30,6 +30,9 @@ const strikeFormat = (leg) => {
 }
 
 const formatDate = (date) => {
+    if (!date) {
+        return null
+    }
     const newDate = new Date(date)
     const yyyy = newDate.getFullYear().toString();
     const mm = newDate.getMonth() + 1;
@@ -39,7 +42,6 @@ const formatDate = (date) => {
 
 export default function ExpandRow({ trade, stratName }) {
     const tradeLeg = trade[stratName]
-    
     return (
         <>
             {tradeLeg.map(leg => (
