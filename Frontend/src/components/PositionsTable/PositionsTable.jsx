@@ -58,14 +58,14 @@ export default function PositionsTable({ data }) {
     ]
 
     const headers = Object.keys(tableHeader)
-    const [trades, setTrades] = useState([])
+    const [allTrades, setAllTrades] = useState([])
 
     useEffect(() => {
         tradeService
           .getAll()
           .then(initialTrades => {
             // const addExpand = initialTrades.map(trade => ( {...trade, "expand": 0 }))
-            setTrades(initialTrades)
+            setAllTrades(initialTrades)
           })
       }, [])
 
@@ -80,7 +80,7 @@ export default function PositionsTable({ data }) {
             <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
                     {/* <RemapData onFileLoad={handleFileLoad} /> */}
-                    <AddTradeModal trades={trades} setTrades={setTrades} header={tableHeader} />
+                    <AddTradeModal allTrades={allTrades} setAllTrades={setAllTrades} header={tableHeader} />
                 </div>
                 <hr/>
                 <table>
@@ -94,7 +94,7 @@ export default function PositionsTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        <FormatTrade trades={trades} setTrades={setTrades} tableHeader={tableHeader} />
+                        <FormatTrade allTrades={allTrades} setAllTrades={setAllTrades} tableHeader={tableHeader} />
                     </tbody>
                 </table>  
             </div>

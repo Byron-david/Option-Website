@@ -16,10 +16,11 @@ async function routes (fastify, options) {
       reply.status(201).send(body)
   })
 
-  fastify.put('/dashboard/trades', async (request, reply) => {
-    const id = request.params
+  fastify.delete('/dashboard/trades/:id', async (request, reply) => {
+    const id = parseInt(request.params.id)
     console.log(id);
 
+    reply.status(200).send(id)
 })
 }
 

@@ -101,7 +101,8 @@
 } */
 
 .individualTrades td {
-  border-bottom: 2px solid var(--background-color-main);
+  border-bottom: 2px solid var(--background-color-secondary);
+  background-color: var(--background-color-main);
 }
 
 .debit {

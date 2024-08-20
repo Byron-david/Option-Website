@@ -24,28 +24,28 @@ async function getAllStrategies() {
   
     const allTrades = []
     let groupTrades = []
-    let combineTrade = {};
+    let strategy = {};
     let id
-    let strategy
+    let strategyName
     rows.forEach((trades, index) => {
       if (!id || id !== trades.strategyid) {
-        id = trades.strategyid;
-  
+        
         if (groupTrades.length !== 0) {
-          combineTrade[strategy] = groupTrades;
-          combineTrade = {...combineTrade, id: id}
-          allTrades.push(combineTrade)
-          combineTrade = {}
+          strategy[strategyName] = groupTrades;
+          strategy = {...strategy, id: id}
+          allTrades.push(strategy)
+          strategy = {}
           groupTrades = []
         }
-        strategy = trades.strategy;
+        strategyName = trades.strategy;
+        id = trades.strategyid;
       }
       groupTrades.push(trades)
   
       if (index === rows.length - 1) {
-        combineTrade[strategy] = groupTrades;
-        combineTrade = {...combineTrade, id: id}
-        allTrades.push(combineTrade)
+        strategy[strategyName] = groupTrades;
+        strategy = {...strategy, id: id}
+        allTrades.push(strategy)
       }
       });
   
@@ -94,9 +94,20 @@ const insertTrade = async (tradeObj, id) => {
       tradeObj.strikes, tradeObj.value, tradeObj.expdate, id]
       
     const res = await pool.query(text, values)
-  
-      // ('SPY', (DATE '07/29/2024'), 'SELL', 'PUT', 1, 1.50, 160, 150, (DATE '08/30/2024')),
-    // await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
+    
+    return res
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const deleteTrade = async (id) => {
+  try {
+    const text = `DELETE FROM trades WHERE strategyid = $1`
+
+    const res = await pool.query(text, [id])
+
+    return res
   } catch (error) {
     console.error(error)
   }
@@ -107,5 +118,6 @@ module.exports = {
   getAllStrategies,
   insertTrade,
   insertTrades,
-  insertStrategy
+  insertStrategy,
+  deleteTrade
 };

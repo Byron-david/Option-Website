@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal.jsx'
 import AddTradeForm from './AddTradeForm.jsx'
 import styles from '../Modal/Modal.module.css'; 
 
-function AddTradeModal({ trades, setTrades, setNewTrade, handleChange, header }) {
+function AddTradeModal({ allTrades, setAllTrades, setNewTrade, handleChange, header }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -11,8 +11,8 @@ function AddTradeModal({ trades, setTrades, setNewTrade, handleChange, header })
         <button onClick={() => setIsOpen(true)}>+ Add Trade</button>
         <Modal open={isOpen}>
           <AddTradeForm handleClickClose={() => setIsOpen(false)}
-          trades={trades}
-          setTrades={setTrades}
+          allTrades={allTrades}
+          setAllTrades={setAllTrades}
           header={header}
           />
         </Modal>

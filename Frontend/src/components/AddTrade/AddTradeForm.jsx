@@ -30,7 +30,7 @@ const defaultLeg = {
                 exp: '', 
               }
 
-function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
+function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
   const [newTrade, setNewTrade] = useState(defaultTrade)
   const [stock, setStock] = useState({...defaultStock})
   const [leg, setLeg] = useState([])
@@ -145,7 +145,7 @@ function AddTradeForm({ trades, setTrades, handleClickClose, header }) {
     tradeService
       .create(tradeObject)
       .then(returnedTrade => {
-        setTrades(trades.concat(returnedTrade))
+        setAllTrades(allTrades.concat(returnedTrade))
         setNewTrade(defaultTrade)
       })
       // handleClickClose()

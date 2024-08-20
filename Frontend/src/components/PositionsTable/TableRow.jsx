@@ -5,6 +5,7 @@ import CombinePrice from './CombinePrice.jsx'
 import Button from '../Button/Button.jsx'
 import { useState } from 'react';
 import ExpandRow from './ExpandRow'
+import tradeService from '../../services/trades.js'
 
 const subActionFormat = (subAction, className) => {
     const open = subAction.find((element) => element === "OPEN")
@@ -50,7 +51,7 @@ const formatExpDate = (dates) => {
     }
 }
 
-export default function TableRow({ trade, stratName }) {
+export default function TableRow({ allTrades, setAllTrades, trade, stratName, index, }) {
     const [expand, setExpand] = useState(0);
 
     const tradeLeg = trade[Object.keys(trade)[0]]
@@ -106,6 +107,20 @@ export default function TableRow({ trade, stratName }) {
             expand === 0 ? setExpand(1) : setExpand(0);
         }
     }
+
+    const handleDelete = (event, id) => {
+        event.preventDefault()
+
+        const databaseId = allTrades[id].id
+        console.log(id);
+        console.log(allTrades[id].id);
+        // console.log(trades.filter(t => t.id !== id));
+        if (window.confirm("Delete Entry?")) {
+            tradeService
+                .remove(id)
+                .then(setAllTrades(allTrades.filter(t => t.id !== databaseId)))
+        }
+    }
     
     return (
         <>
@@ -125,8 +140,12 @@ export default function TableRow({ trade, stratName }) {
                 <td>{expdates}</td>
                 <td>
                     <div className={styles.editButtons}>
-                        <Button text="edit" backgroundColor={`var(--background-color-button-blue)`} />
-                        <Button text="del" backgroundColor={`var(--background-color-button-red)`} />
+                        <Button text="Edit"
+                        backgroundColor={`var(--background-color-button-blue)`} />
+
+                        <Button text="Del"
+                        backgroundColor={`var(--background-color-button-red)`}
+                        handleClick={event => handleDelete(event, index)} />
                         {/* <Button text="del" backgroundColor={`var(--background-color-button-red)`} handleClick={() => handleDelete(person.id)} /> */}
                     </div>
                 </td>
