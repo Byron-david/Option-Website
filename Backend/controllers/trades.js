@@ -3,24 +3,25 @@ const db = require("../db/queries");
 
 async function routes (fastify, options) {
   fastify.get('/dashboard/trades', async (request, reply) => {
-      const strategies = await db.getAllStrategies()
-      reply.status(200).send(strategies)
+      const strategies = await db.getAllStrategies();
+      reply.status(200).send(strategies);
   })
 
   fastify.post('/dashboard/trades', async (request, reply) => {
-      const body = request.body
+      const body = request.body;
 
       const id = await db.insertStrategy(body);
       await db.insertTrades(body, id);
   
-      reply.status(201).send(body)
+      reply.status(201).send(body);
   })
 
   fastify.delete('/dashboard/trades/:id', async (request, reply) => {
-    const id = parseInt(request.params.id)
+    const id = parseInt(request.params.id);
     console.log(id);
+    await db.deleteTrade(id);
 
-    reply.status(200).send(id)
+    reply.status(200).send(id);
 })
 }
 

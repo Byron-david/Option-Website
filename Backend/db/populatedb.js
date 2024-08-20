@@ -3,6 +3,8 @@ const { Client } = require("pg");
 require('dotenv').config()
 
 const SQL = `
+DROP TABLE IF EXISTS trades, strategies;
+
 CREATE TABLE IF NOT EXISTS strategies (
   strategyID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   strategy text NOT NULL

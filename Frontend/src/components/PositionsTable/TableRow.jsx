@@ -110,15 +110,17 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
 
     const handleDelete = (event, id) => {
         event.preventDefault()
-
         const databaseId = allTrades[id].id
-        console.log(id);
-        console.log(allTrades[id].id);
-        // console.log(trades.filter(t => t.id !== id));
+
         if (window.confirm("Delete Entry?")) {
             tradeService
-                .remove(id)
-                .then(setAllTrades(allTrades.filter(t => t.id !== databaseId)))
+                .remove(databaseId)
+                .then(response => {
+                    setAllTrades(allTrades.filter(t => t.id !== databaseId))
+                    console.log(response);
+                    return response
+                }
+                )
         }
     }
     
