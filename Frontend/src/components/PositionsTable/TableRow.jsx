@@ -6,6 +6,7 @@ import Button from '../Button/Button.jsx'
 import { useState } from 'react';
 import ExpandRow from './ExpandRow'
 import tradeService from '../../services/trades.js'
+import formatDate from '../../functions/formatDate.js'
 
 const subActionFormat = (subAction, className) => {
     const open = subAction.find((element) => element === "OPEN")
@@ -29,14 +30,6 @@ const addPrices = (prices) => {
     let total = prices.reduce((accu, curr) => parseFloat(accu) + parseFloat(curr), 0)
     total = total.toFixed(2)
     return total
-}
-
-const formatDate = (date) => {
-    const newDate = new Date(date)
-    const yyyy = newDate.getFullYear().toString();
-    const mm = newDate.getMonth() + 1;
-    const dd = newDate.getDate();
-    return `${mm}/${dd}/${yyyy.slice(-2)}`
 }
 
 const formatExpDate = (dates) => {
@@ -123,6 +116,42 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 )
         }
     }
+
+    const handleUpdate = (event, id) => {
+        event.preventDefault()
+        const currentStrategy = allTrades[id]
+        const stratName = Object.keys(currentStrategy)[0]
+        const tradesArray = currentStrategy[stratName]
+
+        const defaultTrade = { 
+            symbol: tradesArray[0].symbol, 
+            date: tradesArray[0].date
+         }
+
+        const defaultStock = {
+            action: 'BUY', 
+            sub_action: 'OPEN', 
+            trade_type: 'STOCK', 
+            qty: '', 
+            price: '', 
+            value: '', 
+            exp: null, 
+        }
+
+        const defaultLeg = { 
+            action: 'BUY',
+            sub_action: 'OPEN', 
+            trade_type: 'CALL', 
+            qty: 1, 
+            strikes: '', 
+            value: '', 
+            exp: '', 
+        }
+
+        tradesArray.forEach(leg => 
+            console.log(leg)
+        )
+    }
     
     return (
         <>
@@ -143,7 +172,8 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 <td>
                     <div className={styles.editButtons}>
                         <Button text="Edit"
-                        backgroundColor={`var(--background-color-button-blue)`} />
+                        backgroundColor={`var(--background-color-button-blue)`}
+                        handleClick={event => handleUpdate(event, index)} />
 
                         <Button text="Del"
                         backgroundColor={`var(--background-color-button-red)`}

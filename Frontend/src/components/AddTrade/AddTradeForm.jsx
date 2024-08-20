@@ -5,63 +5,22 @@ import { v4 as uuid } from 'uuid';
 import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
 import AddStock from './AddStock.jsx';
-
-const defaultTrade = { symbol: '', 
-                       date: ''
-                    }
-
-const defaultStock = {
-  action: 'BUY', 
-  sub_action: 'OPEN', 
-  trade_type: 'STOCK', 
-  qty: '', 
-  price: '', 
-  value: '', 
-  exp: null, 
-}
-
-const defaultLeg = { 
-                action: 'BUY',
-                sub_action: 'OPEN', 
-                trade_type: 'CALL', 
-                qty: 1, 
-                strikes: '', 
-                value: '', 
-                exp: '', 
-              }
+import TradeForm from './TradeForm.jsx';
+import { 
+  defaultNewTrade, 
+  defaultTrade, 
+  defaultStock, 
+  defaultLeg, 
+  strategyOptions, 
+  action, 
+  subAction, 
+  posType } from '../../../public/tradeDefaults.js'
 
 function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
-  const [newTrade, setNewTrade] = useState(defaultTrade)
-  const [stock, setStock] = useState({...defaultStock})
-  const [leg, setLeg] = useState([])
+  const [newTrade, setNewTrade] = useState(defaultNewTrade)
+  // const [stock, setStock] = useState({...defaultStock})
+  // const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("Stock");
-
-  const strategyOptions = [
-    { id: uuid(), value: "Stock", text: "Stock", quantity: 0 },
-    { id: uuid(), value: "Option", text: "Single Option", quantity: 1 },
-    { id: uuid(), value: "Covered Call", text: "Covered Call", quantity: 1 },
-    { id: uuid(), value: "Vertical Spread", text: "Vertical Spread", quantity: 2 },
-    { id: uuid(), value: "Strangle", text: "Strangle", quantity: 2 },
-    { id: uuid(), value: "Iron Condor", text: "Iron Condor", quantity: 4 },
-    { id: uuid(), value: "Butterfly", text: "Butterfly", quantity: 4 },
-    // { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
-    // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
-  ]
-
-  const action = [
-    { id: uuid(), value: "BUY", text: "Buy" },
-    { id: uuid(), value: "SELL", text: "Sell" },
-  ]
-
-  const subAction = [
-    { id: uuid(), value: "OPEN", text: "Open" },
-    { id: uuid(), value: "CLOSE", text: "Close" },
-  ]
-
-  const posType = [
-    { id: uuid(), value: "PUT", text: "Put" },
-    { id: uuid(), value: "CALL", text: "Call" },
-  ]
 
   const handleTrade = (event) => {
     setNewTrade(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
@@ -72,12 +31,12 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
   }
 
   const handleStrategy = (event) => {
-    const newStrategy = event.target.value
-    setStrategy(newStrategy)
+    const updateStrategy = event.target.value
+    setStrategy(updateStrategy)
 
-    const findQty = strategyOptions.find(element => element.value === newStrategy)
+    const findQty = strategyOptions.find(element => element.value === updateStrategy)
 
-    if (newStrategy === "Stock" || newStrategy === "Covered Call") {
+    if (updateStrategy === "Stock" || updateStrategy === "Covered Call") {
       setStock({...defaultStock})
     }
     else {
@@ -92,17 +51,17 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
         newLeg.action = "SELL"
       }
 
-      if (newStrategy === "Iron Condor") {
+      if (updateStrategy === "Iron Condor") {
         if (i < 2) {
           newLeg.trade_type = "PUT"
         }
       }
 
-      if (newStrategy === "Covered Call") {
+      if (updateStrategy === "Covered Call") {
         newLeg.action = "SELL"
       }
 
-      if (newStrategy === "Strangle" ) {
+      if (updateStrategy === "Strangle" ) {
         newLeg.action = "SELL"
         if (i < 1) {
           newLeg.trade_type = "PUT"
@@ -151,49 +110,51 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
       // handleClickClose()
   }
 
+//   <form action ="/dashboard/trades" onSubmit={addTrade} method="POST">
+//   <div className="bodyTemplate">
+//     <div className="inputContainer">
+//         <label>Symbol: 
+//           <input 
+//             type="text" 
+//             name="symbol" 
+//             value={newTrade.symbol || ""} 
+//             onChange={handleTrade}
+//             placeholder="AAPL"
+//             maxLength="4"
+//           />
+//         </label>
+//         <label>Strategy:
+//           <select 
+//               className="inputSelect"
+//               name="strategy"
+//               value={strategy}
+//               onChange={handleStrategy}> 
+//               <OptionItems items={strategyOptions}/>
+//           </select>
+//         </label>
+//         <label>Date Exec.:
+//           <input 
+//             type="date" 
+//             name="date" 
+//             value={newTrade.date || ""} 
+//             onChange={handleTrade}
+//           />
+//         </label>
+//     </div>
+//     <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} itemSubAction={subAction} />
+//     <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
+//   </div>
+//   <div className="footerTemplate">
+//     <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
+//     <Button type="submit" text="Save" className="buttonAdd" />
+//   </div>
+// </form>
+
   return (
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        <form action ="/dashboard/trades" onSubmit={addTrade} method="POST">
-          <div className="bodyTemplate">
-            <div className="inputContainer">
-                <label>Symbol: 
-                  <input 
-                    type="text" 
-                    name="symbol" 
-                    value={newTrade.symbol || ""} 
-                    onChange={handleTrade}
-                    placeholder="AAPL"
-                    maxLength="4"
-                  />
-                </label>
-                <label>Strategy:
-                  <select 
-                      className="inputSelect"
-                      name="strategy"
-                      value={strategy}
-                      onChange={handleStrategy}> 
-                      <OptionItems items={strategyOptions}/>
-                  </select>
-                </label>
-                <label>Date Exec.:
-                  <input 
-                    type="date" 
-                    name="date" 
-                    value={newTrade.date || ""} 
-                    onChange={handleTrade}
-                  />
-                </label>
-            </div>
-            <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} itemSubAction={subAction} />
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
-          </div>
-          <div className="footerTemplate">
-            <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
-            <Button type="submit" text="Save" className="buttonAdd" />
-          </div>
-        </form>
+        <TradeForm newTrade={newTrade} setNewTrade={setNewTrade} onSubmit={addTrade} handleClickClose={handleClickClose} />
       </div>
     </>
   );

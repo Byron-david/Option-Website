@@ -18,8 +18,9 @@ async function routes (fastify, options) {
 
   fastify.delete('/dashboard/trades/:id', async (request, reply) => {
     const id = parseInt(request.params.id);
-    console.log(id);
+    
     await db.deleteTrade(id);
+    await db.deleteStrategy(id);
 
     reply.status(200).send(id);
 })

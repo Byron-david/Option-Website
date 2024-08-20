@@ -113,11 +113,24 @@ const deleteTrade = async (id) => {
   }
 }
 
+const deleteStrategy = async (id) => {
+  try {
+    const text = `DELETE FROM strategies WHERE strategyid = $1`
+
+    const res = await pool.query(text, [id])
+
+    return res
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = {
   getAllTrades,
   getAllStrategies,
   insertTrade,
   insertTrades,
   insertStrategy,
-  deleteTrade
+  deleteTrade,
+  deleteStrategy
 };

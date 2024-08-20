@@ -5,23 +5,23 @@ import styles from './AddTrade.module.css';
 import OptionItems from '../Input/OptionItems.jsx'
 import OptionAction from './OptionAction.jsx';
 
-function AddLeg({ leg, setLeg, newLeg, strategy, itemTypes, itemActions, itemSubAction }) {
+function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, itemSubAction }) {
   const addNewLeg = () => {
     // 3 legs max
-    if (leg.length <= 2) setLeg([...leg, newLeg])
+    if (leg.length <= 2) setNewTrade([...leg, newLeg])
   }
 
   const deleteLeg = (index) => {
     let data = [...leg];
     data.splice(index, 1)
-    setLeg(data)
+    setNewTrade(data)
   }
 
   const handleLegChange = (index, event) => {
     let { name, value } = event.target;
     let onChangeValue = [...leg];
     onChangeValue[index][name] = value;
-    setLeg(onChangeValue);
+    setNewTrade(onChangeValue);
   }
 
   let addButton;
