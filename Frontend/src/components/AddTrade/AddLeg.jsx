@@ -4,17 +4,37 @@ import OptionLeg from './OptionLeg.jsx'
 import styles from './AddTrade.module.css'; 
 import OptionItems from '../Input/OptionItems.jsx'
 import OptionAction from './OptionAction.jsx';
+import { defaultLeg } from '../../../public/tradeDefaults.js'
 
-function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, itemSubAction }) {
+function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemSubAction }) {
+  const leg = newTrade.legs
   const addNewLeg = () => {
+    const newLeg = { ...defaultLeg }
+    
     // 3 legs max
-    if (leg.length <= 2) setNewTrade([...leg, newLeg])
+    if (leg.length <= 2) {
+      setNewTrade(values => ({
+        ...values, 
+        legs: [...values.legs, newLeg] 
+      }))
+    }
   }
 
   const deleteLeg = (index) => {
     let data = [...leg];
-    data.splice(index, 1)
-    setNewTrade(data)
+    if (index === 0) {
+      setNewTrade(values => ({
+        ...values, 
+        legs: []
+      }))
+    }
+    else {
+      data.splice(index, 1)
+      setNewTrade(values => ({
+        ...values, 
+        legs: [data] 
+      }))
+    }
   }
 
   const handleLegChange = (index, event) => {
@@ -44,7 +64,8 @@ function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, it
         {leg.map((option, index) => (
                   <div className={styles.addOption} key={index}>
 
-                    {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null}
+                    {/* {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null} */}
+                    <Button handleClick={() => deleteLeg(index)} className="buttonRemove" />
 
                     <OptionAction option={option}
                                 items={itemActions}
@@ -108,7 +129,12 @@ function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, it
                     </label>
                   </div>
             ))}
-      {addButton}
+            <div>
+              <Button handleClick={addNewLeg}
+                        className={styles.buttonAdd}
+                        text="+ Add Option" />
+            </div>
+
     </>
   );
 }

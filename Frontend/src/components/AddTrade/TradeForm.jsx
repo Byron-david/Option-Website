@@ -4,8 +4,6 @@ import Button from '../Button/Button.jsx'
 import AddLeg from './AddLeg.jsx'
 import AddStock from './AddStock.jsx';
 import { 
-  defaultNewTrade, 
-  defaultTrade, 
   defaultStock, 
   defaultLeg, 
   strategyOptions, 
@@ -21,7 +19,6 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     setNewTrade(values => ({
       ...values, 
       base: {...values.base, [event.target.name]: event.target.value.toUpperCase()}
-      // base: { [event.target.name]: event.target.value.toUpperCase()}
     }))
   }
 
@@ -29,7 +26,6 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     setNewTrade(values => ({
       ...values, 
       stock: {...values.stock, [event.target.name]: event.target.value }}))
-      console.log(newTrade);
   }
 
   const handleStrategy = (event) => {
@@ -81,56 +77,11 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
       }
 
       allLegs.push(newLeg)
-      // setNewTrade(values => ({
-      //   ...values, 
-      //   legs: [leg => [...leg, newLeg]]
-      // }))
-      // setNewTrade([...newTrade.legs, newLeg])
-      
-      // setNewTrade((prev) => {
-      //   const newState = [...prev, newLeg]
-      //   return newState
-      // })
     }
     setNewTrade(values => ({
       ...values, 
       legs: allLegs
     }))
-  }
-
-  const valueAdjust = (combinedTrade, value) => {
-    combinedTrade.map(t => t.action === "BUY" ? t[value] = `${t[value] * -1}` : t[value] )
-  }
-
-  const addTrade = event => {
-    event.preventDefault()
-    let combinedTrade = []
-    
-    if (newTrade.legs.length !== 0 && Object.keys(newTrade.stock).length !== 0) {
-      const newStock = {...newTrade.base, ...newTrade.stock}
-      const newLeg = newTrade.legs.map(prev => ({...newTrade.base, ...prev}))
-      combinedTrade = combinedTrade.concat(newStock, ...newLeg)
-    }
-    else if (newTrade.legs.length !== 0) {
-      combinedTrade = newTrade.legs.map(prev => ({...newTrade.base, ...prev}))
-
-    }
-    else {
-      combinedTrade = [{...newTrade.base, ...newTrade.stock}]
-    }
-  
-    valueAdjust(combinedTrade, "value")
-    valueAdjust(combinedTrade, "price")
-
-    const tradeObject = {[strategy]: combinedTrade}
-
-    tradeService
-      .create(tradeObject)
-      .then(returnedTrade => {
-        setAllTrades(allTrades.concat(returnedTrade))
-        setNewTrade(defaultTrade)
-      })
-      // handleClickClose()
   }
 
   return (
@@ -148,7 +99,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   maxLength="4"
                 />
               </label>
-              <label>Strategy:
+              <label>Preset:
                 <select 
                     className="inputSelect"
                     name="strategy"
@@ -167,7 +118,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
               </label>
           </div>
           <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={newTrade.stock} itemSubAction={subAction} />
-          <AddLeg leg={newTrade.legs} setNewTrade={setNewTrade} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
+          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={strategy} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
         </div>
         <div className="footerTemplate">
           <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />

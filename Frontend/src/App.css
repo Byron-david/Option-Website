@@ -235,11 +235,7 @@ input[type=date]{
   filter: brightness(125%);
 }
 
-.buttonAdd {
-  background-color: var(--background-color-button);
-  color: var(--background-color-main);
-  padding: 0.2rem 0.5rem;
-}
+
 
 table {
   background-color: var(--background-color-secondary);
