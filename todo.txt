@@ -1,5 +1,5 @@
 Todo:
--Add route for deleting trade/strategy
 -Add route for updating trade/strategy
 
 Changes:
+-Add route for deleting trade/strategy

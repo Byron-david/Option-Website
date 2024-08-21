@@ -154,7 +154,7 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        <TradeForm newTrade={newTrade} setNewTrade={setNewTrade} onSubmit={addTrade} handleClickClose={handleClickClose} />
+        <TradeForm newTrade={newTrade} setNewTrade={setNewTrade} handleClickClose={handleClickClose} />
       </div>
     </>
   );

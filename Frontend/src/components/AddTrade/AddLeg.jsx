@@ -21,7 +21,10 @@ function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, it
     let { name, value } = event.target;
     let onChangeValue = [...leg];
     onChangeValue[index][name] = value;
-    setNewTrade(onChangeValue);
+    setNewTrade(values => ({
+      ...values, 
+      legs: onChangeValue
+    }))
   }
 
   let addButton;
@@ -49,7 +52,7 @@ function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, it
                     <label>Open/Close: 
                       <select 
                           className="inputSelect"
-                          name="subAction"
+                          name="sub_action"
                           value={option.sub_action || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemSubAction}/>
@@ -58,7 +61,7 @@ function AddLeg({ leg, setNewTrade, newLeg, strategy, itemTypes, itemActions, it
                     <label>Type: 
                       <select 
                           className="inputSelect"
-                          name="tradeType"
+                          name="trade_type"
                           value={option.trade_type || ""}
                           onChange={e => handleLegChange(index, e)}>
                           <OptionItems items={itemTypes}/>

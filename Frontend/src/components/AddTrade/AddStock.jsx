@@ -18,14 +18,14 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction }) {
             items={items}
             handleChange={handleChange} />
         <label>Open/Close: 
-            <select 
-                className="inputSelect"
-                name="subAction"
-                value={stock.sub_action || ""}
-                onChange={handleChange}>
-                <OptionItems items={itemSubAction}/>
-            </select>
-          </label>
+          <select 
+              className="inputSelect"
+              name="sub_action"
+              value={stock.sub_action || ""}
+              onChange={handleChange}>
+              <OptionItems items={itemSubAction}/>
+          </select>
+        </label>
         <label>Price: 
             <input 
             type="number" 

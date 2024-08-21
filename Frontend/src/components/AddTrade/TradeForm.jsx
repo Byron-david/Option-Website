@@ -14,22 +14,22 @@ import {
   posType } from '../../../public/tradeDefaults.js'
 
 function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
-  // const [newTrade, setNewTrade] = useState(defaultNewTrade)
-  const [stock, setStock] = useState({...defaultStock})
-  const [leg, setLeg] = useState([])
   const [strategy, setStrategy] = useState("Stock");
 
   const handleTrade = (event) => {
-    console.log('HERE', event.target.value);
+    console.log(event.target.name, event.target.value);
     setNewTrade(values => ({
       ...values, 
-      base: { [event.target.name]: event.target.value.toUpperCase()}}))
+      base: {...values.base, [event.target.name]: event.target.value.toUpperCase()}
+      // base: { [event.target.name]: event.target.value.toUpperCase()}
+    }))
   }
 
   const handleStock = (event) => {
     setNewTrade(values => ({
       ...values, 
-      stock: { [event.target.name]: event.target.value }}))
+      stock: {...values.stock, [event.target.name]: event.target.value }}))
+      console.log(newTrade);
   }
 
   const handleStrategy = (event) => {
