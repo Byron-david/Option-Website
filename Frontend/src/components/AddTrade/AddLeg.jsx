@@ -8,6 +8,7 @@ import { defaultLeg } from '../../../public/tradeDefaults.js'
 
 function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemSubAction }) {
   const leg = newTrade.legs
+
   const addNewLeg = () => {
     const newLeg = { ...defaultLeg }
     
@@ -18,11 +19,14 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
         legs: [...values.legs, newLeg] 
       }))
     }
+
+    console.log(newTrade);
   }
 
   const deleteLeg = (index) => {
     let data = [...leg];
-    if (index === 0) {
+
+    if (leg.length === 1) {
       setNewTrade(values => ({
         ...values, 
         legs: []
@@ -30,9 +34,10 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
     }
     else {
       data.splice(index, 1)
+
       setNewTrade(values => ({
         ...values, 
-        legs: [data] 
+        legs: data
       }))
     }
   }
@@ -61,11 +66,13 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
 
   return (
     <>
+
         {leg.map((option, index) => (
                   <div className={styles.addOption} key={index}>
+                    <span>Option:&nbsp;&nbsp;&nbsp;</span>
 
                     {/* {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null} */}
-                    <Button handleClick={() => deleteLeg(index)} className="buttonRemove" />
+                    <Button handleClick={() => deleteLeg(index)} className={styles.buttonRemove} />
 
                     <OptionAction option={option}
                                 items={itemActions}
@@ -129,11 +136,11 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                     </label>
                   </div>
             ))}
-            <div>
+            {/* <div>
               <Button handleClick={addNewLeg}
                         className={styles.buttonAdd}
                         text="+ Add Option" />
-            </div>
+            </div> */}
 
     </>
   );

@@ -3,6 +3,7 @@ import OptionItems from '../Input/OptionItems.jsx'
 import Button from '../Button/Button.jsx'
 import AddLeg from './AddLeg.jsx'
 import AddStock from './AddStock.jsx';
+import styles from './AddTrade.module.css'; 
 import { 
   defaultStock, 
   defaultLeg, 
@@ -13,6 +14,7 @@ import {
 
 function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
   const [strategy, setStrategy] = useState("Stock");
+  const [stockVisible, setStockVisible] = useState(1);
 
   const handleTrade = (event) => {
     console.log(event.target.name, event.target.value);
@@ -84,6 +86,46 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     }))
   }
 
+  const addNewLeg = () => {
+    const newLeg = { ...defaultLeg }
+    const leg = newTrade.legs
+
+    // 3 legs max
+    if (leg.length <= 3) {
+      setNewTrade(values => ({
+        ...values, 
+        legs: [...values.legs, newLeg] 
+      }))
+      console.log(newTrade);
+
+    }
+  }
+
+  const addStock = () => {
+    setStockVisible(1);
+  }
+
+  let addStockButton
+  let showStock
+  if (stockVisible === 0) {
+    showStock = null
+    addStockButton = <Button handleClick={addStock}
+                      className={styles.buttonAdd}
+                      text="Add Stock" />
+  } else {
+    showStock = <AddStock strategy={strategy}
+                  items={action}
+                  handleChange={handleStock}
+                  stock={newTrade.stock}
+                  itemSubAction={subAction}
+                  stockVisible={stockVisible}
+                  setStockVisible={setStockVisible}
+                  setNewTrade={setNewTrade} />
+
+      addStockButton = null
+  }
+
+
   return (
     <>
       <form action ="/dashboard/trades" onSubmit={onSubmit} method="POST">
@@ -117,8 +159,16 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                 />
               </label>
           </div>
-          <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={newTrade.stock} itemSubAction={subAction} />
+
+          {stockVisible === 0 ? null 
+          : showStock}
           <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={strategy} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
+          <div>
+            {addStockButton}
+            <Button handleClick={addNewLeg}
+                      className={styles.buttonAdd}
+                      text="Add Option" />
+          </div>
         </div>
         <div className="footerTemplate">
           <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
