@@ -13,7 +13,7 @@ import {
   posType } from '../../../public/tradeDefaults.js'
 
 function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
-  const [strategy, setStrategy] = useState("Stock");
+  const [preset, setPreset] = useState("Stock");
   const [stockVisible, setStockVisible] = useState(1);
 
   const handleTrade = (event) => {
@@ -30,9 +30,9 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
       stock: {...values.stock, [event.target.name]: event.target.value }}))
   }
 
-  const handleStrategy = (event) => {
+  const handlePreset = (event) => {
     const updateStrategy = event.target.value
-    setStrategy(updateStrategy)
+    setPreset(updateStrategy)
 
     const findQty = strategyOptions.find(element => element.value === updateStrategy)
 
@@ -113,7 +113,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                       className={styles.buttonAdd}
                       text="Add Stock" />
   } else {
-    showStock = <AddStock strategy={strategy}
+    showStock = <AddStock strategy={preset}
                   items={action}
                   handleChange={handleStock}
                   stock={newTrade.stock}
@@ -124,7 +124,6 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
 
       addStockButton = null
   }
-
 
   return (
     <>
@@ -144,9 +143,9 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
               <label>Preset:
                 <select 
                     className="inputSelect"
-                    name="strategy"
-                    value={strategy}
-                    onChange={handleStrategy}> 
+                    name="preset"
+                    value={preset}
+                    onChange={handlePreset}> 
                     <OptionItems items={strategyOptions}/>
                 </select>
               </label>
@@ -162,7 +161,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
 
           {stockVisible === 0 ? null 
           : showStock}
-          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={strategy} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
+          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={preset} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
           <div>
             {addStockButton}
             <Button handleClick={addNewLeg}
