@@ -4,8 +4,9 @@ import OptionItems from '../Input/OptionItems.jsx';
 import { defaultStock } from '../../../public/tradeDefaults.js'
 import Button from '../Button/Button.jsx'
 
-function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVisible, setStockVisible, setNewTrade }) {
+function AddStock({ strategy, handleChange, items, itemSubAction, stockVisible, setStockVisible, newTrade, setNewTrade }) {
   if (strategy !== "Stock" && strategy !== "Covered Call") return null
+  const stock = newTrade.stock
 
   let stockValue = 0;
   if (stock.price !== '' && stock.qty !== '') {
@@ -18,6 +19,7 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
       ...values, 
       stock: {}
     }))
+
     setStockVisible(0)
   }
 
@@ -25,7 +27,7 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
     <>
       <div className={styles.addOption}>
         <span>Stock:&nbsp;&nbsp;&nbsp;</span>
-        <Button handleClick={() => deleteStock()} className={styles.buttonRemove} />
+        <Button handleClick={deleteStock} className={styles.buttonRemove} />
         <OptionAction option={stock}
             items={items}
             handleChange={handleChange} />

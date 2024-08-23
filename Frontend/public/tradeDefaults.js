@@ -24,9 +24,9 @@ const defaultLeg = {
 }
 
 const strategyOptions = [
-    { id: 0, value: "None", text: "None", quantity: 0 },
-    // { id: 0, value: "Stock", text: "Stock", quantity: 0 },
-    // { id: 1, value: "Option", text: "Single Option", quantity: 1 },
+    // { id: 0, value: "None", text: "None", quantity: 0 },
+    { id: 0, value: "Stock", text: "Stock", quantity: 0 },
+    { id: 1, value: "Option", text: "Single Option", quantity: 1 },
     { id: 2, value: "Covered Call", text: "Covered Call", quantity: 1 },
     { id: 3, value: "Vertical Spread", text: "Vertical Spread", quantity: 2 },
     { id: 4, value: "Strangle", text: "Strangle", quantity: 2 },
