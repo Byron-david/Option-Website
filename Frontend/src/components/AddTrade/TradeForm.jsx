@@ -13,7 +13,7 @@ import {
   posType } from '../../../public/tradeDefaults.js'
 
 function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
-  const [strategy, setStrategy] = useState("Stock");
+  const [preset, setPreset] = useState("Stock");
   const [stockVisible, setStockVisible] = useState(1);
 
   const handleTrade = (event) => {
@@ -32,7 +32,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
 
   const handleStrategy = (event) => {
     const updateStrategy = event.target.value
-    setStrategy(updateStrategy)
+    setPreset(updateStrategy)
 
     const findQty = strategyOptions.find(element => element.value === updateStrategy)
 
@@ -40,12 +40,14 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
       setNewTrade(values => ({
         ...values, 
         stock: {...defaultStock}}))
+      setStockVisible(1)
     }
     else {
       setNewTrade(values => ({
         ...values, 
         stock: {}
       }))
+      setStockVisible(0)
     }
 
     setNewTrade(values => ({
@@ -101,30 +103,10 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     }
   }
 
-  const addStock = () => {
+  const addStock = (event) => {
+    event.preventDefault()
     setStockVisible(1);
   }
-
-  let addStockButton
-  let showStock
-  if (stockVisible === 0) {
-    showStock = null
-    addStockButton = <Button handleClick={addStock}
-                      className={styles.buttonAdd}
-                      text="Add Stock" />
-  } else {
-    showStock = <AddStock strategy={strategy}
-                  items={action}
-                  handleChange={handleStock}
-                  stock={newTrade.stock}
-                  itemSubAction={subAction}
-                  stockVisible={stockVisible}
-                  setStockVisible={setStockVisible}
-                  setNewTrade={setNewTrade} />
-
-      addStockButton = null
-  }
-
 
   return (
     <>
@@ -144,8 +126,8 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
               <label>Preset:
                 <select 
                     className="inputSelect"
-                    name="strategy"
-                    value={strategy}
+                    name="preset"
+                    value={preset}
                     onChange={handleStrategy}> 
                     <OptionItems items={strategyOptions}/>
                 </select>
@@ -160,11 +142,19 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
               </label>
           </div>
 
-          {stockVisible === 0 ? null 
-          : showStock}
-          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={strategy} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
+          <AddStock strategy={preset}
+                    items={action}
+                    handleChange={handleStock}
+                    stock={newTrade.stock}
+                    itemSubAction={subAction}
+                    stockVisible={stockVisible}
+                    setStockVisible={setStockVisible}
+                    setNewTrade={setNewTrade} />
+          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={preset} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
           <div>
-            {addStockButton}
+            <Button handleClick={addStock}
+                      className={styles.buttonAdd}
+                      text="Add Stock" />
             <Button handleClick={addNewLeg}
                       className={styles.buttonAdd}
                       text="Add Option" />

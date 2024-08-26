@@ -5,7 +5,9 @@ import { defaultStock } from '../../../public/tradeDefaults.js'
 import Button from '../Button/Button.jsx'
 
 function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVisible, setStockVisible, setNewTrade }) {
-  if (strategy !== "Stock" && strategy !== "Covered Call") return null
+  if (stockVisible === 0) {
+    return null
+  }
 
   let stockValue = 0;
   if (stock.price !== '' && stock.qty !== '') {
