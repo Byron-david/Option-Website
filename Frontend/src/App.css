@@ -1,13 +1,13 @@
 :root {
-  --background-color-nav : #303838;
-  --background-color-main : #232829;
-  --background-color-secondary : #303838;
+  --background-color-nav : #263544;
+  --background-color-main : #1d2531 ;
+  --background-color-secondary : #263544;
 
   --background-color-highlight : #eaeaea;
-  --background-color-button : #74c68a;
-  --background-color-button-blue : #74aac6;
-  /* --background-color-button-green : #B1F054; */
-  --background-color-button-red :#f05454;
+  --background-color-button : #429efa;
+  --background-color-button-blue : #42a5f5;
+  --background-color-button-green : #4aeb88;
+  --background-color-button-red :#f54242;
 
   /* --background-color-main-light : #eaeaea;
   --background-color-secondary-light : #f5f5f5; */

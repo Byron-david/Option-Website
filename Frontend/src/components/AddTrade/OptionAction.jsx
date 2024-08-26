@@ -2,7 +2,7 @@ import OptionItems from '../Input/OptionItems.jsx'
 
 function OptionAction({ option, items, handleChange }) {
   const buyStyle = {
-    backgroundColor: `var(--background-color-button)`,
+    backgroundColor: `var(--background-color-button-green)`,
     color: `var(--background-color-main)`
   }
 

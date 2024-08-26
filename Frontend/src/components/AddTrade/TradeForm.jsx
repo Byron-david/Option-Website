@@ -183,7 +183,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
         </div>
         <div className="footerTemplate">
           <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
-          <Button type="submit" text="Save" className="buttonAdd" />
+          <Button type="submit" text="Save" className={styles.buttonSave} />
         </div>
       </form>
     </>

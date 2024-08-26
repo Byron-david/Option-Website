@@ -38,6 +38,10 @@
   float: right;
 }
 
+.buttonSave {
+  background-color: var(--background-color-button-green);
+}
+
 /* Make buttons round with centered text */
 .buttonRemove:before {
   content:'';

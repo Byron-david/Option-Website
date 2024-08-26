@@ -3,6 +3,7 @@
     /* height: 100%; */
     z-index: 1;
     background-color: var(--background-color-nav);
+    /* background-image: linear-gradient(var(--background-color-button),var(--background-color-secondary)); */
     position: fixed;
     top: 0;
     left: 0;
