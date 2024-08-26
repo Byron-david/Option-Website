@@ -103,23 +103,23 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     }
   }
 
-  const addStock = () => {
-    setNewTrade(values => (
-      { ...values, 
-      stock: {...defaultStock} }
-    ))
-    setStockVisible(1);
+  const addStock = (event) => {
+    event.preventDefault()
+    if (stockVisible === 0) {
+      setNewTrade(values => (
+        { ...values, 
+        stock: {...defaultStock} }
+      ))
+      setStockVisible(1);
+    }
   }
 
-  let addStockButton
   let showStock
   if (stockVisible === 0) {
     showStock = null
-    addStockButton = <Button handleClick={addStock}
-                      className={styles.buttonAdd}
-                      text="Add Stock" />
+
   } else {
-    showStock = <AddStock strategy={strategy}
+    showStock = <AddStock strategy={preset}
                   items={action}
                   handleChange={handleStock}
                   stock={newTrade.stock}
@@ -128,19 +128,8 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   setStockVisible={setStockVisible}
                   setNewTrade={setNewTrade} />
 
-      addStockButton = null
   }
 
-
-  // {stockVisible === 0 ? null 
-  //   : <AddStock strategy={preset}
-  //               items={action}
-  //               handleChange={handleStock}
-  //               stock={newTrade.stock}
-  //               itemSubAction={subAction}
-  //               stockVisible={stockVisible}
-  //               setStockVisible={setStockVisible}
-  //               setNewTrade={setNewTrade} />}
   return (
     <>
       <form action ="/dashboard/trades" onSubmit={onSubmit} method="POST">
@@ -161,7 +150,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                     className="inputSelect"
                     name="preset"
                     value={preset}
-                    onChange={handleStrategy}> 
+                    onChange={handlePreset}> 
                     <OptionItems items={strategyOptions}/>
                 </select>
               </label>
@@ -175,8 +164,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
               </label>
           </div>
 
-          <AddStock strategy={preset}
-                    items={action}
+          <AddStock items={action}
                     handleChange={handleStock}
                     stock={newTrade.stock}
                     itemSubAction={subAction}

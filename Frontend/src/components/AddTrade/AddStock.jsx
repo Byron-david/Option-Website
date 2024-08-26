@@ -4,16 +4,10 @@ import OptionItems from '../Input/OptionItems.jsx';
 import { defaultStock } from '../../../public/tradeDefaults.js'
 import Button from '../Button/Button.jsx'
 
-<<<<<<< HEAD
-function AddStock({ strategy, handleChange, items, itemSubAction, stockVisible, setStockVisible, newTrade, setNewTrade }) {
-  if (strategy !== "Stock" && strategy !== "Covered Call") return null
-  const stock = newTrade.stock
-=======
 function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVisible, setStockVisible, setNewTrade }) {
   if (stockVisible === 0) {
     return null
   }
->>>>>>> presets
 
   let stockValue = 0;
   if (stock.price !== '' && stock.qty !== '') {
