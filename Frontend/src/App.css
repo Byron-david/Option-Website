@@ -1,20 +1,26 @@
 :root {
-  --background-color-nav : #263544;
-  --background-color-main : #1d2531 ;
-  --background-color-secondary : #263544;
+  --background-color-nav : #121621;
+  --background-color-main : #fcfcfc ;
+  --background-color-header : #ffffff; 
 
   --background-color-highlight : #eaeaea;
-  --background-color-button : #429efa;
-  --background-color-button-blue : #42a5f5;
-  --background-color-button-green : #4aeb88;
-  --background-color-button-red :#f54242;
+  --background-color-button : #635bff;
+  --background-color-button-blue : #635bff;
+  --background-color-button-green : #15b71d;
+  --background-color-button-red :#f04438;
+
+  --hover-light : #f3f3f3;
 
   /* --background-color-main-light : #eaeaea;
   --background-color-secondary-light : #f5f5f5; */
   
+  --border-light : #dcdfe4;
+  --border-mid : #434a60;
+
   --text-color-light : #eaeaea;
-  --text-color-alt : #4F5D75;
-  --text-color-dark : #232829;
+  --text-color-header-light : #667085;
+  --text-color-mid : #b3b9c6;
+  --text-color-dark : #212636;
 
   --nav-width : 15%;
   --padding : 0.5rem;
@@ -23,8 +29,10 @@
   --margin : 1rem;
 
   --border-radius-main : 0.25rem;
+  --border-radius-mid : 0.5rem;
 
-  --box-shadow : 0px 0px 5px 0 rgba(0, 0, 0, .2);
+  /* --box-shadow: rgba(0, 0, 0, 0.04) 0px 5px 22px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; */
+  --box-shadow : 0px 0px 10px 0 rgba(0, 0, 0, .1);
   --box-shadow-light : 0px 0px 5px 0 rgba(1, 1, 1, .2);
 }
 
@@ -71,7 +79,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid var(--background-color-main);
+  border-top: 1px solid var(--border-mid);
   padding: 0;
   width: 100%;
 }
@@ -210,11 +218,11 @@ input[type=date]{
   }
 }
 
-
-
-
 table {
   background-color: var(--background-color-secondary);
+  border-top: 1px solid var(--border-light);
+  border-bottom-left-radius: var(--border-radius-mid);
+  border-bottom-right-radius: var(--border-radius-mid);
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
@@ -222,17 +230,19 @@ table {
   min-width: 600px;
   overflow:hidden;
   font-size: 0.9em;
+  color: var(--text-color-dark)
 }
 
 caption {
   padding: 1rem;
   font-size: 1rem;
   font-weight: 500;
+  text-align: left;
 }
 
 th {
   /* border-bottom: 1px solid var(--background-color-highlight); */
-  filter: brightness(90%);
+  /* border-top: 1px solid var(--border-light); */
 }
 
 /* th:first-child{
@@ -244,7 +254,8 @@ th:last-child {
 } */
 
 thead > tr {
-  background-color: var(--background-color-main);
+  background-color: var(--hover-light);
+  color: var(--text-color-header-light)
 }
 
 tbody > tr {
@@ -252,7 +263,7 @@ tbody > tr {
 }
 
 tbody > tr:hover{
-  filter: brightness(120%);
+  background-color: var(--hover-light);
 }
 
 th, td {
@@ -260,7 +271,7 @@ th, td {
   text-align: left;
   padding: 0.5rem 0.5rem;
   min-width: 50px;
-  border-bottom: 3px solid var(--background-color-main);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .inputCsv {

@@ -17,7 +17,7 @@
     font-family: inherit;
     font-size: 1rem;
     background-color: transparent;
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     cursor: pointer;
     border-radius: var(--border-radius-main);
     text-align: left;
@@ -28,7 +28,7 @@
 
 .active {
     background-color: var(--background-color-button);
-    color: var(--text-color-dark);
+    color: var(--text-color-light);
 }
 
 #logo {
@@ -50,4 +50,5 @@ ul {
 
 li {
     width: 100%;
+    color: var(--text-color-mid)
 }
