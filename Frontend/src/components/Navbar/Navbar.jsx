@@ -17,7 +17,7 @@ function Logo() {
   return (
     <>
       <h2 id={styles.logo}>Option Insights</h2>
-      <hr/>
+      <hr className={styles.logoHr}/>
     </>
   )
 }

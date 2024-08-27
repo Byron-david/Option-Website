@@ -162,7 +162,9 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 <td>{strategy}</td>
                 <td>{qty}</td>
                 <td>
-                    <CombinePrice prices={prices} />
+                    <div className={styles.price}>
+                        <CombinePrice prices={prices} />
+                    </div>
                 </td>
                 <td>
                     <CombineStrikes key={uuid()} strikes={strikes} />

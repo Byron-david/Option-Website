@@ -36,6 +36,10 @@
     text-align: left;
 }
 
+.logoHr {
+    border-color: var(--text-color-mid);
+}
+
 ul {
     margin: 0;
     padding: 1rem;

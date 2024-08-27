@@ -3,10 +3,13 @@ import styles from './Button.module.css';
 
 function Button({ text = "x", handleClick, 
                   className = styles.buttonGreen, 
-                  backgroundColor}) 
+                  backgroundColor,
+                  color = "white"
+                }) 
   {
   const buttonStyle = {
-    backgroundColor: backgroundColor
+    backgroundColor: backgroundColor,
+    color: color
   }
 
   return (

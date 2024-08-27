@@ -37,7 +37,7 @@ begin
   INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID) 
   VALUES
     ('SPY', (DATE '07/29/2024'), 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, (DATE '08/30/2024'), new_id),
-    ('SPY', (DATE '07/29/2024'), 'BUY', 'OPEN', 'PUT', 1, 1.30, 150, 130, (DATE '08/30/2024'), new_id);
+    ('SPY', (DATE '07/29/2024'), 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, (DATE '08/30/2024'), new_id);
 end $$;
 
 do

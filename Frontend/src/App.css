@@ -6,7 +6,7 @@
   --background-color-highlight : #eaeaea;
   --background-color-button : #635bff;
   --background-color-button-blue : #635bff;
-  --background-color-button-green : #15b71d;
+  --background-color-button-green : #0bdd16;
   --background-color-button-red :#f04438;
 
   --hover-light : #f3f3f3;
@@ -74,13 +74,13 @@ button:hover {
   filter: brightness(125%);
 }
 
-
 hr {
   display: block;
   height: 1px;
   border: 0;
   border-top: 1px solid var(--border-mid);
   padding: 0;
+  margin: 0;
   width: 100%;
 }
 

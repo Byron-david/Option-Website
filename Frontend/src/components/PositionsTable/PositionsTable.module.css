@@ -109,6 +109,11 @@
 
 .debit {
   color: var(--background-color-button-red)
+  /* border-radius: var(--border-radius-main);
+  color: white;
+  border: 1px solid var(--background-color-button-red);
+  padding: var(--padding-small);
+  margin: 0.25rem; */
 }
 
 .credit {
@@ -116,8 +121,14 @@
   /* border-radius: var(--border-radius-main);
   color: white;
   background-color: var(--background-color-button-green);
-  padding: var(--padding-small); */
+  padding: var(--padding-small);
+  margin: 0.25rem; */
 }
+
+/* .price {
+  display: flex;
+  flex-wrap: wrap;
+} */
 
 hr {
   display: block;
