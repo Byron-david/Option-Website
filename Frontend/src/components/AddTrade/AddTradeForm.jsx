@@ -1,33 +1,25 @@
 import { useState } from 'react'
-import OptionItems from '../Input/OptionItems.jsx'
-import Button from '../Button/Button.jsx'
-import { v4 as uuid } from 'uuid';
-import AddLeg from './AddLeg.jsx'
 import tradeService from '../../services/trades.js'
-import AddStock from './AddStock.jsx';
 import TradeForm from './TradeForm.jsx';
-import { 
-  defaultNewTrade, 
-  defaultTrade, 
-  defaultStock, 
-  defaultLeg, 
-  strategyOptions } from '../../../public/tradeDefaults.js'
 import formatTrade from '../../functions/formatTrade.js'
+import { defaultNewTrade, defaultTrade } from '../../../public/tradeDefaults.js'
 
-function AddTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
+function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
   const [newTrade, setNewTrade] = useState(defaultNewTrade)
 
   const addTrade = event => {
     event.preventDefault()
     
-    const tradeObject = formatTrade(newTrade)
+    console.log(newTrade);
 
-    tradeService
-      .create(tradeObject)
-      .then(returnedTrade => {
-        setAllTrades(allTrades.concat(returnedTrade))
-        setNewTrade(defaultTrade)
-      })
+    const tradeObject = formatTrade(newTrade, "strategy")
+
+    // tradeService
+    //   .create(tradeObject)
+    //   .then(returnedTrade => {
+    //     setAllTrades(allTrades.concat(returnedTrade))
+    //     setNewTrade(defaultTrade)
+    //   })
       // handleClickClose()
   }
 

@@ -114,22 +114,6 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     }
   }
 
-  let showStock
-  if (stockVisible === 0) {
-    showStock = null
-
-  } else {
-    showStock = <AddStock strategy={preset}
-                  items={action}
-                  handleChange={handleStock}
-                  stock={newTrade.stock}
-                  itemSubAction={subAction}
-                  stockVisible={stockVisible}
-                  setStockVisible={setStockVisible}
-                  setNewTrade={setNewTrade} />
-
-  }
-
   return (
     <>
       <form action ="/dashboard/trades" onSubmit={onSubmit} method="POST">
@@ -171,7 +155,12 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                     stockVisible={stockVisible}
                     setStockVisible={setStockVisible}
                     setNewTrade={setNewTrade} />
-          <AddLeg newTrade={newTrade} setNewTrade={setNewTrade} strategy={preset} itemTypes={posType} itemActions={action} itemSubAction={subAction} />
+          <AddLeg newTrade={newTrade}
+                  setNewTrade={setNewTrade}
+                  strategy={preset}
+                  itemTypes={posType}
+                  itemActions={action}
+                  itemSubAction={subAction} />
           <div>
             <Button handleClick={addStock}
                       className={styles.buttonAdd}
