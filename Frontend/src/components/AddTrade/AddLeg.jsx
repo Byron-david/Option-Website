@@ -46,9 +46,8 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
     let { name, value } = event.target;
     let onChangeValue = [...leg];
     // if (name === "value") {
-    //   value =parseFloat(value).toFixed(2)
+    //   value = parseFloat(value).toFixed(2)
     // }
-    console.log(value);
     onChangeValue[index][name] = value;
     setNewTrade(values => ({
       ...values, 
@@ -110,10 +109,10 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
-                    <label>Value: 
+                    <label>Option Price: 
                       <input 
                         required="required"
-                        placeholder="1,000"
+                        placeholder="2.50"
                         type="number" 
                         name="value" 
                         value={option.value || ""} 
