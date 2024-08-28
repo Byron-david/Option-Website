@@ -30,47 +30,74 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
       //     exp: '', 
       // }
       
-      // Check Call/Put count
-      const countDuplicate = () => {
-        const duplicates = newTrade.legs.reduce((acc, item) => {
-          let newItem = acc.find((i) => i.trade_type === item.trade_type);
-          
-          if (newItem) {
-            newItem.count += 1;
-          } else {
-            acc.push({ trade_type: item.trade_type, count: 1 });
-          }
-          
-          return acc;
-        }, []);
 
-        return duplicates
-      }
-
-      const checkStrikes = newTrade.legs.reduce((acc, item) => {
-        let newStrike = acc.find((i) => i.strikes === item.strikes);
-        let newTradeType = acc.find((i) => i.trade_type === item.trade_type);
-        
-        if (newStrike && newTradeType) {
-          newStrike.count += 1;
-        } else {
-          acc.push({ strikes: item.strikes, trade_type: item.trade_type, count: 1 });
-        }
-        
-        return acc;
-      }, []).reduce((acc, curr) => curr.count > 1 ? acc.concat(curr) : acc, []);
-
-      // Butterfly
-      if (countDuplicate()[0].count === 4) {
-        if (checkStrikes[0].count === 2) {
-          console.log("butterfly");
-          strategy = "Butterfly"
-        }
-      }
 
 
     }
+    
+    // Check Call/Put count
+    // const countDuplicate = () => {
+    //   const duplicates = newTrade.legs.reduce((acc, item) => {
+    //     let newItem = acc.find((i) => i.trade_type === item.trade_type);
+        
+    //     if (newItem) {
+    //       newItem.count += 1;
+    //     } else {
+    //       acc.push({ trade_type: item.trade_type, count: 1 });
+    //     }
+        
+    //     return acc;
+    //   }, []);
 
+    //   return duplicates
+    // }
+
+    const countDuplicate = (trade, key) => {
+      const duplicates = trade.legs.reduce((acc, item) => {
+        let newItem = acc.find((i) => i[key] === item[key]);
+        
+        if (newItem) {
+          newItem.count += 1;
+        } else {
+          acc.push({ [key]: item[key], count: 1 });
+        }
+        
+        return acc;
+      }, []);
+
+      return duplicates
+    }
+
+    const checkTradeType = countDuplicate(newTrade, "trade_type")
+
+    if (checkTradeType)
+
+    // Checks if duplicate strike price (In case there are 4 legs)
+    // const checkStrikes = countDuplicate(newTrade, "strikes")
+    //                       .reduce((acc, curr) => curr.count > 1 ? acc.concat(curr) : acc, [])
+
+    // const checkStrikes = newTrade.legs.reduce((acc, item) => {
+    //   let newStrike = acc.find((i) => i.strikes === item.strikes);
+    //   let newTradeType = acc.find((i) => i.trade_type === item.trade_type);
+      
+    //   if (newStrike && newTradeType) {
+    //     newStrike.count += 1;
+    //   } else {
+    //     acc.push({ strikes: item.strikes, trade_type: item.trade_type, count: 1 });
+    //   }
+      
+    //   return acc;
+    // }, []).reduce((acc, curr) => curr.count > 1 ? acc.concat(curr) : acc, []);
+
+    // Butterfly
+    console.log(checkTradeType);
+    console.log(checkStrikes);
+    if (checkTradeType[0].count === 3) {
+      if (checkStrikes[0].count === 2) {
+        console.log("butterfly");
+        strategy = "Butterfly"
+      }
+    }
 
     // Covered Call
     if (newTrade.stock.action === "BUY"
