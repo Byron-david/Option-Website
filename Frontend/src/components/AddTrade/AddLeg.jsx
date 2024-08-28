@@ -113,9 +113,10 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                       <input 
                         required="required"
                         placeholder="2.50"
+                        id="optionPrice"
                         type="number" 
                         name="value" 
-                        value={option.value || ""} 
+                        value={option.value} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
