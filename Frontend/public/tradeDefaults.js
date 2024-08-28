@@ -30,8 +30,8 @@ const strategyOptions = [
     { id: 2, value: "Covered Call", text: "Covered Call", quantity: 1 },
     { id: 3, value: "Vertical Spread", text: "Vertical Spread", quantity: 2 },
     { id: 4, value: "Strangle", text: "Strangle", quantity: 2 },
+    { id: 6, value: "Butterfly", text: "Butterfly", quantity: 3 },
     { id: 5, value: "Iron Condor", text: "Iron Condor", quantity: 4 },
-    { id: 6, value: "Butterfly", text: "Butterfly", quantity: 4 },
     // { id: 0, value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
     // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
   ]

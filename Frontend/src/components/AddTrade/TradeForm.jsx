@@ -69,6 +69,15 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
         }
       }
 
+      if (updateStrategy === "Butterfly") {
+        if (i === 1) {
+          newLeg.qty = 2
+        }
+        if (i === 2) {
+          newLeg.action = "BUY"
+        }
+      }
+
       if (updateStrategy === "Covered Call") {
         newLeg.action = "SELL"
       }
