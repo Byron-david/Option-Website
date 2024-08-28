@@ -67,6 +67,10 @@
   filter: brightness(125%);
 }
 
+.preset {
+  margin-left: auto; 
+  margin-right: 0;
+}
 
 @media screen and (max-width: 750px) {
     .addOption {

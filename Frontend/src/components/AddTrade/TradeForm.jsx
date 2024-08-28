@@ -138,15 +138,6 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   maxLength="4"
                 />
               </label>
-              <label>Preset:
-                <select 
-                    className="inputSelect"
-                    name="preset"
-                    value={preset}
-                    onChange={handlePreset}> 
-                    <OptionItems items={strategyOptions}/>
-                </select>
-              </label>
               <label>Date Exec.:
                 <input 
                   type="date" 
@@ -154,6 +145,15 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   value={newTrade.base.date || ""} 
                   onChange={handleTrade}
                 />
+              </label>
+              <label className={styles.preset}>Preset:
+                <select 
+                    className="inputSelect"
+                    name="preset"
+                    value={preset}
+                    onChange={handlePreset}> 
+                    <OptionItems items={strategyOptions}/>
+                </select>
               </label>
           </div>
 
