@@ -1,6 +1,7 @@
 :root {
   --background-color-nav : #121621;
-  --background-color-main : #fcfcfc ;
+  --background-color-main : #fcfcfc;
+  --background-color-main2 : #f6f6f6;
   --background-color-header : #ffffff; 
 
   --background-color-highlight : #eaeaea;
@@ -264,8 +265,22 @@ tbody > tr {
   background-color: var(--background-color-secondary);
 }
 
-tbody > tr:hover{
-  background-color: var(--hover-light);
+tr:hover td {
+  border: 1px solid var(--background-color-button-blue );
+  border-style: solid none;
+  padding: 10px;
+}
+
+tr:hover td:first-child {
+  border-left-style: solid;
+  border-top-left-radius: var(--border-radius-main);
+  border-bottom-left-radius: var(--border-radius-main);
+}
+
+tr:hover td:last-child {
+  border-right-style: solid;
+  border-bottom-right-radius: var(--border-radius-main);
+  border-top-right-radius: var(--border-radius-main);
 }
 
 th, td {
