@@ -68,9 +68,10 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
       return duplicates
     }
 
-    const checkTradeType = countDuplicate(newTrade, "trade_type")
+    const countTradeType = countDuplicate(newTrade, "trade_type")
+    const countAction = countDuplicate(newTrade, "action")
 
-    if (checkTradeType)
+    if (countTradeType)
 
     // Checks if duplicate strike price (In case there are 4 legs)
     // const checkStrikes = countDuplicate(newTrade, "strikes")
@@ -90,9 +91,9 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     // }, []).reduce((acc, curr) => curr.count > 1 ? acc.concat(curr) : acc, []);
 
     // Butterfly
-    console.log(checkTradeType);
-    console.log(checkStrikes);
-    if (checkTradeType[0].count === 3) {
+    console.log(countTradeType);
+    // console.log(checkStrikes);
+    if (countTradeType[0].count === 3) {
       if (checkStrikes[0].count === 2) {
         console.log("butterfly");
         strategy = "Butterfly"
@@ -108,7 +109,13 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     } 
 
     // Strangle
-
+    console.log(newTrade)
+    // if (countTradeType[0].count === 1) {
+    //   if (checkStrikes[0].count === 2) {
+    //     console.log("Strangle");
+    //     strategy = "Strangle"
+    //   }
+    // }
     // Vertical Spread
 
     // Option
