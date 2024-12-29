@@ -51,7 +51,7 @@
 
 .callStrike {
   /* color: var(--background-color-button) */
-  border: 1px solid  var(--background-color-button-green); 
+  border: 1px solid  var(--background-color-green); 
   /* background-color:  var(--background-color-button);  */
   padding: var(--padding-small);
   /* color: var(--background-color-main); */
@@ -62,8 +62,8 @@
 
 .putStrike {
   /* color: var(--background-color-button) */
-  border: 1px solid  var(--background-color-button-red); 
-  /* background-color:  var(--background-color-button-red);  */
+  border: 1px solid  var(--background-color-red); 
+  /* background-color:  var(--background-color-red);  */
   padding: var(--padding-small);
   /* color: var(--background-color-main); */
   border-radius: var(--border-radius-main);
@@ -73,27 +73,25 @@
 
 .actionOpen {
   /* color: var(--background-color-button) */
-  background-color:  var(--background-color-button-green); 
-  color: var(--background-color-main);
-  /* border: 1px solid  var(--background-color-button);  */
+  /* background-color:  var(--background-color-green);  */
+  border: 1px solid  var(--background-color-green); 
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
 
 .actionClose {
   /* color: var(--background-color-button) */
-  background-color:  var(--background-color-button-red); 
-  color: var(--background-color-main);
-  /* border: 1px solid  var(--background-color-button-red);  */
+  /* background-color:  var(--background-color-red);  */
+  border: 1px solid  var(--background-color-red); 
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
 
 .actionRoll {
   /* color: var(--background-color-button) */
-  background-color:  var(--background-color-button-blue); 
+  background-color:  var(--background-color-blue); 
   color: var(--background-color-main);
-  /* border: 1px solid  var(--background-color-button-blue);  */
+  /* border: 1px solid  var(--background-color-blue);  */
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
@@ -108,19 +106,19 @@
 }
 
 .debit {
-  color: var(--background-color-button-red)
+  color: var(--background-color-red)
   /* border-radius: var(--border-radius-main);
   color: white;
-  border: 1px solid var(--background-color-button-red);
+  border: 1px solid var(--background-color-red);
   padding: var(--padding-small);
   margin: 0.25rem; */
 }
 
 .credit {
-  color: var(--background-color-button-green);
+  color: var(--background-color-green);
   /* border-radius: var(--border-radius-main);
   color: white;
-  background-color: var(--background-color-button-green);
+  background-color: var(--background-color-green);
   padding: var(--padding-small);
   margin: 0.25rem; */
 }

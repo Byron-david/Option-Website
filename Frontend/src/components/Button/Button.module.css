@@ -1,6 +1,6 @@
 .buttonGreen {
     background-color: var(--background-color-button);
-    color: var(--text-color-dark);
+    color: var(--background-color-main);
     padding: 0.2rem 0.5rem;
 }
 

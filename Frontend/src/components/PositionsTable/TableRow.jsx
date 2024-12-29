@@ -174,13 +174,15 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 <td>
                     <div className={styles.editButtons}>
                         <Button text="Edit"
-                        backgroundColor={`var(--background-color-button-blue)`}
+                        backgroundColor={`var(--background-color-blue)`}
+                        color={`var(--background-color-main)`}
                         handleClick={event => handleUpdate(event, index)} />
 
                         <Button text="Del"
-                        backgroundColor={`var(--background-color-button-red)`}
+                        backgroundColor={`var(--background-color-red)`}
+                        color={`var(--background-color-main)`}
                         handleClick={event => handleDelete(event, index)} />
-                        {/* <Button text="del" backgroundColor={`var(--background-color-button-red)`} handleClick={() => handleDelete(person.id)} /> */}
+                        {/* <Button text="del" backgroundColor={`var(--background-color-red)`} handleClick={() => handleDelete(person.id)} /> */}
                     </div>
                 </td>
             </tr>

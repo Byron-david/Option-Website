@@ -39,7 +39,7 @@
 }
 
 .buttonSave {
-  background-color: var(--background-color-button-green);
+  background-color: var(--background-color-green);
 }
 
 /* Make buttons round with centered text */
@@ -57,7 +57,7 @@
   border-radius: var(--border-radius-main);
   text-align: center;
   padding: 0;
-  background-color: var(--background-color-button-red);
+  background-color: var(--background-color-red);
   color: var(--background-color-main);
   /* padding: 0.2rem 0.5rem; */
 }
