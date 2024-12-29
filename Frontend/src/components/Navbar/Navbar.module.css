@@ -32,7 +32,7 @@
     background-color: var(--background-color-button);
     background-image: var(--background-color-gradient);
 
-    color: var(--text-color-light);
+    color: var(--background-color-main);
 }
 
 #logo {

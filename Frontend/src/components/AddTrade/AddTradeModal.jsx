@@ -9,7 +9,7 @@ function AddTradeModal({ allTrades, setAllTrades, setNewTrade, handleChange, hea
   return (
     <>
       <div className={styles.modalButtonContainer}>
-        <Button handleClick={() => setIsOpen(true)} text="+ Add Trade" />
+        <Button handleClick={() => setIsOpen(true)} text="+ Add Trade" className={styles.addTrade}/>
         <Modal open={isOpen}>
           <AddTradeForm handleClickClose={() => setIsOpen(false)}
                         allTrades={allTrades}

@@ -32,6 +32,11 @@ dialog {
     z-index: 999;
 } */
 
+.addTrade {
+    background-image: var(--background-color-gradient);
+}
+
 .modalButtonContainer {
     padding: var(--padding);
+    text-align: left;
 }
