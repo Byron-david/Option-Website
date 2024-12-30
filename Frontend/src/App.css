@@ -12,6 +12,8 @@
   --background-color-green : #52d87b;
   --background-color-red :#f04438;
 
+  --top-nav-size : 30px;
+
   --hover-light : #f3f3f3;
 
   /* --background-color-main-light : #eaeaea;
@@ -63,6 +65,7 @@ main {
 
 #mainContainer {
   padding-left: var(--nav-width);
+  margin-top: var(--top-nav-size);
 }
 
 button {

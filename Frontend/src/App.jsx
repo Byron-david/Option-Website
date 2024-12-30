@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import AddTradeModal from './components/AddTrade/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
+import TopNavbar from './components/Navbar/TopNavbar.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 import { v4 as uuid } from 'uuid';
 
@@ -16,7 +17,8 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <TopNavbar />
+      {/* <Navbar /> */}
       <div id="mainContainer">
         <main>
           <div>
