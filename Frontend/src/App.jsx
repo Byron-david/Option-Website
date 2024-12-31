@@ -17,8 +17,8 @@ function App() {
 
   return (
     <>
-      <TopNavbar />
       {/* <Navbar /> */}
+      <TopNavbar />
       <div id="mainContainer">
         <main>
           <div>

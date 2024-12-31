@@ -30,9 +30,11 @@
 
 #topNavContainer {
     /* flex: 1 0 20%; */
-    height: var(--top-nav-size);
     z-index: 2;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
     /* background-image: var(--background-color-gradient); */
     border-bottom: 1px solid var(--border-light);
     background-color: var(--background-color-main);
@@ -41,11 +43,38 @@
     position: fixed;
     top: 0;
     width: 100%;
+    height: var(--top-nav-size);
 }
 
 #topNavTitle {
     padding: var(--padding-title);
 }
+
+#topNavElements {
+    display: flex;
+}
+
+#topNavElements > a{
+    padding: var(--padding);
+    border: 1px solid transparent;
+
+    /* display:inline-block; */
+}
+
+#topNavElements > a:hover{
+    border-radius: var(--border-radius-mid);
+    border: 1px solid white;
+}
+
+
+/* #topNavElements > a:hover::after{
+    content: "";
+    display: block;
+    width: 70%;
+    border-bottom: 1px solid;
+    margin: 0px auto;
+} */
+
 
 .active {
     background-color: var(--background-color-button);

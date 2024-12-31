@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import styles from './Navbar.module.css'; 
+import Button from '../Button/Button.jsx'
 
-function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
-  // const buttonStyle = {
-  //   color: color,
-  //   backgroundColor: backgroundColor,
-  // }
-  return (
-    <button className={className} onClick={handleClick}>{text}</button>
-  )
-}
+// function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
+//   // const buttonStyle = {
+//   //   color: color,
+//   //   backgroundColor: backgroundColor,
+//   // }
+//   return (
+//     <button className={className} onClick={handleClick}>{text}</button>
+//   )
+// }
 
 function Logo() {
   return (
@@ -23,9 +24,16 @@ function Logo() {
 function TopNavbar() {
   return (
     <>
-      <div id={styles.topNavContainer}>
-        <div id={styles.topNavTitle}>Option Insight</div>
-        <div id={styles.topNavElements}></div>
+      <div>
+        <nav id={styles.topNavContainer}>
+          <div>
+            <a id={styles.topNavTitle}>Option Insight</a>
+          </div>
+          <div id={styles.topNavElements}>
+            <a>Pricing</a>
+            <a>Sign In</a>
+          </div>
+        </nav>
       </div>
     </>
   )
