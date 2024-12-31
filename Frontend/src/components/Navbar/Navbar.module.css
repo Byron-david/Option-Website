@@ -32,14 +32,19 @@
     /* flex: 1 0 20%; */
     height: var(--top-nav-size);
     z-index: 2;
+    display: flex;
     /* background-image: var(--background-color-gradient); */
-    /* border-right: 1px solid var(--border-light); */
+    border-bottom: 1px solid var(--border-light);
     background-color: var(--background-color-main);
-    background-color: red;
+    /* background-color: red; */
     /* background-image: linear-gradient(var(--background-color-button),var(--background-color-secondary)); */
     position: fixed;
     top: 0;
     width: 100%;
+}
+
+#topNavTitle {
+    padding: var(--padding-title);
 }
 
 .active {

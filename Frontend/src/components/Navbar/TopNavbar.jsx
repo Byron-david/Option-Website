@@ -24,7 +24,8 @@ function TopNavbar() {
   return (
     <>
       <div id={styles.topNavContainer}>
-
+        <div id={styles.topNavTitle}>Option Insight</div>
+        <div id={styles.topNavElements}></div>
       </div>
     </>
   )
