@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import styles from './Pages.module.css'; 
 
 function Home() {
   return (
     <>
-      <h1>Home</h1>
+      <h1 id={styles.homeH1}>Stock and Option Journaling Made Easy</h1>
     </>
   )
 }

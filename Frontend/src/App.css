@@ -27,6 +27,9 @@
   --text-color-mid : #b3b9c6;
   --text-color-dark : #eaeaea;
 
+  --text-size-large : 4rem;
+  --text-size-med : 3rem;
+
   --nav-width : 280px;
   --padding : 0.5rem;
   --padding-small : 0.25rem;
@@ -61,6 +64,10 @@ body {
 
 main {
   overflow-y: auto;
+}
+
+#pageContainer {
+  margin-top: var(--top-nav-size);
 }
 
 #mainContainer {

@@ -11,18 +11,20 @@ function App() {
     <>
       {/* <Navbar /> */}
       <TopNavbar />
-      <div id="mainContainer">
+      <main id="pageContainer">
+        <Outlet />
+      </main>
+      {/* <div id="mainContainer">
         <main>
-          <Outlet />
           <div>
-            {/* {JSON.stringify(newTrade)} */}
+            {JSON.stringify(newTrade)}
           </div>
-          {/* <AddTradeForm  /> */}
-          {/* <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/> */}
-          {/* <ImportCsvModal /> */}
+          <AddTradeForm  />
+          <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/>
+          <ImportCsvModal />
           <PositionsTable />
         </main>
-      </div>
+      </div> */}
     </>
   )
 }
