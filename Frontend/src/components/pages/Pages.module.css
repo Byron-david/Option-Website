@@ -1,3 +1,8 @@
 #homeH1 {
-    font-size: var(--text-size-med);
+    font-size: var(--text-size-3);
+}
+
+.homeP {
+    color: var(--text-color-mid);
+
 }

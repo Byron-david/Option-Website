@@ -24,11 +24,13 @@
 
   --text-color-light : #eaeaea;
   --text-color-header-light : #667085;
-  --text-color-mid : #b3b9c6;
+  --text-color-mid : #6e7681;
   --text-color-dark : #eaeaea;
 
-  --text-size-large : 4rem;
-  --text-size-med : 3rem;
+  --text-size-4 : 4rem;
+  --text-size-3 : 3rem;
+  --text-size-2 : 2rem;
+  --text-size-1 : 1.5rem;
 
   --nav-width : 280px;
   --padding : 0.5rem;
