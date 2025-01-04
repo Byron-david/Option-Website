@@ -26,3 +26,16 @@
     background-color: var(--color-hover);
     color: var(--color-main);
 }
+
+.flexContainer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.textContainer {
+    padding: var(--padding-normal);
+    flex: 1;
+    margin: var(--margin);
+}

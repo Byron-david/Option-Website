@@ -78,6 +78,17 @@ main {
   margin-top: var(--top-nav-size);
 }
 
+.container_xl {
+  max-width: 1280px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.borderLight {
+  border: 1px solid white;
+  border-radius: var(--border-radius-main);
+}
+
 button {
   background-color: var(--color-button);
   color: var(--color-main);
