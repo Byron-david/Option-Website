@@ -7,7 +7,7 @@
 }
 
 #addTradeLeg {
-    padding: 0 var(--padding) var(--padding) var(--padding);
+    padding: 0 var(--padding-condensed) var(--padding-condensed) var(--padding-condensed);
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
@@ -15,8 +15,8 @@
   }
 
 .buySellButton {
-  background-color: var(--background-color-button);
-  color: var(--background-color-main);
+  background-color: var(--color-button);
+  color: var(--color-main);
 }
 
 .addOption {
@@ -32,14 +32,14 @@
 }
 
 .buttonAdd {
-  background-color: var(--background-color-button);
-  color: var(--background-color-main);
+  background-color: var(--color-button);
+  color: var(--color-main);
   padding: 0.2rem 0.5rem;
   float: right;
 }
 
 .buttonSave {
-  background-color: var(--background-color-green);
+  background-color: var(--color-green);
 }
 
 /* Make buttons round with centered text */
@@ -57,8 +57,8 @@
   border-radius: var(--border-radius-main);
   text-align: center;
   padding: 0;
-  background-color: var(--background-color-red);
-  color: var(--background-color-main);
+  background-color: var(--color-red);
+  color: var(--color-main);
   /* padding: 0.2rem 0.5rem; */
 }
 

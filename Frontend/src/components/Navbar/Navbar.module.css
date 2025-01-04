@@ -2,10 +2,10 @@
     /* flex: 1 0 20%; */
     /* height: 100%; */
     z-index: 1;
-    /* background-image: var(--background-color-gradient); */
+    /* background-image: var(--color-gradient); */
     /* border-right: 1px solid var(--border-light); */
-    background-color: var(--background-color-nav);
-    /* background-image: linear-gradient(var(--background-color-button),var(--background-color-secondary)); */
+    background-color: var(--color-nav);
+    /* background-image: linear-gradient(var(--color-button),var(--color-secondary)); */
     position: fixed;
     top: 0;
     left: 0;
@@ -35,11 +35,11 @@
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    /* background-image: var(--background-color-gradient); */
+    /* background-image: var(--color-gradient); */
     border-bottom: 1px solid var(--border-light);
-    background-color: var(--background-color-main);
+    background-color: var(--color-main);
     /* background-color: red; */
-    /* background-image: linear-gradient(var(--background-color-button),var(--background-color-secondary)); */
+    /* background-image: linear-gradient(var(--color-button),var(--color-secondary)); */
     position: fixed;
     top: 0;
     width: 100%;
@@ -55,7 +55,7 @@
 }
 
 #topNavElements > a{
-    padding: var(--padding);
+    padding: var(--padding-condensed);
     border: 1px solid transparent;
     color: white;
     text-decoration: none;
@@ -64,8 +64,8 @@
 
 #topNavElements > a:hover{
     border-radius: var(--border-radius-mid);
-    color: var(--background-color-blue);
-    /* border: 1px solid var(--background-color-blue); */
+    color: var(--color-blue);
+    /* border: 1px solid var(--color-blue); */
 }
 
 
@@ -79,10 +79,10 @@
 
 
 .active {
-    background-color: var(--background-color-button);
-    background-image: var(--background-color-gradient);
+    background-color: var(--color-button);
+    background-image: var(--color-gradient);
 
-    color: var(--background-color-main);
+    color: var(--color-main);
 }
 
 #logo {

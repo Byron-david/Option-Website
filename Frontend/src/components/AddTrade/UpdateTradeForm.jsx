@@ -190,7 +190,7 @@ function UpdateTradeForm({ allTrades, setAllTrades, handleClickClose, header }) 
             <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
           </div>
           <div className="footerTemplate">
-            <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={handleClickClose} />
+            <Button text="Cancel" backgroundColor="var(--color-button-red)" handleClick={handleClickClose} />
             <Button type="submit" text="Save" className="buttonAdd" />
           </div>
         </form>

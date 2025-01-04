@@ -42,7 +42,7 @@ function ImportCsvModal() {
                     <RemapData />
                 </BodyTemplate>
                 <FooterTemplate>
-                    <Button text="Cancel" backgroundColor="var(--background-color-button-red)" handleClick={() => setIsOpen(false)} />
+                    <Button text="Cancel" backgroundColor="var(--color-button-red)" handleClick={() => setIsOpen(false)} />
                     <Button text="Save" className="buttonAdd" handleClick={console.log("Saving...")} />
                 </FooterTemplate>
             </ContainerTemplate>

@@ -1,5 +1,5 @@
 /* table {
-    background-color: var(--background-color-secondary);
+    background-color: var(--color-secondary);
     border-collapse: separate;
     border-spacing: 0;
     border-radius: 0.5rem;
@@ -18,7 +18,7 @@
   
   th {
     padding: 1rem;
-    border-bottom: 1px solid var(--background-color-secondary);
+    border-bottom: 1px solid var(--color-secondary);
   }
   
   td {
@@ -37,7 +37,7 @@
     border-radius: 0.5rem;
     margin: 1rem;
     border: 1px solid var(--border-light);
-    background-color: var(--background-color-secondary);
+    background-color: var(--color-secondary);
     /* white-space: nowrap; */
 }
 
@@ -46,79 +46,79 @@
 }
 
 .slash {
-  padding: var(--padding);
+  padding: var(--padding-condensed);
 }
 
 .callStrike {
-  /* color: var(--background-color-button) */
-  border: 1px solid  var(--background-color-green); 
-  /* background-color:  var(--background-color-button);  */
+  /* color: var(--color-button) */
+  border: 1px solid  var(--color-green); 
+  /* background-color:  var(--color-button);  */
   padding: var(--padding-small);
-  /* color: var(--background-color-main); */
+  /* color: var(--color-main); */
   border-radius: var(--border-radius-main);
   display: inline-block;
   margin: 0.25rem;
 }
 
 .putStrike {
-  /* color: var(--background-color-button) */
-  border: 1px solid  var(--background-color-red); 
-  /* background-color:  var(--background-color-red);  */
+  /* color: var(--color-button) */
+  border: 1px solid  var(--color-red); 
+  /* background-color:  var(--color-red);  */
   padding: var(--padding-small);
-  /* color: var(--background-color-main); */
+  /* color: var(--color-main); */
   border-radius: var(--border-radius-main);
   display: inline-block;
   margin: 0.25rem;
 }
 
 .actionOpen {
-  /* color: var(--background-color-button) */
-  /* background-color:  var(--background-color-green);  */
-  border: 1px solid  var(--background-color-green); 
+  /* color: var(--color-button) */
+  /* background-color:  var(--color-green);  */
+  border: 1px solid  var(--color-green); 
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
 
 .actionClose {
-  /* color: var(--background-color-button) */
-  /* background-color:  var(--background-color-red);  */
-  border: 1px solid  var(--background-color-red); 
+  /* color: var(--color-button) */
+  /* background-color:  var(--color-red);  */
+  border: 1px solid  var(--color-red); 
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
 
 .actionRoll {
-  /* color: var(--background-color-button) */
-  background-color:  var(--background-color-blue); 
-  color: var(--background-color-main);
-  /* border: 1px solid  var(--background-color-blue);  */
+  /* color: var(--color-button) */
+  background-color:  var(--color-blue); 
+  color: var(--color-main);
+  /* border: 1px solid  var(--color-blue);  */
   padding: var(--padding-small);
   border-radius: var(--border-radius-main);
 }
 
 /* .individualTrades {
-  background-color:  var(--background-color-main)
+  background-color:  var(--color-main)
 } */
 
 .individualTrades td {
   border-bottom: 1px solid var(--border-light);
-  background-color: var(--background-color-main);
+  background-color: var(--color-main);
 }
 
 .debit {
-  color: var(--background-color-red)
+  color: var(--color-red)
   /* border-radius: var(--border-radius-main);
   color: white;
-  border: 1px solid var(--background-color-red);
+  border: 1px solid var(--color-red);
   padding: var(--padding-small);
   margin: 0.25rem; */
 }
 
 .credit {
-  color: var(--background-color-green);
+  color: var(--color-green);
   /* border-radius: var(--border-radius-main);
   color: white;
-  background-color: var(--background-color-green);
+  background-color: var(--color-green);
   padding: var(--padding-small);
   margin: 0.25rem; */
 }

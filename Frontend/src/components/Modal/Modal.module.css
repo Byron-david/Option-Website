@@ -33,10 +33,10 @@ dialog {
 } */
 
 .addTrade {
-    background-image: var(--background-color-gradient);
+    background-image: var(--color-gradient);
 }
 
 .modalButtonContainer {
-    padding: var(--padding);
+    padding: var(--padding-condensed);
     text-align: left;
 }

@@ -2,13 +2,13 @@ import OptionItems from '../Input/OptionItems.jsx'
 
 function OptionAction({ option, items, handleChange }) {
   const buyStyle = {
-    backgroundColor: `var(--background-color-button-green)`,
-    color: `var(--background-color-main)`
+    backgroundColor: `var(--color-button-green)`,
+    color: `var(--color-main)`
   }
 
   const sellStyle = {
-    backgroundColor: `var(--background-color-button-red)`,
-    color: `var(--background-color-main)`
+    backgroundColor: `var(--color-button-red)`,
+    color: `var(--color-main)`
   }
 
   return (

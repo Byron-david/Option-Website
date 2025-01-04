@@ -1,8 +1,28 @@
-#homeH1 {
+.header1 {
     font-size: var(--text-size-3);
 }
 
-.homeP {
+.header2 {
     color: var(--text-color-mid);
 
+}
+
+.linkContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.linkButton {
+    background-color: white;
+    color: var(--color-main);
+    padding: var(--padding-normal) var(--padding-spacious);
+    border-radius: var(--border-radius-main);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.linkButton:hover {
+    background-color: var(--color-hover);
+    color: var(--color-main);
 }
