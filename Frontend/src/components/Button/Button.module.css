@@ -7,3 +7,21 @@
 .buttonContainer {
     padding: 0.5rem;
 }
+
+.link {
+    background-color: var(--color-button);
+    background-color: transparent;
+    color: var(--color-main);
+    color: white;
+    padding: var(--padding-normal) var(--padding-spacious);
+    text-decoration: none;
+    border-radius: var(--border-radius-mid);
+    border: 1px solid white;
+    display: block;
+    font-weight: 600;
+}
+
+.link:hover {
+    /* background-color: var(--color-hover); */
+    border: 1px solid var(--color-blue);
+}
