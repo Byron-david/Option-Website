@@ -52,3 +52,15 @@ sup {
 .pMuted {
     color: var(--text-color-mid);
 }
+
+ul {
+    list-style-type: disc;
+    text-align: left;
+    font-weight: 550;
+    color: var(--color-blue);
+}
+
+li {
+    color: var(--color-blue);
+
+}
