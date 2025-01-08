@@ -25,3 +25,20 @@
     /* background-color: var(--color-hover); */
     border: 1px solid var(--color-blue);
 }
+
+.link {
+    background-color: var(--color-blue);
+    /* background-color: transparent; */
+    color: var(--color-main);
+    color: white;
+    padding: var(--padding-normal) var(--padding-spacious);
+    text-decoration: none;
+    border-radius: var(--border-radius-mid);
+    /* border: 1px solid white; */
+    display: block;
+    font-weight: 600;
+}
+
+.link:hover {
+    background-image: var(--color-hover-grad);
+}

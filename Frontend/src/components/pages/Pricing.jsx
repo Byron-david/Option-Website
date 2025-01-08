@@ -1,5 +1,7 @@
 import LinkButton from '../Button/LinkButton';
 import styles from './Pages.module.css'; 
+import ButtonStyles from '../Button/Button.module.css'; 
+import Monthly from './Monthly';
 
 function Pricing() {
   return (
@@ -10,11 +12,7 @@ function Pricing() {
           <div class={`${styles.textContainer} borderLight`}>
             <h2>Free</h2>
             <p class={styles.pMuted}>The basics to get started</p>
-            <h3 class={styles.header3}>
-              <sup>$</sup>
-              <span class="text30">0</span>
-              <span> per Month</span>
-            </h3>
+            <Monthly price="0"/>
             <LinkButton to="/signin" text="Join for Free"/>
             <ul>
               <li>Single portfolio</li>
@@ -25,20 +23,18 @@ function Pricing() {
           <div class={`${styles.textContainer} borderLight`}>
             <h2>Basic</h2>
             <p class={styles.pMuted}>All you need to be successful</p>
-            <h3 class={styles.header3}>
-              <sup>$</sup>
-              <span class="text30">5</span>
-              <span> per Month</span>
-            </h3>
-            <LinkButton to="/signin" text="Join Now" className="linkBorder"/>
+            <Monthly price="5"/>
+            <LinkButton to="/signin" text="Join Now" className={ButtonStyles.link}/>
             <ul>
-              <li>Single portfolio</li>
-              <li>50 trade strategies</li>
-              <li>Strategy analysis</li>
+              <li>Everything included in Free, and...</li>
+              <li>Multiple portfolios</li>
+              <li>Unlimited trade strategies</li>
             </ul>
           </div>
           <div class={`${styles.textContainer} borderLight`}>
             <h2>Pro</h2>
+            <p class={styles.pMuted}>If you're looking for the best</p>
+            <Monthly price="10"/>
           </div>
         </div>
       </div>

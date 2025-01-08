@@ -13,7 +13,6 @@ function App() {
       <TopNavbar />
       <main id="pageContainer">
         <Outlet />
-        <PositionsTable />
 
       </main>
       {/* <div id="mainContainer">

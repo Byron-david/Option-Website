@@ -12,6 +12,7 @@
   --color-green : #52d87b;
   --color-red :#f04438;
 
+  --color-hover-grad : linear-gradient(#3ac2d4, #227b86 );
   --color-hover :#aebaca;
 
   --top-nav-size : 50px;
