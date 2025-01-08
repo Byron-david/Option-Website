@@ -29,10 +29,6 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
       //     value: '', 
       //     exp: '', 
       // }
-      
-
-
-
     }
     
     // Check Call/Put count
