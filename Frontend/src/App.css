@@ -95,6 +95,19 @@ main {
   background-color: var(--color-secondary);
 }
 
+.textButton {
+  text-decoration: none;
+  color: var(--color-blue);
+}
+
+.text05 {
+  font-size: 0.5rem;
+}
+
+.text75 {
+  font-size: 0.75rem;
+}
+
 .text15 {
   font-size: 1.5rem;
 }
@@ -176,7 +189,7 @@ input {
   border-radius: var(--border-radius-main);
 }
 
-input[type=text], input[type=date], input[type=number], input[type=checkbox], select{
+input[type=text], input[type=password], input[type=date], input[type=number], input[type=checkbox], select{
   margin: 0.25rem 0;
   display: block;
   /* border: 1px solid var(--color-highlight); */

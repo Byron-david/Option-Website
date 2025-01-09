@@ -2,6 +2,11 @@ import { useState } from 'react'
 import TextInput from '../Input/TextInput';
 import Button from '../Button/Button';
 import styles from './Pages.module.css'; 
+import LinkButton from '../Button/LinkButton';
+import {
+  BrowserRouter as Router,
+  Link,
+} from "react-router-dom"
 
 function SignIn() {
   return (
@@ -14,10 +19,11 @@ function SignIn() {
               <div class={`${styles.flexColumn} inputContainer`}>
                   <label for="username">Username</label>
                   <input id="username" name="username" placeholder="username" type="text" />
-                  <div class={`${styles.flexColumn} inputContainer`}>
+                  <div class={styles.spaceBetween}>
                     <label for="password">Password</label>
-                    <input id="password" name="password" type="password" />
+                    <Link to="/" class={`textButton text75`}>Forgot Password?</Link>
                   </div>
+                    <input id="password" name="password" type="password" />
               </div>
             <Button text="Sign Up"/>
             </div>

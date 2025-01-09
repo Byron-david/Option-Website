@@ -48,6 +48,14 @@ sup {
     align-items: flex-start;
 }
 
+.spaceBetween {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
 .textContainer {
     padding: var(--padding-normal);
     margin: var(--margin);
