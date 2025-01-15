@@ -14,14 +14,14 @@ function SignIn() {
       <div>
         <h1>Sign In</h1>
         <form action="" method="POST">
-          <div class={styles.flexContainer}>
-            <div class={`${styles.textContainer} borderLight`}>
-              <div class={`${styles.flexColumn} inputContainer`}>
+          <div className={styles.flexContainer}>
+            <div className={`${styles.textContainer} borderLight`}>
+              <div className={`${styles.flexColumn} inputContainer`}>
                   <label for="username">Username</label>
                   <input id="username" name="username" placeholder="username" type="text" />
-                  <div class={styles.spaceBetween}>
+                  <div className={styles.spaceBetween}>
                     <label for="password">Password</label>
-                    <Link to="/" class={`textButton text75`}>Forgot Password?</Link>
+                    <Link to="/" className={`textButton text75`}>Forgot Password?</Link>
                   </div>
                     <input id="password" name="password" type="password" />
               </div>

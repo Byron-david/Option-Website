@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  posts     Post[]
+}
+
+model Trade {
+  id        Int      @id @default(autoincrement())
+  symbol    String   @db.VarChar(255)
+  date      DateTime 
+  action    String
+  strategy  String
+  qty       String
+  price     String
+  strikes   String
+  value     String
+  expiration String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// symbol VARCHAR ( 255 ),
+// date time
+// action text NOT NULL,
+// strategy text NOT NULL,
+// qty int NOT NULL,
+// price int NOT NULL,
+// strikes int NOT NULL,
+// value int NOT NULL,
+// expiration time

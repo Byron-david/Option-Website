@@ -8,6 +8,7 @@ import './index.css'
 import SignIn from './components/pages/SignIn.jsx'
 import Home from './components/pages/Home.jsx'
 import ErrorPage from './components/pages/ErrorPage.jsx'
+import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "signin",
         element: <SignIn />
+      },
+      {
+        path: "dashboard",
+        element: <PositionsTable />
       },
     ]
   },

@@ -7,11 +7,11 @@ function Pricing() {
   return (
     <>
       <h1>Pricing</h1>
-      <div class="container_xl">
-        <div class={styles.flexContainer}>
-          <div class={`${styles.textContainer} borderLight ${styles.flex1}`}>
+      <div className="container_xl">
+        <div className={styles.flexContainer}>
+          <div className={`${styles.textContainer} borderLight ${styles.flex1}`}>
             <h2>Free</h2>
-            <p class={styles.pMuted}>The basics to get started</p>
+            <p className={styles.pMuted}>The basics to get started</p>
             <Monthly price="0"/>
             <LinkButton to="/signin" text="Join for Free"/>
             <ul>
@@ -20,9 +20,9 @@ function Pricing() {
               <li>Strategy analysis</li>
             </ul>
           </div>
-          <div class={`${styles.textContainer} borderLight ${styles.flex1}`}>
+          <div className={`${styles.textContainer} borderLight ${styles.flex1}`}>
             <h2>Basic</h2>
-            <p class={styles.pMuted}>All you need to be successful</p>
+            <p className={styles.pMuted}>All you need to be successful</p>
             <Monthly price="5"/>
             <LinkButton to="/signin" text="Join Now" className={ButtonStyles.link}/>
             <ul>
@@ -31,9 +31,9 @@ function Pricing() {
               <li>Unlimited trade strategies</li>
             </ul>
           </div>
-          <div class={`${styles.textContainer} borderLight ${styles.flex1}`}>
+          <div className={`${styles.textContainer} borderLight ${styles.flex1}`}>
             <h2>Pro</h2>
-            <p class={styles.pMuted}>If you're looking for the best</p>
+            <p className={styles.pMuted}>If you're looking for the best</p>
             <Monthly price="10"/>
           </div>
         </div>
