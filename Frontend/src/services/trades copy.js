@@ -7,16 +7,6 @@ const getAll = () => {
     return request.then(response => response.data)
   }
   
-// const getAll = async () => {
-//   try {
-//     const response = await fetch('baseUrl');
-//     const data = await response.json();
-//     // setUsers(data);
-//   } catch (error) {
-//     console.error('Error fetching trades:', error);
-//   }
-// };
-
 const create = async newObject => {
   const {data} = await axios.post(baseUrl, newObject)
   return data

@@ -5,10 +5,12 @@ import Features from './components/pages/Features.jsx'
 import Pricing from './components/pages/Pricing.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
+import Dashboard from './components/pages/Dashboard.jsx'
 import SignIn from './components/pages/SignIn.jsx'
 import Home from './components/pages/Home.jsx'
 import ErrorPage from './components/pages/ErrorPage.jsx'
 import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
+import Navbar from './components/Navbar/Navbar.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,10 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <PositionsTable />
+        element: <Dashboard />,
+        children: [
+          { path: "trades", element: <PositionsTable /> }
+        ]
       },
     ]
   },

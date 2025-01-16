@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './Navbar.module.css'; 
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx'
 import ImportCsvModal from '../ImportCsvModal.jsx'
+import { Outlet } from 'react-router-dom';
 
 function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
   // const buttonStyle = {
