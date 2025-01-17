@@ -29,7 +29,7 @@ const remove = async (id) => {
 }
 
 export default { 
-  getAll, 
+  fetchData, 
   create, 
   update,
   remove

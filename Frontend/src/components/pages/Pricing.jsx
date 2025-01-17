@@ -14,7 +14,7 @@ function Pricing() {
             <p className={styles.pMuted}>The basics to get started</p>
             <Monthly price="0"/>
             <LinkButton to="/signin" text="Join for Free"/>
-            <ul>
+            <ul className={styles.bulletList}>
               <li>Single portfolio</li>
               <li>50 trade strategies</li>
               <li>Strategy analysis</li>
@@ -25,7 +25,7 @@ function Pricing() {
             <p className={styles.pMuted}>All you need to be successful</p>
             <Monthly price="5"/>
             <LinkButton to="/signin" text="Join Now" className={ButtonStyles.link}/>
-            <ul>
+            <ul className={styles.bulletList}>
               <li>Everything included in Free, and...</li>
               <li>Multiple portfolios</li>
               <li>Unlimited trade strategies</li>
