@@ -36,6 +36,7 @@
     /* border-radius: var(--border-radius-main); */
     border-radius: 0.5rem;
     margin: 1rem;
+    /* margin-left: var(--nav-width); */
     border: 1px solid var(--border-light);
     background-color: var(--color-secondary);
     /* white-space: nowrap; */

@@ -5,10 +5,12 @@ import { Link, Outlet } from "react-router-dom"
 function dashboard() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
+      <div>
+        <Navbar />
+        <main className={styles.dashboard}>
+          <Outlet />
+        </main>
+      </div>
     </>
   )
 }

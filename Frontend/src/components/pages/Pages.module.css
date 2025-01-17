@@ -1,3 +1,7 @@
+.dashboard {
+    margin-left: var(--nav-width);
+}
+
 .header1 {
     font-size: var(--text-size-3);
 }
