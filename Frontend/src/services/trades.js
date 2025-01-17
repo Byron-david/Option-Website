@@ -13,8 +13,21 @@ const fetchData = async () => {
 };
 
 const create = async newObject => {
-  const {data} = await axios.post(baseUrl, newObject)
-  return data
+  try {
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      }
+    );
+    const data = await response.json();
+    return data
+  } catch (error) {
+    console.error('Error adding trades:', error);
+  }
+  // const {data} = await axios.post(baseUrl, newObject)
+  // return data
 }
 
 const update = (id, newObject) => {
