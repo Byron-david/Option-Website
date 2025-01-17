@@ -28,7 +28,8 @@ const MapRows = ({data}) => {
 }
 
 export default function PositionsTable({ data }) {
-    // const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     // const [importData, setImportData] = useState([]);
 
     // const tableHeader = {
@@ -61,13 +62,31 @@ export default function PositionsTable({ data }) {
     const [allTrades, setAllTrades] = useState([])
 
     useEffect(() => {
-        tradeService
-          .getAll()
-          .then(initialTrades => {
-            // const addExpand = initialTrades.map(trade => ( {...trade, "expand": 0 }))
-            setAllTrades(initialTrades)
-          })
-      }, [])
+        const fetchDataAsync = async () => {
+          setIsLoading(true);
+          try {
+            const fetchedData = await tradeService.fetchData();
+            setAllTrades(fetchedData);
+    
+          } catch (err) {
+            setError(err);
+          } 
+          finally {
+            setIsLoading(false);
+          }
+        };
+    
+        fetchDataAsync();
+      }, []);
+
+    // useEffect(() => {
+    //     tradeService
+    //       .getAll()
+    //       .then(initialTrades => {
+    //         // const addExpand = initialTrades.map(trade => ( {...trade, "expand": 0 }))
+    //         setAllTrades(initialTrades)
+    //       })
+    //   }, [])
 
     // const handleFileLoad = (csvData) => {
     //   setData(csvData);
@@ -76,7 +95,12 @@ export default function PositionsTable({ data }) {
     // }
 
     return (
-        <>
+        <> 
+            {isLoading ? 
+            <div>
+                Loading...
+            </div>
+            :
             <div className={styles.tableContainer}>
                 <div className={styles.tableTools}>
                     {/* <RemapData onFileLoad={handleFileLoad} /> */}
@@ -98,6 +122,7 @@ export default function PositionsTable({ data }) {
                     </tbody>
                 </table>  
             </div>
+            }
         </>
     )
 }
