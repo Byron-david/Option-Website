@@ -75,7 +75,7 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                     <span>Option:&nbsp;&nbsp;&nbsp;</span>
 
                     {/* {strategy === "custom" ? <Button handleClick={() => deleteLeg(index)} className="buttonRemove" /> : null} */}
-                    <Button handleClick={() => deleteLeg(index)} className={styles.buttonRemove} />
+                    {/* <Button handleClick={() => deleteLeg(index)} className={styles.buttonRemove} /> */}
 
                     <OptionAction option={option}
                                 items={itemActions}
