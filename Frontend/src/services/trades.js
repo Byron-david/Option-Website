@@ -19,6 +19,7 @@ const create = async newObject => {
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(newObject),
       }
     );
     const data = await response.json();
