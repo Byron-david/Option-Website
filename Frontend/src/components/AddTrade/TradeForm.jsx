@@ -170,14 +170,14 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   itemTypes={posType}
                   itemActions={action}
                   itemSubAction={subAction} />
-          <div>
+          {/* <div>
             <Button handleClick={addStock}
                       className={styles.buttonAdd}
                       text="Add Stock" />
             <Button handleClick={addNewLeg}
                       className={styles.buttonAdd}
                       text="Add Option" />
-          </div>
+          </div> */}
         </div>
         <div className="footerTemplate">
           <Button text="Cancel" backgroundColor="var(--color-red)" handleClick={handleClickClose} />
