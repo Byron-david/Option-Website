@@ -6,6 +6,7 @@ import { defaultNewTrade, defaultTrade } from '../../../public/tradeDefaults.js'
 
 function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
   const [newTrade, setNewTrade] = useState(defaultNewTrade)
+  const [error, setError] = useState(null)
 
   const addTrade = event => {
     event.preventDefault()
@@ -127,6 +128,23 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     // }
 
     const tradeObject = formatTrade(newTrade, "strategy")
+
+    const createTrade = async (tradeObject) => {
+      // setIsLoading(true);
+      try {
+        const fetchedData = await tradeService.create(tradeObject);
+        setAllTrades(allTrades.concat(returnedTrade));
+        setNewTrade(defaultTrade)
+
+      } 
+      catch (err) {
+        setError(err);
+      } 
+      // finally {
+      //   setIsLoading(false);
+      // }
+    };
+    createTrade(tradeObject);
 
     // tradeService
     //   .create(tradeObject)
