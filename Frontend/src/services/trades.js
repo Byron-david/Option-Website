@@ -14,7 +14,7 @@ const fetchData = async () => {
 
 const create = async newObject => {
   try {
-    const response = await fetch(baseUrl, {
+    const {response} = await fetch(baseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +23,9 @@ const create = async newObject => {
       }
     );
     const data = await response.json();
-    return data
+    console.log(data)
+
+    return response
   } catch (error) {
     console.error('Error adding trades:', error);
   }
