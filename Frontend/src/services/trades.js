@@ -23,20 +23,10 @@ const create = async newObject => {
       }
     );
 
-    if (response.ok) {
-      const data = await response.json(); // Parse the JSON response
-      console.log("=======================")
-      console.log('Item added:', data);
-    } else {
-      const errorData = await response.json();
-      console.log("+++++++++++++++++++++++++++=")
-
-      console.log(`Error: ${errorData.error}`);
-    }
-    // const data = await response.json();
+    const data = await response.json();
     // // console.log(data)
 
-    // return data
+    return data
   } catch (error) {
     console.error('Error adding trades:', error);
   }
