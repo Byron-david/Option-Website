@@ -14,7 +14,7 @@ const fetchData = async () => {
 
 const create = async newObject => {
   try {
-    const {response} = await fetch(baseUrl, {
+    const response = await fetch(baseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,10 +22,21 @@ const create = async newObject => {
       body: JSON.stringify(newObject),
       }
     );
-    const data = await response.json();
-    console.log(data)
 
-    return response
+    if (response.ok) {
+      const data = await response.json(); // Parse the JSON response
+      console.log("=======================")
+      console.log('Item added:', data);
+    } else {
+      const errorData = await response.json();
+      console.log("+++++++++++++++++++++++++++=")
+
+      console.log(`Error: ${errorData.error}`);
+    }
+    // const data = await response.json();
+    // // console.log(data)
+
+    // return data
   } catch (error) {
     console.error('Error adding trades:', error);
   }

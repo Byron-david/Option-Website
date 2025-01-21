@@ -14,11 +14,13 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     
     const tradeObject = formatTrade(newTrade, strategy)
 
+    console.log(tradeObject)
     const createTrade = async (tradeObject) => {
       // setIsLoading(true);
       try {
         const fetchedData = await tradeService.create(tradeObject);
-        setAllTrades(allTrades.concat(returnedTrade));
+        console.log(fetchedData)
+        setAllTrades(allTrades.concat(fetchedData));
         setNewTrade(defaultTrade)
 
       } 
