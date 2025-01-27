@@ -51,6 +51,7 @@ const posType = [
     { id: 1, value: "CALL", text: "Call" },
 ]
 
+// base are defaults for each trade
 const defaultNewTrade = {
   base: {
     symbol: '',

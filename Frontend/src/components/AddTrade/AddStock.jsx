@@ -28,7 +28,7 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
     <>
       <div className={styles.addOption}>
         <span>Stock:&nbsp;&nbsp;&nbsp;</span>
-        <Button handleClick={deleteStock} className={styles.buttonRemove} />
+        {/* <Button handleClick={deleteStock} className={styles.buttonRemove} /> */}
         <OptionAction option={stock}
             items={items}
             handleChange={handleChange} />

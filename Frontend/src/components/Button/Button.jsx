@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './Button.module.css'; 
 
 function Button({ text = "x", handleClick, 
-                  className = styles.buttonGreen, 
+                  className = styles.buttonDefault, 
                   backgroundColor,
                   color
                 }) 

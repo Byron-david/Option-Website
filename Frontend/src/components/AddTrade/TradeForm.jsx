@@ -12,7 +12,7 @@ import {
   subAction, 
   posType } from '../../../public/tradeDefaults.js'
 
-function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
+function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade, strategy, setStrategy }) {
   const [preset, setPreset] = useState("Stock");
   const [stockVisible, setStockVisible] = useState(1);
 
@@ -30,9 +30,9 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
     ))
   }
 
-  const handlePreset = (event) => {
+  const handleStrategy = (event) => {
     const updateStrategy = event.target.value
-    setPreset(updateStrategy)
+    setStrategy(updateStrategy)
 
     const findQty = strategyOptions.find(element => element.value === updateStrategy)
 
@@ -146,12 +146,12 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   onChange={handleTrade}
                 />
               </label>
-              <label className={styles.preset}>Preset:
+              <label className={styles.preset}>Strategy:
                 <select 
                     className="inputSelect"
-                    name="preset"
-                    value={preset}
-                    onChange={handlePreset}> 
+                    name="strategy"
+                    value={strategy}
+                    onChange={handleStrategy}> 
                     <OptionItems items={strategyOptions}/>
                 </select>
               </label>
@@ -170,14 +170,14 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade }) {
                   itemTypes={posType}
                   itemActions={action}
                   itemSubAction={subAction} />
-          <div>
+          {/* <div>
             <Button handleClick={addStock}
                       className={styles.buttonAdd}
                       text="Add Stock" />
             <Button handleClick={addNewLeg}
                       className={styles.buttonAdd}
                       text="Add Option" />
-          </div>
+          </div> */}
         </div>
         <div className="footerTemplate">
           <Button text="Cancel" backgroundColor="var(--color-red)" handleClick={handleClickClose} />
