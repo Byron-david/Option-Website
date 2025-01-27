@@ -40,8 +40,23 @@ const update = (id, newObject) => {
 }
 
 const remove = async (id) => {
-  const {request} = await axios.delete(`${baseUrl}/${id}`)
-  return request
+  try {
+    const response = await fetch(`${baseUrl}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    return data;
+    
+  } catch (error) {
+    console.error('Error adding trades:', error);
+  }
+  // axios way
+  // const {request} = await axios.delete(`${baseUrl}/${id}`)
+  // return request
   // return request.then(response => response.data)
 }
 

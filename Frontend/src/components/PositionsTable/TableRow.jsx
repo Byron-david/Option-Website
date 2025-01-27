@@ -46,6 +46,7 @@ const formatExpDate = (dates) => {
 
 export default function TableRow({ allTrades, setAllTrades, trade, stratName, index, }) {
     const [expand, setExpand] = useState(0);
+    const [error, setError] = useState(null);
 
     const tradeLeg = trade[Object.keys(trade)[0]]
     const firstLeg = tradeLeg[0]
@@ -101,19 +102,30 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
         }
     }
 
-    const handleDelete = (event, id) => {
+    const handleDelete = async (event, id) => {
         event.preventDefault()
         const databaseId = allTrades[id].id
 
         if (window.confirm("Delete Entry?")) {
-            tradeService
-                .remove(databaseId)
-                .then(response => {
-                    setAllTrades(allTrades.filter(t => t.id !== databaseId))
-                    console.log(response);
-                    return response
-                }
-                )
+            try {
+                await tradeService.remove(databaseId);
+                setAllTrades(allTrades.filter(t => t.id !== databaseId))
+                console.log(response);
+                return response
+              } 
+              catch (err) {
+                setError(err);
+              } 
+
+            // axios way
+            // tradeService
+            //     .remove(databaseId)
+            //     .then(response => {
+            //         setAllTrades(allTrades.filter(t => t.id !== databaseId))
+            //         console.log(response);
+            //         return response
+            //     }
+            //     )
         }
     }
 

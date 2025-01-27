@@ -102,15 +102,20 @@ const insertTrade = async (tradeObj, id) => {
 }
 
 const deleteTrade = async (id) => {
-  try {
-    const text = `DELETE FROM trades WHERE strategyid = $1`
+  const text = `DELETE FROM trades WHERE strategyid = $1`
 
-    const res = await pool.query(text, [id])
+  const res = await pool.query(text, [id])
 
-    return res
-  } catch (error) {
-    console.error(error)
-  }
+  // try/catch moved to controller
+  // try {
+  //   const text = `DELETE FROM trades WHERE strategyid = $1`
+
+  //   const res = await pool.query(text, [id])
+
+  //   return res
+  // } catch (error) {
+  //   console.error(error)
+  // }
 }
 
 const deleteStrategy = async (id) => {

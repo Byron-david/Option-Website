@@ -15,7 +15,30 @@ async function addTrade(req, res) {
   res.status(201).send(body);
 }
 
+async function deleteTrade(req, res) {
+  const id = req.params.id;
+  try {
+    const result = await deleteTrade(id)
+
+    if (result.rowCount === 0) {
+        return res.status(404).json({ message: `Trade ${entryId} not found.` });
+    }
+
+    res.json({ message: `Trade ${entryId} deleted successfully.`, deletedEntry: result.rows[0] });
+} catch (error) {
+    console.error('Error deleting entry:', error.message);
+    res.status(500).json({ message: 'An error occurred while deleting the entry.' });
+}
+   
+}
+
+// tradesRouter.delete('/:id', async (request, response) => {
+//   await Trade.findByIdAndDelete(request.params.id)
+//   response.status(204).end()
+// })
+
 module.exports = {
   getTrades,
   addTrade,
+  deleteTrade,
 };

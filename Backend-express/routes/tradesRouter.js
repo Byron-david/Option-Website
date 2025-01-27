@@ -4,5 +4,6 @@ const tradesRouter = Router();
 
 tradesRouter.get('/trades', tradesController.getTrades)
 tradesRouter.post('/trades', tradesController.addTrade)
+tradesRouter.delete('/trades', tradesController.deleteTrade)
 
 module.exports = tradesRouter;
