@@ -38,7 +38,8 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         children: [
-          { path: "trades", element: <PositionsTable /> }
+          { path: "trades", element: <PositionsTable /> },
+          { path: "trades/:id", element: <PositionsTable /> }
         ]
       },
     ]

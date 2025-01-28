@@ -106,6 +106,8 @@ const deleteTrade = async (id) => {
 
   const res = await pool.query(text, [id])
 
+  return res;
+
   // try/catch moved to controller
   // try {
   //   const text = `DELETE FROM trades WHERE strategyid = $1`

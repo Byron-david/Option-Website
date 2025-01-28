@@ -6,6 +6,18 @@ async function getTrades(req, res) {
   res.json(strategies)
 }
 
+async function getTrade(req, res) {
+  const id = req.params.id;
+  console.log(res.json(id));
+  // const trade = await Trade.findById(req.params.id)
+
+  if (id) {
+    res.json(id)
+  } else {
+    res.status(404).end()
+  }
+}
+
 async function addTrade(req, res) {
   const body = req.body;
 
@@ -15,22 +27,26 @@ async function addTrade(req, res) {
   res.status(201).send(body);
 }
 
-async function deleteTrade(req, res) {
+async function removeTrade(req, res) {
   const id = req.params.id;
+
+  console.log("ID", id);
   try {
-    const result = await deleteTrade(id)
+    const result = await db.deleteTrade(id)
 
     if (result.rowCount === 0) {
-        return res.status(404).json({ message: `Trade ${entryId} not found.` });
+        return res.status(404).json({ message: `Trade ${id} not found.` });
     }
 
-    res.json({ message: `Trade ${entryId} deleted successfully.`, deletedEntry: result.rows[0] });
+    res.json({ message: `Trade ${id} deleted successfully.`, deletedEntry: result.rows[0] });
 } catch (error) {
     console.error('Error deleting entry:', error.message);
     res.status(500).json({ message: 'An error occurred while deleting the entry.' });
 }
    
 }
+
+
 
 // tradesRouter.delete('/:id', async (request, response) => {
 //   await Trade.findByIdAndDelete(request.params.id)
@@ -39,6 +55,7 @@ async function deleteTrade(req, res) {
 
 module.exports = {
   getTrades,
+  getTrade,
   addTrade,
-  deleteTrade,
+  removeTrade,
 };
