@@ -2,14 +2,11 @@ const db = require("../db/queries");
 
 async function getTrades(req, res) {
   const strategies = await db.getAllStrategies()
-  // const strategies = await db.getAllStrategies()
   res.json(strategies)
 }
 
 async function getTrade(req, res) {
   const id = req.params.id;
-  console.log(res.json(id));
-  // const trade = await Trade.findById(req.params.id)
 
   if (id) {
     res.json(id)
@@ -30,7 +27,6 @@ async function addTrade(req, res) {
 async function removeTrade(req, res) {
   const id = req.params.id;
 
-  console.log("ID", id);
   try {
     const result = await db.deleteTrade(id)
 

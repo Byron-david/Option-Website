@@ -262,24 +262,6 @@ input[type=date]{
 }
 
 
-
-/* #addTrade {
-  max-width: 80vw;
-  border-radius: var(--border-radius-main);
-  border: 1px solid var(--color-secondary);
-  box-shadow: var(--box-shadow);
-  min-width: 0%;
-  background-color: var(--color-secondary);
-  margin: var(--margin);
-}
-
-
-.addOption {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-} */
-
 @media screen and (max-width: 750px) {
   #addTradeBody, .addOption {
     flex-wrap: wrap;
@@ -309,18 +291,6 @@ caption {
   /* text-align: left */
 }
 
-th {
-  /* border-bottom: 1px solid var(--color-highlight); */
-  /* border-top: 1px solid var(--border-light); */
-}
-
-/* th:first-child{
-  border-top-left-radius: var(--border-radius-main);
-}
-
-th:last-child {
-  border-top-right-radius: var(--border-radius-main);
-} */
 
 thead > tr {
   background-color: var(--color-main);
@@ -332,12 +302,12 @@ tbody > tr {
 }
 
 tr {
-  transition: transform 0.1s;
+  transition: transform 0.01s;
   
 }
 
 tr:hover {
-  transform: translateX(10px); /* Moves row outside the table */
+  transform: translateX(5px); /* Moves row outside the table */
   border: 1px solid var(--color-blue );
   border-style: solid none;
 }
