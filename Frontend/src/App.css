@@ -298,8 +298,9 @@ table {
   min-width: 600px;
   overflow:hidden;
   font-size: 0.9em;
-  color: var(--text-color-dark)
+  color: var(--text-color-dark);
 }
+
 
 caption {
   padding: 1rem;
@@ -330,19 +331,27 @@ tbody > tr {
   background-color: var(--color-secondary);
 }
 
-tr:hover td {
-  border: 1px solid var(--color-blue );
-  border-style: solid none;
-  padding: 10px;
+tr {
+  transition: transform 0.1s;
+  
 }
 
+tr:hover {
+  transform: translateX(10px); /* Moves row outside the table */
+  border: 1px solid var(--color-blue );
+  border-style: solid none;
+}
+
+
 tr:hover td:first-child {
+  border-left: var(--color-blue );
   border-left-style: solid;
   border-top-left-radius: var(--border-radius-main);
   border-bottom-left-radius: var(--border-radius-main);
 }
 
 tr:hover td:last-child {
+  border-right: var(--color-secondary);
   border-right-style: solid;
   border-bottom-right-radius: var(--border-radius-main);
   border-top-right-radius: var(--border-radius-main);
