@@ -99,3 +99,13 @@ sup {
     flex: 1;
     width: 50%;
 }
+
+.signupButton {
+    color: var(--color-main);
+    background-color: var(--color-blue);
+    margin-top: var(--margin);
+    flex-grow: 1;
+    width: 100%;
+    /* padding: var(--padding-condensed); */
+
+}

@@ -26,14 +26,23 @@ const create = async newObject => {
   }
 }
 
-function SignIn() {
+function SignUp() {
   // State for form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
 
   // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+
+    // Basic validation
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
 
     // Create the payload
     const payload = {
@@ -41,15 +50,20 @@ function SignIn() {
       password,
     };
 
-    // Send the POST request
-    const response = await create(payload);
+    try {
+      // Send the POST request
+      const response = await create(payload);
 
-    // Handle the response (e.g., show success/error message, redirect, etc.)
-    if (response) {
-      console.log('Sign-in successful:', response);
-      // You can redirect the user or update the UI here
-    } else {
-      console.error('Sign-in failed');
+      // Handle the response
+      if (response) {
+        console.log('Sign-up successful:', response);
+        setError(''); // Clear any previous errors
+        // You can redirect the user or update the UI here
+      } else {
+        setError('Sign-up failed. Please try again.');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
     }
   };
   
@@ -57,34 +71,54 @@ function SignIn() {
     <>
       <div className={styles.panelContainer}>
         <div className={styles.panelLeft}>
-          <h1>Sign Up</h1>
+          <h2 className="textDark">Sign Up</h2>
           <form onSubmit={handleSubmit} method="POST">
             <div className={styles.flexContainer}>
-              <div className={`${styles.textContainer} borderLight`}>
                 <div className={`${styles.flexColumn} inputContainer`}>
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email"
+                        className="textDark"
+                        >Email
+                  </label>
                   <input
+                    className="inputLight"
                     id="email"
                     name="email"
-                    placeholder="email"
+                    placeholder="Email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <div className={styles.spaceBetween}>
-                    <label htmlFor="password">Password</label>
-
+                  <label htmlFor="password"
+                          className="textDark"
+                  >Password</label>
                   </div>
                   <input
+                    className="inputLight"
                     id="password"
                     name="password"
+                    placeholder="Password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                <label htmlFor="confirmPassword"
+                      className="textDark">
+                      Confirm Password
+                </label>
+                <input
+                  className="inputLight"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+                {error && <p className={styles.errorMessage}>{error}</p>}
+                <Button className={styles.signupButton} type="submit" text="Create Account" />
                 </div>
-                <Button type="submit" text="Create Account" />
-              </div>
             </div>
           </form>
         </div>
@@ -95,4 +129,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default SignUp
