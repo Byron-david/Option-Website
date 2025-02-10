@@ -8,7 +8,7 @@ import {
 
 const create = async newObject => {
   try {
-    const response = await fetch("http://localhost:3000/signin", {
+    const response = await fetch("http://localhost:3000/signup", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,13 +22,13 @@ const create = async newObject => {
     return data
 
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error('Error creating user:', error);
   }
 }
 
 function SignIn() {
   // State for form inputs
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // Form submission handler
@@ -37,7 +37,7 @@ function SignIn() {
 
     // Create the payload
     const payload = {
-      username,
+      email,
       password,
     };
 
@@ -56,25 +56,23 @@ function SignIn() {
   return (
     <>
       <div>
-        <h1>Sign In</h1>
+        <h1>Sign Up</h1>
         <form onSubmit={handleSubmit} method="POST">
           <div className={styles.flexContainer}>
             <div className={`${styles.textContainer} borderLight`}>
               <div className={`${styles.flexColumn} inputContainer`}>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  id="username"
-                  name="username"
-                  placeholder="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  name="email"
+                  placeholder="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className={styles.spaceBetween}>
                   <label htmlFor="password">Password</label>
-                  <Link to="/" className={`textButton text75`}>
-                    Forgot Password?
-                  </Link>
+
                 </div>
                 <input
                   id="password"
@@ -84,7 +82,7 @@ function SignIn() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" text="Sign In" />
+              <Button type="submit" text="Create Account" />
             </div>
           </div>
         </form>
