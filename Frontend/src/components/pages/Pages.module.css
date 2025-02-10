@@ -83,3 +83,19 @@ sup {
     padding: var(--padding-condensed);
 
 }
+
+.panelContainer {
+    display: flex;
+    height: 100vh;
+}
+
+.panelLeft {
+    flex: 1;
+    background-color: white;
+    width: 50%;
+}
+
+.panelRight {
+    flex: 1;
+    width: 50%;
+}

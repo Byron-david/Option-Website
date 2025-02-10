@@ -75,7 +75,7 @@ main {
 }
 
 #pageContainer {
-  margin-top: var(--top-nav-size);
+  /* margin-top: var(--top-nav-size); */
 }
 
 #mainContainer {

@@ -55,37 +55,41 @@ function SignIn() {
   
   return (
     <>
-      <div>
-        <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit} method="POST">
-          <div className={styles.flexContainer}>
-            <div className={`${styles.textContainer} borderLight`}>
-              <div className={`${styles.flexColumn} inputContainer`}>
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  placeholder="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <div className={styles.spaceBetween}>
-                  <label htmlFor="password">Password</label>
+      <div className={styles.panelContainer}>
+        <div className={styles.panelLeft}>
+          <h1>Sign Up</h1>
+          <form onSubmit={handleSubmit} method="POST">
+            <div className={styles.flexContainer}>
+              <div className={`${styles.textContainer} borderLight`}>
+                <div className={`${styles.flexColumn} inputContainer`}>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    placeholder="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <div className={styles.spaceBetween}>
+                    <label htmlFor="password">Password</label>
 
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <Button type="submit" text="Create Account" />
               </div>
-              <Button type="submit" text="Create Account" />
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+        <div className={styles.panelRight}>RIGHT PANEL</div>
+
       </div>
     </>
   )
