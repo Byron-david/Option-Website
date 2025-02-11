@@ -1,6 +1,7 @@
 .buttonDefault {
     background-color: var(--color-blue);
     color: var(--color-main);
+    margin: var(--margin-condensed);
     /* padding: var(--padding-condensed) var(--padding-normal); */
 }
 

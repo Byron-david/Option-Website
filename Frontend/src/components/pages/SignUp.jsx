@@ -73,14 +73,11 @@ function SignUp() {
         <div className={styles.panelLeft}>
           <h2 className="textDark">Sign Up</h2>
           <form onSubmit={handleSubmit} method="POST">
-            <div className={styles.flexContainer}>
-                <div className={`${styles.flexColumn} inputContainer`}>
-                  <label htmlFor="email"
-                        className="textDark"
-                        >Email
-                  </label>
+            <div className={`${styles.flexContainer} inputLight`}>
+                {/* <div className={`${styles.flexColumn} inputContainer`}> */}
+                <div>
+                  <label htmlFor="email">Email</label>
                   <input
-                    className="inputLight"
                     id="email"
                     name="email"
                     placeholder="Email"
@@ -88,13 +85,10 @@ function SignUp() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <div className={styles.spaceBetween}>
-                  <label htmlFor="password"
-                          className="textDark"
-                  >Password</label>
-                  </div>
+                </div>
+                <div>
+                  <label htmlFor="Password">Password</label>
                   <input
-                    className="inputLight"
                     id="password"
                     name="password"
                     placeholder="Password"
@@ -102,23 +96,25 @@ function SignUp() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                <label htmlFor="confirmPassword"
-                      className="textDark">
-                      Confirm Password
-                </label>
-                <input
-                  className="inputLight"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Password"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
+                </div>
+                <div>
+                  <label htmlFor="confirmPassword">
+                        Confirm Password
+                  </label>
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 <Button className={styles.signupButton} type="submit" text="Create Account" />
-                </div>
+                {/* </div> */}
             </div>
           </form>
         </div>

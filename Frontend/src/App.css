@@ -168,7 +168,7 @@ fieldset {
 }
 
 label {
-  padding: var(--padding-condensed);
+  padding: var(--padding-condensed) 0;
 }
 /* legend
 {
@@ -185,7 +185,15 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.inputDark input {
+.inputDark label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-condensed);
+  padding: var(--padding-condensed);
+}
+
+
+.inputDark input, select {
   background-color: var(--color-main);
   border: 1px solid var(--border-dark);
   color: var(--text-color-dark);
@@ -193,29 +201,28 @@ input::-webkit-inner-spin-button {
   border-radius: var(--border-radius-main);
 }
 
-.inputDark select {
-  background-color: var(--color-main);
-  border: 1px solid var(--border-dark);
-  color: var(--text-color-dark);
-  padding: var(--padding-condensed);
-  border-radius: var(--border-radius-main);
-}
-
-.inputSelect {
-  background-color: var(--color-main);
-  border: solid 1px var(--border-dark);;
-  min-width: 0;
-  color: var(--text-color-dark);
-  padding: var(--padding-condensed);
-}
-
-.inputLight {
+/* .inputLight {
   color: var(--color-main);
   border: solid 1px var(--border-light);
   background-color: transparent;
+} */
+
+.inputLight label {
+  background-color: transparent;
+  color: var(--color-main);
 }
 
-input[type=text], input[type=password], input[type=date], input[type=number], input[type=checkbox], select{
+
+.inputLight input, select {
+  background-color: transparent;
+  border: solid 1px var(--border-light);
+  color: var(--color-main);
+  padding: var(--padding-condensed);
+  border-radius: var(--border-radius-main);
+  max-width: 500px;
+}
+
+input[type=text], input[type=password], input[type=date], input[type=number], input[type=checkbox], input[type=email], select{
   /* margin: 0.25rem 0; */
   display: block;
   /* border: 1px solid var(--color-highlight); */

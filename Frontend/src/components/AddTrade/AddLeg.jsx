@@ -82,7 +82,6 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                                 handleChange={e => handleLegChange(index, e)} />
                     <label>Open/Close: 
                       <select 
-                          className="inputSelect"
                           name="sub_action"
                           value={option.sub_action || ""}
                           onChange={e => handleLegChange(index, e)}>
@@ -91,7 +90,6 @@ function AddLeg({ newTrade, setNewTrade, strategy, itemTypes, itemActions, itemS
                     </label>
                     <label>Type: 
                       <select 
-                          className="inputSelect"
                           name="trade_type"
                           step="0.01"
                           value={option.trade_type || ""}
