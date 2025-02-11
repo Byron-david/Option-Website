@@ -43,6 +43,7 @@
   --padding-small : 0.25rem;
   --padding-title : 1rem;
   --margin : 1rem;
+  --margin-condensed : 0.5rem;
 
   --border-radius-main : 0.25rem;
   --border-radius-mid : 0.5rem;
@@ -154,14 +155,6 @@ hr {
   width: 100%;
 }
 
-.inputSelect {
-  background-color: var(--color-main);
-  border: solid 1px var(--border-dark);;
-  min-width: 0;
-  color: var(--text-color-dark);
-  padding: var(--padding-condensed);
-}
-
 /* Hacky way to change date input icon */
 ::-webkit-calendar-picker-indicator {
   /* filter: invert(1); */
@@ -192,7 +185,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input {
+.inputDark input {
   background-color: var(--color-main);
   border: 1px solid var(--border-dark);
   color: var(--text-color-dark);
@@ -200,8 +193,30 @@ input {
   border-radius: var(--border-radius-main);
 }
 
+.inputDark select {
+  background-color: var(--color-main);
+  border: 1px solid var(--border-dark);
+  color: var(--text-color-dark);
+  padding: var(--padding-condensed);
+  border-radius: var(--border-radius-main);
+}
+
+.inputSelect {
+  background-color: var(--color-main);
+  border: solid 1px var(--border-dark);;
+  min-width: 0;
+  color: var(--text-color-dark);
+  padding: var(--padding-condensed);
+}
+
+.inputLight {
+  color: var(--color-main);
+  border: solid 1px var(--border-light);
+  background-color: transparent;
+}
+
 input[type=text], input[type=password], input[type=date], input[type=number], input[type=checkbox], select{
-  margin: 0.25rem 0;
+  /* margin: 0.25rem 0; */
   display: block;
   /* border: 1px solid var(--color-highlight); */
   box-sizing: border-box;
@@ -224,12 +239,6 @@ input[type=date]{
   align-items: center;
   min-width: 0%;
   padding: var(--padding-condensed);
-}
-
-.inputLight {
-  color: var(--color-main);
-  border: solid 1px var(--border-light);
-  background-color: transparent;
 }
 
 .formContainer {
