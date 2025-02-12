@@ -60,7 +60,7 @@ function SignIn() {
         <form onSubmit={handleSubmit} method="POST">
           <div className={styles.flexContainer}>
             <div className={`${styles.textContainer} borderLight`}>
-              <div className={`${styles.flexColumn} inputContainer`}>
+              <div className={`${styles.flexColumn} inputDark`}>
                 <label htmlFor="username">Username</label>
                 <input
                   id="username"
@@ -83,8 +83,8 @@ function SignIn() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+              <Button className={styles.signupButton} type="submit" text="Sign In" />
               </div>
-              <Button type="submit" text="Sign In" />
             </div>
           </div>
         </form>

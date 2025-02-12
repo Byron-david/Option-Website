@@ -4,13 +4,16 @@
   --color-secondary : #161b22;
   --color-header : #ffffff; 
 
-  --color-gradient : linear-gradient(90deg, #3ac2d4, #52d87b ); 
 
   --color-highlight : #eaeaea;
   --color-button : #d8d652;
-  --color-blue : #3ac2d4;
+  --color-blue : #3faff9;
   --color-green : #52d87b;
   --color-red :#f04438;
+  --color-purple :#855bf0;
+  --color-yellow :#cef038;
+
+  --color-gradient : linear-gradient(90deg, var(--color-blue), var(--color-purple)); 
 
   --color-hover-grad : linear-gradient(#3ac2d4, #227b86 );
   --color-hover :#aebaca;
@@ -207,9 +210,18 @@ input::-webkit-inner-spin-button {
   background-color: transparent;
 } */
 
+.inputLight div {
+  display: flex;
+  flex-direction: column;
+
+}
+
 .inputLight label {
   background-color: transparent;
   color: var(--color-main);
+  align-self: flex-start;
+  /* padding: 0; */
+  margin-top: 0.5rem;
 }
 
 
@@ -219,7 +231,6 @@ input::-webkit-inner-spin-button {
   color: var(--color-main);
   padding: var(--padding-condensed);
   border-radius: var(--border-radius-main);
-  max-width: 500px;
 }
 
 input[type=text], input[type=password], input[type=date], input[type=number], input[type=checkbox], input[type=email], select{
