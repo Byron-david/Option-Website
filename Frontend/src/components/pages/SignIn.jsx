@@ -28,7 +28,7 @@ const create = async newObject => {
 
 function SignIn() {
   // State for form inputs
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // Form submission handler
@@ -37,7 +37,7 @@ function SignIn() {
 
     // Create the payload
     const payload = {
-      username,
+      email,
       password,
     };
 
@@ -61,14 +61,14 @@ function SignIn() {
           <div className={styles.flexContainer}>
             <div className={`${styles.textContainer} borderLight`}>
               <div className={`${styles.flexColumn} inputDark`}>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  id="username"
-                  name="username"
-                  placeholder="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className={styles.spaceBetween}>
                   <label htmlFor="password">Password</label>
