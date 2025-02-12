@@ -71,9 +71,9 @@ function SignUp() {
     <>
       <div className={styles.panelContainer}>
         <div className={styles.panelLeft}>
-          <h2 className="textDark">Sign Up</h2>
           <form onSubmit={handleSubmit} method="POST">
             <div className={`${styles["flexContainer-50"]} inputLight`}>
+              <h3 className="textDark">Sign Up</h3>
                 <div>
                   <label htmlFor="email">Email</label>
                   <input
@@ -113,11 +113,17 @@ function SignUp() {
 
                 {error && <p className={styles.errorMessage}>{error}</p>}
                 <Button className={styles.signupButton} type="submit" text="Create Account" />
+
+            </div>
+            <div className={`${styles.textContainer}`}>
+              Already have an account?
+              <Link to="/signin" className={`textButton`}> Sign in</Link>
             </div>
           </form>
         </div>
-        <div className={styles.panelRight}>RIGHT PANEL</div>
-
+        <div className={styles.panelRight}>
+          RIGHT PANEL
+        </div>
       </div>
     </>
   )

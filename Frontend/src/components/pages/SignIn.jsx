@@ -56,10 +56,10 @@ function SignIn() {
   return (
     <>
       <div>
-        <h1>Sign In</h1>
+        <h2>Sign In</h2>
         <form onSubmit={handleSubmit} method="POST">
-          <div className={styles.flexContainer}>
-            <div className={`${styles.textContainer} borderLight`}>
+          <div className={`${styles.flexColumnStretch} width30`}>
+            <div className={`${styles.textContainer} darkBoxA`}>
               <div className={`${styles.flexColumn} inputDark`}>
                 <label htmlFor="email">Email</label>
                 <input
@@ -85,6 +85,10 @@ function SignIn() {
                 />
               <Button className={styles.signupButton} type="submit" text="Sign In" />
               </div>
+            </div>
+            <div className={`${styles.textContainer} ${styles.flexStretch} darkBoxB`}>
+              Don't have an account yet?
+              <Link to="/signup" className={`textButton`}> Create an account</Link>
             </div>
           </div>
         </form>

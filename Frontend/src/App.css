@@ -94,15 +94,21 @@ main {
   margin-left: auto;
 }
 
-.borderLight {
+.darkBoxA {
   border: 1px solid var(--border-dark);
   border-radius: var(--border-radius-main);
   background-color: var(--color-secondary);
 }
 
+.darkBoxB {
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius-main);
+  background-color: var(--color-main);
+}
+
 .textButton {
   text-decoration: none;
-  color: var(--color-blue);
+  color: var(--color-purple);
 }
 
 .text05 {
@@ -188,6 +194,14 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+.width20 {
+  width: 20%;
+}
+
+.width30 {
+  width: 30%;
+}
+
 .inputDark label {
   display: flex;
   flex-direction: column;
@@ -197,6 +211,7 @@ input::-webkit-inner-spin-button {
 
 
 .inputDark input, select {
+  align-self: stretch;
   background-color: var(--color-main);
   border: 1px solid var(--border-dark);
   color: var(--text-color-dark);
