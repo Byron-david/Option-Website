@@ -44,7 +44,7 @@ sup {
     display: flex;
     text-align: center;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .flexContainer-50 {
