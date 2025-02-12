@@ -51,7 +51,7 @@ sup {
     align-items: stretch;
 }
 
-.flexContainer-50 {
+.flexContainer50 {
     display: flex;
     justify-content: center;
     flex-direction: column;

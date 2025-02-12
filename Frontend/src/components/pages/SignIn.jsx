@@ -69,6 +69,7 @@ function SignIn() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 <div className={styles.spaceBetween}>
                   <label htmlFor="password">Password</label>
@@ -82,6 +83,7 @@ function SignIn() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               <Button className={styles.signupButton} type="submit" text="Sign In" />
               </div>
