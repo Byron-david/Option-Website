@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './MainContent.module.css'; 
 import AddTradeModal from './AddTrade/AddTradeModal.jsx'
 import ImportCsvModal from './ImportCsvModal.jsx'
-import PositionsTable from './PositionsTable/PositionsTable.jsx';
+import TradesTable from './TradesTable/TradesTable.jsx';
 
 function MainContent() {
   return (
@@ -11,7 +11,7 @@ function MainContent() {
         <main>
           <AddTradeModal />
           <ImportCsvModal />
-          <PositionsTable />
+          <TradesTable />
         </main>
       </div>
     </>

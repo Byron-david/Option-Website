@@ -4,7 +4,7 @@ import { parse } from "csv-parse/browser/esm/sync";
 // import { transform } from 'csv-transform/browser/esm/stream-transform';
 
 // Create Page
-function positionsTable() {
+function TradesTable() {
     const div = document.querySelector("#content");
     const container = document.createElement("div");
     const tbl = document.createElement("table");
@@ -133,7 +133,7 @@ function csvNaming () {
 }
 
 function importCSV () {
-    const posTable = positionsTable();
+    const posTable = TradesTable();
     const button = document.createElement("button");
     const input = document.createElement("input");
 
@@ -192,7 +192,7 @@ function importCSV () {
 }
 
 function positionsPage() {
-    const table = positionsTable();
+    const table = TradesTable();
     const csv = importCSV();
 
     table.makeTable();

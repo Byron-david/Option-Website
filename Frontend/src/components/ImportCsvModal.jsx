@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Modal from './Modal/Modal.jsx'
-import RemapData from './PositionsTable/RemapData.jsx'
+import RemapData from './TradesTable/RemapData.jsx'
 import ContainerTemplate from './Templates/ContainerTemplate.jsx'
 import Button from './Button/Button.jsx'
 import styles from './Modal/Modal.module.css'; 

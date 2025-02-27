@@ -30,7 +30,7 @@ function Navbar() {
         <Logo />
         <nav>
           <ul>
-            <li><Button text="Positions" className={`${styles.navButtons} ${styles.active}`} /></li>
+            <li><Button text="Trades" className={`${styles.navButtons} ${styles.active}`} /></li>
             <li><Button text="Statistics"/></li>
             <li><Button text="Pricing"/></li>
             <li><Button text="Support"/></li>

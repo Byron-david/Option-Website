@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import styles from './PositionsTable.module.css'; 
-import AddSlash from './AddSlash'
+import styles from './TradesTable.module.css'; 
+import AddSlash from './AddSlash.jsx'
 import React, { Fragment } from "react"
 import FormatPrice from './FormatPrice.jsx'
 

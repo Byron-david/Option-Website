@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import styles from './PositionsTable.module.css'; 
+import styles from './TradesTable.module.css'; 
 import RemapData from './RemapData.jsx'
 import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
 import FormatTrade from './FormatTrade.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
-import tradeService from '../../services/trades'
+import tradeService from '../../services/trades.js'
 
 function RowButtons() {
     return (
@@ -27,7 +27,7 @@ const MapRows = ({data}) => {
     )
 }
 
-export default function PositionsTable({ data }) {
+export default function TradesTable({ data }) {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     // const [importData, setImportData] = useState([]);
@@ -108,7 +108,7 @@ export default function PositionsTable({ data }) {
                 </div>
                 <hr/>
                 <table>
-                    <caption>All Positions</caption>
+                    <caption>All Trades</caption>
                     <thead>
                         <tr>
                             {tableHeader.map((element) => (

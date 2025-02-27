@@ -3,7 +3,7 @@ import './App.css'
 import AddTradeModal from './components/AddTrade/AddTradeModal.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import TopNavbar from './components/Navbar/TopNavbar.jsx'
-import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
+import TradesTable from './components/TradesTable/TradesTable.jsx'
 import { Outlet } from "react-router-dom";
 
 function App() {
@@ -13,7 +13,6 @@ function App() {
       <TopNavbar />
       <main id="pageContainer">
         <Outlet />
-        
 
       </main>
       {/* <div id="mainContainer">
@@ -24,7 +23,7 @@ function App() {
           <AddTradeForm  />
           <AddTradeModal trades={trades} setTrades={setTrades} setNewTrade={setNewTrade}/>
           <ImportCsvModal />
-          <PositionsTable />
+          <TradesTable />
         </main>
       </div> */}
     </>

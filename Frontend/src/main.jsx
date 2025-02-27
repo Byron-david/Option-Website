@@ -10,7 +10,7 @@ import SignIn from './components/pages/SignIn.jsx'
 import SignUp from './components/pages/SignUp.jsx'
 import Home from './components/pages/Home.jsx'
 import ErrorPage from './components/pages/ErrorPage.jsx'
-import PositionsTable from './components/PositionsTable/PositionsTable.jsx'
+import TradesTable from './components/TradesTable/TradesTable.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 
 const router = createBrowserRouter([
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         children: [
-          { path: "trades", element: <PositionsTable /> },
-          { path: "trades/:id", element: <PositionsTable /> }
+          { path: "trades", element: <TradesTable /> },
+          { path: "trades/:id", element: <TradesTable /> }
         ]
       },
     ]

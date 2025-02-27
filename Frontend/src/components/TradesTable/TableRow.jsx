@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import styles from './PositionsTable.module.css'; 
+import styles from './TradesTable.module.css'; 
 import CombineStrikes from './CombineStrikes'
 import CombinePrice from './CombinePrice.jsx'
 import Button from '../Button/Button.jsx'

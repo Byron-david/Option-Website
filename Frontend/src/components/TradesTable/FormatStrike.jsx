@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import styles from './PositionsTable.module.css'; 
+import styles from './TradesTable.module.css'; 
 import React, { Fragment } from "react"
 
 export default function FormatStrike({ leg }) {
