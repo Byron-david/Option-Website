@@ -104,8 +104,8 @@ function SignUp() {
     <div className={styles.panelContainer}>
       <div className={styles.panelLeft}>
         <form onSubmit={handleSubmit} method="POST">
-          {/* <div className={`${styles.flexContainer30} inputLight`}> */}
-          <FormTemplate dark={false}>
+          <div className={`${styles.flexContainer30} inputLight`}>
+          {/* <FormTemplate dark={false}> */}
             <h3 className="textDark">Sign Up</h3>
 
             {/* Email Input */}
@@ -160,8 +160,8 @@ function SignUp() {
               text={isLoading ? 'Creating Account...' : 'Create Account'}
               disabled={isLoading}
             />
-          </FormTemplate>
-          {/* </div> */}
+          {/* </FormTemplate>  */}
+          </div>
 
           {/* Link to Sign In */}
           <div className={styles.textContainer}>

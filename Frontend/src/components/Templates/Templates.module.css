@@ -44,7 +44,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
+  align-items: stretch;
+
 }
 
 .width30 {
@@ -83,6 +84,7 @@
 
 .inputDark {
   background-color: var(--color-main);
+  overflow: hidden;
 }
 
 .inputDark label {
@@ -109,7 +111,7 @@
 }
 
 .borderBoxLight {
-  border: 1px solid var(--border-dark);
+  border: 1px solid var(--border-light);
   border-radius: var(--border-radius-main);
-  background-color: var(--color-secondary);
+  background-color: white;
 }

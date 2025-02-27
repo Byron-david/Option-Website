@@ -318,6 +318,17 @@ input[type=date]{
   #addTradeBody, .addOption {
     flex-wrap: wrap;
   }
+
+
+}
+
+@media screen and (max-width: 1000px) {
+  .width20 {
+    width: 100%
+  }
+  .width30 {
+    width: 100%
+  }
 }
 
 table {

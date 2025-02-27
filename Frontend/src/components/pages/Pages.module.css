@@ -31,7 +31,8 @@ sup {
 }
 
 .linkButton {
-    background-color: white;
+    /* background-color: white; */
+    background: var(--color-gradient);
     color: var(--color-main);
     padding: var(--padding-normal) var(--padding-spacious);
     border-radius: var(--border-radius-main);
