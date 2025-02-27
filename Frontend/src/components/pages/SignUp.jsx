@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from '../Button/Button';
 import styles from './Pages.module.css';
 import { Link } from 'react-router-dom';
+import FormTemplate from '../Templates/FormTemplate';
 
 // API call to create a new user
 const createUser = async (newUser) => {
@@ -103,7 +104,8 @@ function SignUp() {
     <div className={styles.panelContainer}>
       <div className={styles.panelLeft}>
         <form onSubmit={handleSubmit} method="POST">
-          <div className={`${styles.flexContainer50} inputLight`}>
+          {/* <div className={`${styles.flexContainer30} inputLight`}> */}
+          <FormTemplate dark={false}>
             <h3 className="textDark">Sign Up</h3>
 
             {/* Email Input */}
@@ -158,7 +160,8 @@ function SignUp() {
               text={isLoading ? 'Creating Account...' : 'Create Account'}
               disabled={isLoading}
             />
-          </div>
+          </FormTemplate>
+          {/* </div> */}
 
           {/* Link to Sign In */}
           <div className={styles.textContainer}>

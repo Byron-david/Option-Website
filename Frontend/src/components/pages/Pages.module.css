@@ -51,11 +51,11 @@ sup {
     align-items: stretch;
 }
 
-.flexContainer50 {
+.flexContainer30 {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    max-width: 50%;
+    max-width: 30%;
     margin: auto;
 }
 

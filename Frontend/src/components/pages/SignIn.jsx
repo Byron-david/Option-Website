@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Link,
 } from "react-router-dom"
+import FormTemplate from '../Templates/FormTemplate';
 
 const create = async newObject => {
   try {
@@ -57,9 +58,11 @@ function SignIn() {
     <>
       <div>
         <h2>Sign In</h2>
-        <form onSubmit={handleSubmit} method="POST">
-          <div className={`${styles.flexColumnStretch} width30`}>
-            <div className={`${styles.textContainer} darkBoxA`}>
+        <div className={`${styles.flexColumnStretch} width20`}>
+          <form onSubmit={handleSubmit} method="POST">
+            
+            <FormTemplate>
+            {/* <div className={`${styles.textContainer} darkBoxA`}> */}
               <div className={`${styles.flexColumn} inputDark`}>
                 <label htmlFor="email">Email</label>
                 <input
@@ -85,15 +88,16 @@ function SignIn() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-              <Button className={styles.signupButton} type="submit" text="Sign In" />
+                <Button className={styles.signupButton} type="submit" text="Sign In" />
               </div>
-            </div>
-            <div className={`${styles.textContainer} ${styles.flexStretch} darkBoxB`}>
-              Don't have an account yet?
-              <Link to="/signup" className={`textButton`}> Create an account</Link>
-            </div>
+            </FormTemplate>
+            {/* </div> */}
+          </form>
+          <div className={`${styles.textContainer} ${styles.flexStretch} darkBoxB`}>
+            Don't have an account yet?
+            <Link to="/signup" className={`textButton`}> Create an account</Link>
           </div>
-        </form>
+        </div>
       </div>
     </>
   )

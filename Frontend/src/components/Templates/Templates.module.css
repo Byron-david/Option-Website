@@ -32,3 +32,84 @@
 #csvBody {
   flex-direction: row;
 }
+
+.flexContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.flexContainerCol {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+}
+
+.width30 {
+  max-width: 30%;
+}
+
+.width50 {
+  max-width: 50%;
+}
+
+.inputLight {
+  background-color: white;
+}
+
+.inputLight div {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLight label {
+  background-color: transparent;
+  color: var(--color-main);
+  align-self: flex-start;
+  /* padding: 0; */
+  margin-top: 0.5rem;
+}
+
+
+.inputLight input, select {
+  background-color: transparent;
+  border: solid 1px var(--border-light);
+  color: var(--color-main);
+  padding: var(--padding-condensed);
+  border-radius: var(--border-radius-main);
+}
+
+.inputDark {
+  background-color: var(--color-main);
+}
+
+.inputDark label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-condensed);
+  padding: var(--padding-condensed);
+}
+
+
+.inputDark input, select {
+  align-self: stretch;
+  background-color: var(--color-main);
+  border: 1px solid var(--border-dark);
+  color: var(--text-color-dark);
+  padding: var(--padding-condensed);
+  border-radius: var(--border-radius-main);
+}
+
+.borderBoxDark {
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius-main);
+  background-color: var(--color-secondary);
+}
+
+.borderBoxLight {
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius-main);
+  background-color: var(--color-secondary);
+}
