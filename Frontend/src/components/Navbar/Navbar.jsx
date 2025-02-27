@@ -3,16 +3,8 @@ import styles from './Navbar.module.css';
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx'
 import ImportCsvModal from '../ImportCsvModal.jsx'
 import { Outlet } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
-function Button({ text = "Positions", handleClick, className = styles.navButtons }) {
-  // const buttonStyle = {
-  //   color: color,
-  //   backgroundColor: backgroundColor,
-  // }
-  return (
-    <button className={className} onClick={handleClick}>{text}</button>
-  )
-}
 
 function Logo() {
   return (
@@ -24,16 +16,34 @@ function Logo() {
 }
 
 function Navbar() {
+  const [activeButton, setActiveButton] = useState(null);
+
+  // Get the current route location
+  const location = useLocation();
+
   return (
     <>
       <div id={styles.navContainer}>
         <Logo />
-        <nav>
+        <nav className={styles.sideNavElements}>
           <ul>
-            <li><Button text="Trades" className={`${styles.navButtons} ${styles.active}`} /></li>
-            <li><Button text="Statistics"/></li>
-            <li><Button text="Pricing"/></li>
-            <li><Button text="Support"/></li>
+            <li>
+              {/* Check location, then set active */}
+              <Link to="/dashboard/trades"
+                    className={location.pathname === "/dashboard/trades" ?
+                    `${styles.navButtons} ${styles.active}` : styles.navButtons}
+                    >
+                    Trades
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard"
+                    className={location.pathname === "/dashboard" ?
+                      `${styles.navButtons} ${styles.active}` : styles.navButtons}
+                    >
+                    Dashboard
+              </Link>
+            </li>
           </ul>
         </nav>
         {/* <AddTradeModal /> */}
