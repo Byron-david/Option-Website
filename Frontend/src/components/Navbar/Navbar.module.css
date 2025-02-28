@@ -40,6 +40,7 @@
     background-color: var(--color-main);
     /* background-image: linear-gradient(var(--color-button),var(--color-secondary)); */
     top: 0;
+    /* margin-left: var(--nav-width); */
     height: var(--top-nav-size);
 }
 
