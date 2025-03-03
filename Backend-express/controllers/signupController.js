@@ -10,7 +10,7 @@ async function createUser(req, res) {
 
   try {
     // Check if the email already exists
-    const userExists = await pool.query('SELECT * FROM email WHERE users = $1', [email]);
+    const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userExists.rows.length > 0) {
       return res.status(400).json({ message: 'Email already exists' });
     }

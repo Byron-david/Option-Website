@@ -55,7 +55,7 @@ function SignUp() {
       });
 
       if (response.ok) {
-        navigate('/login'); // Redirect to the login page after successful signup
+        navigate('/signin'); // Redirect to the login page after successful signup
       } else {
         const data = await response.json();
         setError(data.message || 'Signup failed');
