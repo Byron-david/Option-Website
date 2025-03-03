@@ -12,6 +12,7 @@ import Home from './components/pages/Home.jsx'
 import ErrorPage from './components/pages/ErrorPage.jsx'
 import TradesTable from './components/TradesTable/TradesTable.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
+import ProtectedRoute from './components/Protected/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -41,10 +42,17 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: 
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>,
         children: [
-          { path: "trades", element: <TradesTable /> },
-          { path: "trades/:id", element: <TradesTable /> }
+          { path: "trades", 
+            element: <TradesTable /> 
+          },
+          { path: "trades/:id", 
+            element: <TradesTable /> 
+          }
         ]
       },
     ]
