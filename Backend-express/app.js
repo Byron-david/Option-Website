@@ -1,11 +1,7 @@
-const pool = require("./db/pool");
 const config = require('./utils/config')
 const express = require('express')
 const session = require("express-session");
-const passport = require("passportConfig");
-
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const passport = require("./passportConfig");
 const app = express()
 const cors = require('cors')
 // const tradesRouter = require('./controllers/trades')
@@ -17,10 +13,28 @@ require('express-async-errors')
 
 logger.info('connecting to', config.DATABASE_URL)
 
-app.use(session({ secret: process.env.SESSION_SECRET,
-                  resave: false,
-                  saveUninitialized: false }));
+  
+// Session configuration
+app.use(
+    session({
+    secret: config.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        // secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+    },
+    })
+);
+// Passport initialization
+app.use(passport.initialize());
 app.use(passport.session());
+
+// app.use(session({ secret: process.env.SESSION_SECRET,
+//                   resave: false,
+//                   saveUninitialized: false }));
+// app.use(passport.session());
 // app.use(express.urlencoded({ extended: false }));
 
 app.use(cors())

@@ -1,12 +1,13 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcryptjs');
-const { Pool } = require("pg");
+// const { Pool } = require("pg");
 const config = require('./utils/config')
+const pool = require("./db/pool");
 
-const pool = new Pool({
-  connectionString: config.DATABASE_URL
-});
+// const pool = new Pool({
+//   connectionString: config.DATABASE_URL
+// });
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
