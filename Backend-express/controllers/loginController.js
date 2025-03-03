@@ -4,8 +4,10 @@ const bcrypt = require('bcryptjs');
 
 async function getUser(req, res) {
   try {
+    await pool.query("SELECT id, username FROM users");
     const result = await pool.query("SELECT id, username FROM users");
-    res.json(result.rows);
+    // res.json(result.rows);
+    res.json({ message: 'Login successful' });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
