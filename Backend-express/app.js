@@ -32,14 +32,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(session({ secret: process.env.SESSION_SECRET,
-//                   resave: false,
-//                   saveUninitialized: false }));
-// app.use(passport.session());
-// app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+    // origin: http://localhost:3000', // Allow requests from your React app
+    credentials: true, // Allow cookies to be sent
+  }));app.use(express.static('dist'))
 
-app.use(cors())
-app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 

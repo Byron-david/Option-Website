@@ -2,29 +2,7 @@ import { useState } from 'react';
 import Button from '../Button/Button';
 import styles from './Pages.module.css';
 import { Link } from 'react-router-dom';
-import FormTemplate from '../Templates/FormTemplate';
-
-// API call to create a new user
-const createUser = async (newUser) => {
-  try {
-    const response = await fetch('http://localhost:3000/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
-    });
-
-    if (!response.ok) {
-      throw new Error('Sign-up failed');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error creating user:', error);
-    throw error;
-  }
-};
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   // State for form inputs and error handling
@@ -33,6 +11,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Password validation rules
   const validatePassword = (password) => {
@@ -60,50 +39,37 @@ function SignUp() {
     return '';
   };
 
-  // Form submission handler
-  const handleSubmit = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
-    // Clear previous errors
-    setError('');
-
-    // Validate password
-    const passwordError = validatePassword(password);
-    if (passwordError) {
-      setError(passwordError);
+    if (!email || !password) {
+      setError('Username and password are required');
       return;
     }
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
-
-    // Create the payload
-    const payload = { email, password };
-
-    setIsLoading(true); // Start loading
 
     try {
-      const response = await createUser(payload);
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-      if (response) {
-        console.log('Sign-up successful:', response);
-        setError(''); // Clear any previous errors
-        // Redirect or update UI here (e.g., navigate to a new page)
+      if (response.ok) {
+        navigate('/login'); // Redirect to the login page after successful signup
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Signup failed');
       }
-    } catch (error) {
-      setError('An error occurred. Please try again.');
-    } finally {
-      setIsLoading(false); // Stop loading
+    } catch (err) {
+      setError('Error during signup');
+      console.error('Error during signup:', err);
     }
   };
 
   return (
     <div className={styles.panelContainer}>
       <div className={styles.panelLeft}>
-        <form onSubmit={handleSubmit} method="POST">
+        <form onSubmit={handleSignup} method="POST">
           <div className={`${styles.flexContainer30} inputLight`}>
           {/* <FormTemplate dark={false}> */}
             <h3 className="textDark">Sign Up</h3>
