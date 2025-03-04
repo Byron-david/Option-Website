@@ -33,9 +33,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-    // origin: http://localhost:3000', // Allow requests from your React app
-    credentials: true, // Allow cookies to be sent
-  }));app.use(express.static('dist'))
+  origin: (origin, callback) => {
+    // List of allowed origins
+    const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+
+    // Allow requests with no origin (e.g., mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+
+    // Check if the origin is in the allowed list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      const msg = `The CORS policy for this site does not allow access from ${origin}.`;
+      return callback(new Error(msg), false);
+    }
+  },
+  credentials: true, // Allow cookies to be sent
+}));
+
+app.use(express.static('dist'))
 
 app.use(express.json())
 app.use(middleware.requestLogger)
