@@ -36,16 +36,22 @@ function SignIn() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3000/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include', // Include cookies in the request
-    });
-    if (response.ok) {
-      navigate('/dashboard'); // Redirect to the protected route
-    } else {
-      alert('Login failed');
+    try {
+      const response = await fetch('http://localhost:3000/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include', // Include cookies in the request
+      });
+      const data = await response.json();
+      if (response.ok) {
+        navigate('/dashboard'); // Redirect to the protected route
+      } else {
+        alert(data.message || 'Login failed'); // Display the error message
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('An error occurred during login');
     }
   };
 

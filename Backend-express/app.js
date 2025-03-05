@@ -29,27 +29,19 @@ app.use(
     })
 );
 // Passport initialization
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // List of allowed origins
-    const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
-
-    // Allow requests with no origin (e.g., mobile apps, curl requests)
-    if (!origin) return callback(null, true);
-
-    // Check if the origin is in the allowed list
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      const msg = `The CORS policy for this site does not allow access from ${origin}.`;
-      return callback(new Error(msg), false);
-    }
-  },
-  credentials: true, // Allow cookies to be sent
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // Allow requests from this origin
+    credentials: true, // Allow credentials (cookies, authorization headers)
+  })
+);
 
 app.use(express.static('dist'))
 
@@ -57,12 +49,12 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.get('/check-auth', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json({ authenticated: true });
-    } else {
-      res.json({ authenticated: false });
-    }
-  });
+  if (req.isAuthenticated()) {
+    res.json({ authenticated: true, user: req.user });
+  } else {
+    res.json({ authenticated: false });
+  }
+});
 
 app.use('/dashboard', tradesRouter)
 app.use('/signup', signupRouter)

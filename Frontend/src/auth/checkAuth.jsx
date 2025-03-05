@@ -1,6 +1,6 @@
 export const checkAuth = async () => {
     try {
-      const response = await fetch('/check-auth', {
+      const response = await fetch('http://localhost:3000/check-auth', {
         credentials: 'include', // Include cookies in the request
       });
       if (response.ok) {
