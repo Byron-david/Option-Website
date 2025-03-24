@@ -43,15 +43,28 @@ function SignIn() {
         body: JSON.stringify({ email, password }),
         credentials: 'include', // Include cookies in the request
       });
-      const data = await response.json();
-      if (response.ok) {
-        navigate('/dashboard'); // Redirect to the protected route
-      } else {
-        alert(data.message || 'Login failed'); // Display the error message
+      
+      console.log('Login response status:', response.status); // Debug log
+    
+      const text = await response.text();
+      console.log('Raw response:', text); // Debug log
+      
+      try {
+        const data = JSON.parse(text);
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Login failed');
+        }
+        
+        console.log('Login successful:', data); // Debug log
+        navigate(data.redirectTo || '/');
+      } catch (e) {
+        console.error('Failed to parse JSON:', e);
+        throw new Error('Invalid server response');
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      alert('An error occurred during login');
+      console.error('Login error:', error);
+      setError(error.message);
     }
   };
 

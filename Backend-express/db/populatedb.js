@@ -1,6 +1,6 @@
+require('dotenv').config()
 const config = require('../utils/config')
 const { Client } = require("pg");
-require('dotenv').config()
 
 const SQL = `
 DROP TABLE IF EXISTS trades, strategies;

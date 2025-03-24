@@ -21,7 +21,7 @@ async function createUser(req, res) {
 
     // Insert the new user into the database
     const result = await pool.query(
-      'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
+      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
 
