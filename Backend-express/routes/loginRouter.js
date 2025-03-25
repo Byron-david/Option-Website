@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const loginController = require("../controllers/loginController");
 const loginRouter = Router();
+const loginController = require("../controllers/loginController");
 
 loginRouter.post('/', loginController.loginUser);
 loginRouter.get('/me', loginController.getCurrentUser);

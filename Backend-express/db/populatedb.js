@@ -1,7 +1,11 @@
 require('dotenv').config()
 const config = require('../utils/config')
 const { Client } = require("pg");
-
+// console.log({
+//   envPath: require('path').resolve('../.env'),
+//   envContents: require('fs').readFileSync('../.env', 'utf8'),
+//   databaseUrl: process.env.DATABASE_URL
+// });
 const SQL = `
 DROP TABLE IF EXISTS trades, strategies;
 

@@ -1,73 +1,56 @@
 const pool = require("../db/pool");
 const passport = require("../passportConfig");
 
-// async function getUser(req, res) {
-//   try {
-//     // Query the database to get user data
-//     const result = await pool.query("SELECT id, email FROM users");
-
-//     // Send the result back to the client
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error('Error fetching users:', err);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// }
-
-// const getUser = (req, res) => {
-//   console.log("=============")
+// const loginUser = (req, res, next) => {
+//   passport.authenticate('local', (err, user, info) => {
 //     if (err) {
+//       console.error('Authentication error:', err);
 //       return res.status(500).json({ message: 'Server error during authentication' });
 //     }
 //     if (!user) {
-//       return res.status(400).json({ message: info.message || 'Invalid credentials' });
+//       return res.status(401).json({ message: info.message || 'Invalid credentials' });
 //     }
 
-//     // Log in the user
-//     req.logIn(user, (err) => {
-//       if (err) {
-//         return res.status(500).json({ message: 'Server error during login' });
+//     req.login(user, (loginErr) => {
+//       if (loginErr) {
+//         console.error('Login error:', loginErr);
+//         return res.status(500).json({ message: 'Session error' });
 //       }
-//       return res.json({ message: 'Login successful', user });
+      
+//       // Successful login
+//       return res.json({ 
+//         message: 'Login successful',
+//         user: {
+//           id: user.id,
+//           email: user.email
+//         },
+//         redirectTo: '/dashboard' // Add redirect path
+//       });
 //     });
-// }
-
-// const getUser = (req, res) => {
-//   // This will only be called if authentication succeeded
-//   res.json({ 
-//     message: 'Login successful',
-//     user: {
-//       id: req.user.id,
-//       email: req.user.email
-//       // Don't send sensitive data!
-//     }
-//   });
+//   })(req, res, next);
 // };
 
 const loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      console.error('Authentication error:', err);
-      return res.status(500).json({ message: 'Server error during authentication' });
-    }
+    if (err) return next(err);
     if (!user) {
-      return res.status(401).json({ message: info.message || 'Invalid credentials' });
+      return res.status(401).json({ 
+        success: false,
+        message: info.message 
+      });
     }
 
-    req.login(user, (loginErr) => {
-      if (loginErr) {
-        console.error('Login error:', loginErr);
-        return res.status(500).json({ message: 'Session error' });
-      }
+    req.logIn(user, (err) => {
+      if (err) return next(err);
       
-      // Successful login
-      return res.json({ 
-        message: 'Login successful',
+      console.log('Logged in user:', req.user); // Debug log
+      
+      return res.json({
+        success: true,
         user: {
           id: user.id,
           email: user.email
-        },
-        redirectTo: '/dashboard' // Add redirect path
+        }
       });
     });
   })(req, res, next);

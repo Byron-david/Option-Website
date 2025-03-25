@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Features from './components/pages/Features.jsx'
 import Pricing from './components/pages/Pricing.jsx'
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
 import './index.css'
 import Dashboard from './components/pages/Dashboard.jsx'
 import SignIn from './components/pages/SignIn.jsx'
@@ -12,12 +12,17 @@ import Home from './components/pages/Home.jsx'
 import ErrorPage from './components/pages/ErrorPage.jsx'
 import TradesTable from './components/TradesTable/TradesTable.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
-import ProtectedRoute from './components/Protected/ProtectedRoute';
+import ProtectedRoute from './components/pages/ProtectedRoute';
+import { AuthProvider } from './components/pages/AuthContext';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -34,7 +39,21 @@ const router = createBrowserRouter([
       },
       {
         path: "signin",
-        element: <SignIn />
+        element: <SignIn />,
+        loader: async () => {
+          try {
+            const response = await fetch('/check-auth', {
+              credentials: 'include'
+            });
+            if (response.ok) {
+              return redirect('/dashboard');
+            }
+            return null;
+          } catch (error) {
+            console.error('Auth check failed:', error);
+            return null;
+          }
+        }
       },
       {
         path: "signup",
@@ -42,10 +61,25 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: 
-        <ProtectedRoute>
-          <Dashboard />
-        </ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        loader: async () => {
+          try {
+            const response = await fetch('/check-auth', {
+              credentials: 'include'
+            });
+            if (!response.ok) {
+              return redirect('/signin');
+            }
+            return null;
+          } catch (error) {
+            console.error('Auth check failed:', error);
+            return redirect('/signin');
+          }
+        },
         children: [
           { path: "trades", 
             element: <TradesTable /> 
@@ -62,6 +96,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   </React.StrictMode>,
 )

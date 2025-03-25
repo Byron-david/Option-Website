@@ -7,88 +7,69 @@ import {
 } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import FormTemplate from '../Templates/FormTemplate';
-
-const create = async newObject => {
-  try {
-    const response = await fetch("http://localhost:3000/signin", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newObject),
-      }
-    );
-
-    const data = await response.json();
-
-    return data
-
-  } catch (error) {
-    console.error('Error fetching user:', error);
-  }
-}
+import { useAuth } from './AuthContext';
 
 function SignIn() {
   // State for form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3000/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include', // Include cookies in the request
-      });
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await fetch('http://localhost:3000/signin', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ email, password }),
+//         credentials: 'include', // Include cookies in the request
+//       });
       
-      console.log('Login response status:', response.status); // Debug log
+//       console.log('Login response status:', response.status); // Debug log
     
-      const text = await response.text();
-      console.log('Raw response:', text); // Debug log
+//       const text = await response.text();
+//       console.log('Raw response:', text); // Debug log
       
-      try {
-        const data = JSON.parse(text);
+//       try {
+//         const data = JSON.parse(text);
         
-        if (!response.ok) {
-          throw new Error(data.message || 'Login failed');
-        }
+//         if (!response.ok) {
+//           throw new Error(data.message || 'Login failed');
+//         }
         
-        console.log('Login successful:', data); // Debug log
-        navigate(data.redirectTo || '/');
-      } catch (e) {
-        console.error('Failed to parse JSON:', e);
-        throw new Error('Invalid server response');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      setError(error.message);
+//         console.log('Login successful:', data); // Debug log
+//         // navigate(data.redirectTo || 'http://localhost:3000/dashboard');
+//       navigate(data.redirectTo || '/dashboard', { 
+//         replace: true,
+//       });
+//       } catch (e) {
+//         console.error('Failed to parse JSON:', e);
+//         throw new Error('Invalid server response');
+//       }
+//     } catch (error) {
+//       console.error('Login error:', error);
+//       setError(error.message);
+//     }
+//   };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError('');
+  
+  try {
+    const success = await login({ email, password });
+    
+    if (success) {
+      // Redirect to intended path or dashboard
+      const redirectTo = location.state?.from?.pathname || '/dashboard';
+      navigate(redirectTo, { replace: true });
     }
-  };
-
-  // Form submission handler
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault(); // Prevent default form submission behavior
-
-  //   // Create the payload
-  //   const payload = {
-  //     email,
-  //     password,
-  //   };
-
-  //   // Send the POST request
-  //   const response = await create(payload);
-
-  //   // Handle the response (e.g., show success/error message, redirect, etc.)
-  //   if (response) {
-  //     console.log('Sign-in successful:', response);
-  //     // You can redirect the user or update the UI here
-  //   } else {
-  //     console.error('Sign-in failed');
-  //   }
-  // };
+  } catch (err) {
+    setError(err.message || 'Login failed');
+  }
+};
   
   return (
     <>
@@ -122,6 +103,7 @@ function SignIn() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                {error && <div className="error">{error}</div>}
                 <Button className={styles.signupButton} type="submit" text="Sign In" />
               </div>
             </div>
