@@ -10,7 +10,7 @@ const Logout = () => {
       credentials: 'include', // Include cookies in the request
     });
     if (response.ok) {
-      navigate('http://127.0.0.1:3000/api/login'); // Redirect to the login page
+      navigate('/api/login'); // Redirect to the login page
     }
   };
 

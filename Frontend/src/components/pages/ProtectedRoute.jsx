@@ -1,4 +1,3 @@
-// ProtectedRoute.jsx
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import LoadingSpinner from '../Loading/LoadingSpinner';
@@ -16,8 +15,6 @@ export default function ProtectedRoute({ children }) {
           }
         });
 
-        console.log('Auth check response:', response); // Debug log
-        
         if (!response.ok) {
           throw new Error('Not authenticated');
         }
@@ -43,16 +40,3 @@ export default function ProtectedRoute({ children }) {
 
   return children;
 }
-
-// import { Navigate } from 'react-router-dom';
-// import { useAuth } from './AuthContext';
-
-// export default function ProtectedRoute({ children }) {
-//   const { isAuthenticated } = useAuth();
-  
-//   if (!isAuthenticated) {
-//     return <Navigate to="/api/login" replace />;
-//   }
-  
-//   return children;
-// }

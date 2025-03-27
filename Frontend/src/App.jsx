@@ -5,8 +5,10 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import TopNavbar from './components/Navbar/TopNavbar.jsx'
 import TradesTable from './components/TradesTable/TradesTable.jsx'
 import { Outlet } from "react-router-dom";
+import { useAuth } from './components/pages/AuthContext';
 
 function App() {
+  const { isAuthenticated } = useAuth();
   // const [isAuthenticated, setIsAuthenticated] = useState(false); // Track login state
 
   // useEffect(() => {
@@ -19,8 +21,8 @@ function App() {
 
   return (
     <>
-      <TopNavbar />
-      {/* {!isAuthenticated && <TopNavbar />} */}
+      {/* <TopNavbar /> */}
+      {!isAuthenticated && <TopNavbar />}
       <main id="pageContainer">
         <Outlet />
       </main>

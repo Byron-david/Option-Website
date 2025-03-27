@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Suspense } from 'react';
 import App from './App.jsx'
 import Features from './components/pages/Features.jsx'
 import Pricing from './components/pages/Pricing.jsx'
@@ -14,6 +15,7 @@ import TradesTable from './components/TradesTable/TradesTable.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import ProtectedRoute from './components/pages/ProtectedRoute';
 import { AuthProvider } from './components/pages/AuthContext';
+import LoadingSpinner from './components/Loading/LoadingSpinner.jsx';
 
 function authLoader(requireAuth) {
   return async () => {
@@ -37,9 +39,12 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      // Add Fallback
+      <Suspense fallback={<LoadingSpinner />}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
     children: [
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
-        // loader: authLoader(true), // Redirect if not authenticated
+        loader: authLoader(true), // Redirect if not authenticated
       },
       {
         path: "signup",
