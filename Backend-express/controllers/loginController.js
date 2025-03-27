@@ -1,28 +1,40 @@
 const pool = require("../db/pool");
 const passport = require("../passportConfig");
 
+// const loginUser = (req, res, next) => {
+//   passport.authenticate('local', (err, user, info) => {
+//     if (err) return next(err);
+//     if (!user) {
+//       return res.status(401).json({ 
+//         success: false,
+//         message: info.message 
+//       });
+//     }
+
+//     req.logIn(user, (err) => {
+//       if (err) return next(err);
+      
+//       console.log('Logged in user:', req.user); // Debug log
+      
+//       return res.json({
+//         success: true,
+//         user: {
+//           id: user.id,
+//           email: user.email
+//         }
+//       });
+//     });
+//   })(req, res, next);
+// };
+
 const loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err);
-    if (!user) {
-      return res.status(401).json({ 
-        success: false,
-        message: info.message 
-      });
-    }
-
+    if (err) return res.status(500).json({ error: err.message });
+    if (!user) return res.status(401).json({ error: info.message });
+    
     req.logIn(user, (err) => {
-      if (err) return next(err);
-      
-      console.log('Logged in user:', req.user); // Debug log
-      
-      return res.json({
-        success: true,
-        user: {
-          id: user.id,
-          email: user.email
-        }
-      });
+      if (err) return res.status(500).json({ error: err.message });
+      return res.json({ user });
     });
   })(req, res, next);
 };

@@ -20,7 +20,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -70,7 +70,7 @@ function Login() {
   return (
     <>
       <div>
-        <h2>Sign In</h2>
+        <h2>Log In</h2>
         <div className={`${styles.flexColumnStretch} width20`}>
           <form onSubmit={handleLogin} method="POST">
             <div className={`${styles.textContainer} darkBoxA`}>

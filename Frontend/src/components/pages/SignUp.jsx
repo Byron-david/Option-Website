@@ -48,14 +48,14 @@ function SignUp() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/signup', {
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
-        navigate('/signin'); // Redirect to the login page after successful signup
+        navigate('/api/login'); // Redirect to the login page after successful signup
       } else {
         const data = await response.json();
         setError(data.message || 'Signup failed');
@@ -132,7 +132,7 @@ function SignUp() {
           {/* Link to Sign In */}
           <div className={styles.textContainer}>
             Already have an account?{' '}
-            <Link to="/signin" className="textButton">
+            <Link to="/api/login" className="textButton">
               Sign in
             </Link>
           </div>

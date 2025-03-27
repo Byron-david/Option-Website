@@ -18,7 +18,7 @@ import { AuthProvider } from './components/pages/AuthContext';
 function authLoader(requireAuth) {
   return async () => {
     try {
-      const response = await fetch('/auth', { credentials: 'include' });
+      const response = await fetch('/api/auth', { credentials: 'include' });
       if (!response.ok) throw new Error('Auth failed');
       
       const data = await response.json();
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
-        loader: authLoader(true), // Redirect if not authenticated
+        // loader: authLoader(true), // Redirect if not authenticated
       },
       {
         path: "signup",

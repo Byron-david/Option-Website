@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/auth', {
+        const response = await fetch('/api/auth', {
           credentials: 'include', // MUST include credentials
           headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (authStatus === 'unauthenticated') {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/api/login" replace />;
   }
 
   return children;
@@ -51,7 +51,7 @@ export default function ProtectedRoute({ children }) {
 //   const { isAuthenticated } = useAuth();
   
 //   if (!isAuthenticated) {
-//     return <Navigate to="/login" replace />;
+//     return <Navigate to="/api/login" replace />;
 //   }
   
 //   return children;

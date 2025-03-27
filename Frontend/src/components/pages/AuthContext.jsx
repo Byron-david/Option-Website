@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const response = await fetch('/auth', { credentials: 'include' });
+        const response = await fetch('/api/auth', { credentials: 'include' });
         if (response.ok) {
           const data = await response.json();
           setIsAuthenticated(data.authenticated);

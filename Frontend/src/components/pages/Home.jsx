@@ -7,7 +7,7 @@ function Home() {
       Made. Simple.</h1>
       <h2 className={styles.header2}>Track all your complex option spreads easily</h2>
       <div className={styles.linkContainer}>
-        <Link to="/signin" className={styles.linkButton}>Get Started</Link>
+        <Link to="/api/login" className={styles.linkButton}>Get Started</Link>
       </div>
     </>
   )

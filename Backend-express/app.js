@@ -57,7 +57,7 @@ const router = express.Router();
 // app.use('/', authRouter);
 app.use('/dashboard', tradesRouter)
 app.use('/signup', signupRouter)
-app.use('/', loginRouter)
+app.use('/api', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

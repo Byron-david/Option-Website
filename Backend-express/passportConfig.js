@@ -34,7 +34,7 @@ passport.use(new LocalStrategy(
       return done(null, {
         id: user.id,
         email: user.email,
-        role: user.role || 'user' // Add role if using RBAC
+        // role: user.role || 'user' // Add role if using RBAC
       });
     } catch (err) {
       return done(err);
@@ -49,12 +49,14 @@ passport.serializeUser((user, done) => {
 
 // Session Deserialization
 passport.deserializeUser(async (id, done) => {
+  console.log("ID: ", id)
   try {
     const result = await pool.query(
-      'SELECT id, email, role FROM users WHERE id = $1', 
+      'SELECT id, email FROM users WHERE id = $1', 
       [id]
     );
     done(null, result.rows[0] || null);
+    console.log("DESERIALIZE: ", result.rows[0])
   } catch (err) {
     done(err);
   }
