@@ -7,8 +7,7 @@ const cors = require('cors')
 // const tradesRouter = require('./controllers/trades')
 const tradesRouter = require('./routes/tradesRouter')
 const loginRouter = require('./routes/loginRouter')
-const signupRouter = require('./routes/signupRouter')
-const authRouter = require('./routes/authRouter');
+const userRouter = require('./routes/userRouter');
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 require('express-async-errors')
@@ -46,18 +45,9 @@ app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-// app.get('/check-auth', (req, res) => {
-//   if (req.isAuthenticated()) {
-//     return res.json({ authenticated: true, user: req.user });
-//   }
-//   res.status(401).json({ authenticated: false });
-// });
-const router = express.Router();
-
-// app.use('/', authRouter);
 app.use('/dashboard', tradesRouter)
-app.use('/signup', signupRouter)
 app.use('/api', loginRouter)
+app.use('/api', userRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

@@ -6,16 +6,13 @@ import {
   Link,
 } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
-import FormTemplate from '../Templates/FormTemplate';
 
 function Login() {
   // State for form inputs
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  // const { login } = useAuth();
-  // const location = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,12 +20,10 @@ function Login() {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
         credentials: 'include', // Include cookies in the request
       });
       
-      console.log('Login response status:', response.status); // Debug log
-    
       const text = await response.text();
       console.log('Raw response:', text); // Debug log
       
@@ -39,7 +34,6 @@ function Login() {
           throw new Error(data.message || 'Login failed');
         }
         
-        console.log('Login successful:', data); // Debug log
         navigate('/dashboard', { replace: true });
       } catch (e) {
         console.error('Failed to parse JSON:', e);
@@ -50,22 +44,6 @@ function Login() {
       setError(error.message);
     }
   };
-// const handleLogin = async (e) => {
-//   e.preventDefault();
-//   setError('');
-  
-//   try {
-//     const success = await login({ email, password });
-    
-//     if (success) {
-//       // Redirect to intended path or dashboard
-//       const redirectTo = location.state?.from?.pathname || '/dashboard';
-//       navigate(redirectTo, { replace: true });
-//     }
-//   } catch (err) {
-//     setError(err.message || 'Login failed');
-//   }
-// };
   
   return (
     <>
@@ -75,14 +53,14 @@ function Login() {
           <form onSubmit={handleLogin} method="POST">
             <div className={`${styles.textContainer} darkBoxA`}>
               <div className={`${styles.flexColumn} inputDark`}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="username">Username</label>
                 <input
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="username"
+                  name="username"
+                  placeholder="username"
+                  type="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
                 <div className={styles.spaceBetween}>

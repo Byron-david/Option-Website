@@ -2,17 +2,17 @@ const bcrypt = require('bcryptjs');
 const pool = require('../db/pool');
 
 async function createUser(req, res) {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required' });
   }
 
   try {
-    // Check if the email already exists
-    const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    // Check if the username already exists
+    const userExists = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     if (userExists.rows.length > 0) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: 'Username already exists' });
     }
 
     // Hash the password
@@ -21,8 +21,8 @@ async function createUser(req, res) {
 
     // Insert the new user into the database
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
-      [email, hashedPassword]
+      'INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING *',
+      [username, hashedPassword]
     );
 
     const newUser = result.rows[0];

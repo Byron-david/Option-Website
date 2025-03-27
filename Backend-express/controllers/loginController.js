@@ -1,31 +1,56 @@
 const pool = require("../db/pool");
 const passport = require("../passportConfig");
+const bcrypt = require('bcryptjs');
 
-// const loginUser = (req, res, next) => {
-//   passport.authenticate('local', (err, user, info) => {
-//     if (err) return next(err);
-//     if (!user) {
-//       return res.status(401).json({ 
-//         success: false,
-//         message: info.message 
-//       });
-//     }
+async function createUser(req, res) {
+  const { username, email, password } = req.body;
 
-//     req.logIn(user, (err) => {
-//       if (err) return next(err);
-      
-//       console.log('Logged in user:', req.user); // Debug log
-      
-//       return res.json({
-//         success: true,
-//         user: {
-//           id: user.id,
-//           email: user.email
-//         }
-//       });
-//     });
-//   })(req, res, next);
-// };
+  // Validate inputs
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'Username, email and password are required' });
+  }
+
+  try {
+    // Check if username or email already exists
+    const existingUser = await pool.query(
+      `SELECT 
+        EXISTS(SELECT 1 FROM users WHERE username = $1) AS username_taken,
+        EXISTS(SELECT 1 FROM users WHERE LOWER(email) = LOWER($2)) AS email_taken`,
+      [username, email]
+    );
+
+    const { username_taken, email_taken } = existingUser.rows[0];
+
+    if (username_taken) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    if (email_taken) {
+      return res.status(400).json({ message: 'Email already registered' });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create new user
+    const result = await pool.query(
+      `INSERT INTO users (username, email, password_hash)
+       VALUES ($1, $2, $3)
+       RETURNING id, username, email, created_at`,
+      [username, email.toLowerCase(), hashedPassword]
+    );
+
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: result.rows[0]
+    });
+
+  } catch (err) {
+    console.error('Signup error:', err);
+    res.status(500).json({ message: 'Error registering user' });
+  }
+}
 
 const loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -34,7 +59,12 @@ const loginUser = (req, res, next) => {
     
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ error: err.message });
-      return res.json({ user });
+      return res.json({ 
+        user: {
+          id: user.id,
+          username: user.username
+        } 
+      });
     });
   })(req, res, next);
 };
@@ -47,7 +77,7 @@ const getCurrentUser = (req, res) => {
   res.json({
     user: {
       id: req.user.id,
-      email: req.user.email
+      username: req.user.username
     }
   });
 };
@@ -59,15 +89,15 @@ const logoutUser = (req, res) => {
       return res.status(500).json({ message: 'Logout failed' });
     }
     req.session.destroy(() => {
-      res.clearCookie('connect.sid'); // Clear session cookie
+      res.clearCookie('connect.sid');
       res.json({ message: 'Logout successful' });
     });
   });
 };
 
 const checkAuth = (req, res) => {
-  console.log('Session check:', req.session); // Debug log
-  console.log('Authenticated user:', req.user); // Debug log
+  // console.log('Session check:', req.session); // Debug log
+  // console.log('Authenticated user:', req.user); // Debug log
   
   if (req.isAuthenticated()) {
     return res.json({ 
@@ -79,6 +109,7 @@ const checkAuth = (req, res) => {
 };
 
 module.exports = {
+  createUser,
   loginUser,
   getCurrentUser,
   logoutUser,

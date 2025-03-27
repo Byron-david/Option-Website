@@ -6,20 +6,20 @@ const pool = require('./db/pool');
 // Local Strategy Configuration
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',       // Use email instead of username
-    passwordField: 'password',    // Field name for password
-    passReqToCallback: false      // Set to true if you need access to req object
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: false
   },
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
       // Custom verification logic
       const result = await pool.query(
-        'SELECT * FROM users WHERE email = $1', 
-        [email.toLowerCase().trim()]
+        'SELECT * FROM users WHERE username = $1', 
+        [username.trim()]
       );
       
       if (result.rows.length === 0) {
-        return done(null, false, { message: 'Incorrect email' });
+        return done(null, false, { message: 'Incorrect username' });
       }
 
       const user = result.rows[0];
@@ -33,7 +33,7 @@ passport.use(new LocalStrategy(
       // Successful authentication
       return done(null, {
         id: user.id,
-        email: user.email,
+        username: user.username,
         // role: user.role || 'user' // Add role if using RBAC
       });
     } catch (err) {
@@ -52,7 +52,7 @@ passport.deserializeUser(async (id, done) => {
   console.log("ID: ", id)
   try {
     const result = await pool.query(
-      'SELECT id, email FROM users WHERE id = $1', 
+      'SELECT id, username FROM users WHERE id = $1', 
       [id]
     );
     done(null, result.rows[0] || null);
