@@ -19,6 +19,7 @@ function App() {
 
   return (
     <>
+      <TopNavbar />
       {/* {!isAuthenticated && <TopNavbar />} */}
       <main id="pageContainer">
         <Outlet />

@@ -1,32 +1,28 @@
-// AuthContext.js
-import { createContext, useContext, useState } from 'react';
+// AuthContext.jsx
+import { createContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = async (credentials) => {
-    // Your login implementation
-    const response = await fetch('http://localhost:3000/signin', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    });
-    
-    if (response.ok) {
-      const userData = await response.json();
-      setUser(userData);
-      return true;
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const response = await fetch('/auth', { credentials: 'include' });
+        if (response.ok) {
+          const data = await response.json();
+          setIsAuthenticated(data.authenticated);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      }
     }
-    return false;
-  };
-
-  const value = { user, login };
+    checkAuth();
+  }, []);
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
@@ -35,7 +31,7 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

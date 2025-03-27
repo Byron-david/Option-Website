@@ -1,35 +1,6 @@
 const pool = require("../db/pool");
 const passport = require("../passportConfig");
 
-// const loginUser = (req, res, next) => {
-//   passport.authenticate('local', (err, user, info) => {
-//     if (err) {
-//       console.error('Authentication error:', err);
-//       return res.status(500).json({ message: 'Server error during authentication' });
-//     }
-//     if (!user) {
-//       return res.status(401).json({ message: info.message || 'Invalid credentials' });
-//     }
-
-//     req.login(user, (loginErr) => {
-//       if (loginErr) {
-//         console.error('Login error:', loginErr);
-//         return res.status(500).json({ message: 'Session error' });
-//       }
-      
-//       // Successful login
-//       return res.json({ 
-//         message: 'Login successful',
-//         user: {
-//           id: user.id,
-//           email: user.email
-//         },
-//         redirectTo: '/dashboard' // Add redirect path
-//       });
-//     });
-//   })(req, res, next);
-// };
-
 const loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
@@ -83,6 +54,9 @@ const logoutUser = (req, res) => {
 };
 
 const checkAuth = (req, res) => {
+  console.log('Session check:', req.session); // Debug log
+  console.log('Authenticated user:', req.user); // Debug log
+  
   if (req.isAuthenticated()) {
     return res.json({ 
       authenticated: true,

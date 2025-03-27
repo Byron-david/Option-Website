@@ -37,7 +37,8 @@ app.use(
   cors({
     origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from this origin
     credentials: true, // Allow credentials (cookies, authorization headers)
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-cookie']
   })
 );
 
@@ -53,10 +54,10 @@ app.use(middleware.requestLogger)
 // });
 const router = express.Router();
 
-app.use('/', authRouter);
+// app.use('/', authRouter);
 app.use('/dashboard', tradesRouter)
 app.use('/signup', signupRouter)
-app.use('/signin', loginRouter)
+app.use('/', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

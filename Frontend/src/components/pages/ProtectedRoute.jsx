@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:3000/check-auth', {
+        const response = await fetch('/auth', {
           credentials: 'include', // MUST include credentials
           headers: {
             'Content-Type': 'application/json',
@@ -38,8 +38,21 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (authStatus === 'unauthenticated') {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
 }
+
+// import { Navigate } from 'react-router-dom';
+// import { useAuth } from './AuthContext';
+
+// export default function ProtectedRoute({ children }) {
+//   const { isAuthenticated } = useAuth();
+  
+//   if (!isAuthenticated) {
+//     return <Navigate to="/login" replace />;
+//   }
+  
+//   return children;
+// }
