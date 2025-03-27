@@ -5,23 +5,13 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import TopNavbar from './components/Navbar/TopNavbar.jsx'
 import TradesTable from './components/TradesTable/TradesTable.jsx'
 import { Outlet } from "react-router-dom";
-import { useAuth } from './components/pages/AuthContext';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
   const { isAuthenticated } = useAuth();
-  // const [isAuthenticated, setIsAuthenticated] = useState(false); // Track login state
-
-  // useEffect(() => {
-  //   const verifyAuth = async () => {
-  //     const authenticated = await checkAuth();
-  //     setIsAuthenticated(authenticated);
-  //   };
-  //   verifyAuth();
-  // }, []);
 
   return (
     <>
-      {/* <TopNavbar /> */}
       {!isAuthenticated && <TopNavbar />}
       <main id="pageContainer">
         <Outlet />
