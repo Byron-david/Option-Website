@@ -24,8 +24,18 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+const ensureAuthenticated = (req, res, next) => {
+  // passport adds isAuthenticated() to the request object
+  if (req.isAuthenticated()) {
+    return next(); // User is authenticated, proceed
+  }
+  // User is not authenticated
+  res.status(401).json({ message: 'Authentication required' });
+};
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
-  errorHandler
+  errorHandler,
+  ensureAuthenticated
 }
