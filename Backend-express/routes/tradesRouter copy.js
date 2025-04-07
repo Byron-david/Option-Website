@@ -1,13 +1,12 @@
 // routes/tradesRouter.js
 const express = require('express');
-const db = require('../db/db'); // Assuming your refactored db.js is here
+const db = require('../db/queries'); // Assuming your refactored db.js is here
 const { ensureAuthenticated } = require('../utils/middleware'); // Use your auth middleware
 const tradesRouter = express.Router();
 const pool = require('../db/pool'); // Import pool if needed for direct checks
 
-
-// --- Strategy Routes (Mounted at /dashboard/strategies) ---
-
+// --- Strategy Routes ---
+// (POST /strategies, GET /strategies, DELETE /strategies/:strategyId - remain unchanged)
 // POST /dashboard/strategies - Create a new strategy
 tradesRouter.post('/strategies', ensureAuthenticated, async (req, res) => {
   const { strategy } = req.body;
@@ -57,13 +56,13 @@ tradesRouter.delete('/strategies/:strategyId', ensureAuthenticated, async (req, 
 });
 
 
-// --- Trade Routes (Mounted under /dashboard) ---
+// --- Trade Routes ---
 
 // POST /dashboard/strategies/:strategyId/trades - Add a single trade
 tradesRouter.post('/strategies/:strategyId/trades', ensureAuthenticated, async (req, res) => {
   const { strategyId } = req.params;
   const tradeData = req.body;
-  const userId = req.user.id;
+  const userId = req.user.id; // Get userId from authenticated request
 
   if (isNaN(parseInt(strategyId, 10))) {
       return res.status(400).json({ message: "Invalid Strategy ID format." });
@@ -77,12 +76,13 @@ tradesRouter.post('/strategies/:strategyId/trades', ensureAuthenticated, async (
        return res.status(404).json({ message: 'Strategy not found or access denied' });
     }
 
-    const newTrade = await db.insertTrade(tradeData, parseInt(strategyId, 10));
+    // Pass userId to db.insertTrade
+    const newTrade = await db.insertTrade(tradeData, parseInt(strategyId, 10), userId);
     res.status(201).json(newTrade);
   } catch (error) {
     console.error("Error adding trade:", error);
-    if (error.code === '23503') { // FK violation likely means strategyId was invalid despite check (race condition?)
-        return res.status(404).json({ message: 'Strategy not found' });
+    if (error.code === '23503') { // FK violation
+        return res.status(404).json({ message: 'Strategy or User not found' });
     }
     res.status(500).json({ message: 'Failed to add trade' });
   }
@@ -92,7 +92,7 @@ tradesRouter.post('/strategies/:strategyId/trades', ensureAuthenticated, async (
 tradesRouter.post('/strategies/:strategyId/trades/bulk', ensureAuthenticated, async (req, res) => {
   const { strategyId } = req.params;
   const tradesArray = req.body;
-  const userId = req.user.id;
+  const userId = req.user.id; // Get userId from authenticated request
 
   if (isNaN(parseInt(strategyId, 10))) {
       return res.status(400).json({ message: "Invalid Strategy ID format." });
@@ -109,12 +109,13 @@ tradesRouter.post('/strategies/:strategyId/trades/bulk', ensureAuthenticated, as
        return res.status(404).json({ message: 'Strategy not found or access denied' });
     }
 
-    const insertedTrades = await db.insertTrades(tradesArray, parseInt(strategyId, 10));
+    // Pass userId to db.insertTrades
+    const insertedTrades = await db.insertTrades(tradesArray, parseInt(strategyId, 10), userId);
     res.status(201).json(insertedTrades);
   } catch (error) {
     console.error("Error adding bulk trades:", error);
      if (error.code === '23503') { // FK violation
-        return res.status(404).json({ message: 'Strategy not found or one/more trades invalid' });
+        return res.status(404).json({ message: 'Strategy or User not found or one/more trades invalid' });
     }
     res.status(500).json({ message: 'Failed to add bulk trades' });
   }
@@ -124,18 +125,14 @@ tradesRouter.post('/strategies/:strategyId/trades/bulk', ensureAuthenticated, as
 tradesRouter.get('/strategies/:strategyId/trades', ensureAuthenticated, async (req, res) => {
   const { strategyId } = req.params;
   const userId = req.user.id;
-
   if (isNaN(parseInt(strategyId, 10))) {
       return res.status(400).json({ message: "Invalid Strategy ID format." });
   }
-
   try {
-    // Verify user owns the strategy before fetching trades
     const strategyOwnerCheck = await pool.query('SELECT user_id FROM strategies WHERE strategyid = $1', [parseInt(strategyId, 10)]);
     if (strategyOwnerCheck.rows.length === 0 || strategyOwnerCheck.rows[0].user_id !== userId) {
        return res.status(404).json({ message: 'Strategy not found or access denied' });
     }
-
     const trades = await db.getTradesByStrategyId(parseInt(strategyId, 10));
     res.json(trades);
   } catch (error) {
@@ -144,18 +141,16 @@ tradesRouter.get('/strategies/:strategyId/trades', ensureAuthenticated, async (r
   }
 });
 
+
 // DELETE /dashboard/trades/:tradeId - Delete a specific trade
-// Note: Mounted under /dashboard, so full path is /dashboard/trades/:tradeId
+// (No change needed here, db function handles user check)
 tradesRouter.delete('/trades/:tradeId', ensureAuthenticated, async (req, res) => {
   const { tradeId } = req.params;
   const userId = req.user.id;
-
   if (isNaN(parseInt(tradeId, 10))) {
       return res.status(400).json({ message: "Invalid Trade ID format." });
   }
-
   try {
-    // db function verifies user ownership implicitly via join
     const deletedCount = await db.deleteTradeByIdForUser(parseInt(tradeId, 10), userId);
     if (deletedCount > 0) {
       res.status(204).send(); // Success, no content
