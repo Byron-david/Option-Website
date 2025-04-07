@@ -28,6 +28,7 @@ function Login() {
       console.log('Raw response:', text); // Debug log
       
       try {
+
         const data = JSON.parse(text);
         
         if (!response.ok) {

@@ -31,7 +31,7 @@ function Navbar() {
               {/* Check location, then set active */}
               <Link to="/dashboard/trades"
                     className={location.pathname === "/dashboard/trades" ?
-                    `${styles.navButtons} ${styles.active}` : styles.navButtons}
+                    `${styles.active} ${styles.navButtons}` : styles.navButtons}
                     >
                     Trades
               </Link>
@@ -39,7 +39,7 @@ function Navbar() {
             <li>
               <Link to="/dashboard"
                     className={location.pathname === "/dashboard" ?
-                      `${styles.navButtons} ${styles.active}` : styles.navButtons}
+                      `${styles.active} ${styles.navButtons}` : styles.navButtons}
                     >
                     Dashboard
               </Link>

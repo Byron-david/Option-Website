@@ -15,7 +15,7 @@
   }
   
 .navButtons {
-    color: var(--text-color-main);
+    color: white;
     padding: 0.5rem;
     font-family: inherit;
     font-size: 1rem;
@@ -26,6 +26,10 @@
     text-align: left;
     display: block;
     width: 100%;
+}
+
+.navButtons:hover {
+    color: var(--color-hover);
 }
 
 #topNavContainer {
@@ -77,17 +81,20 @@
 
 .sideNavElements a{
     text-decoration: none;
-    /* display:inline-block; */
+    /* color: white; */
 }
-.sideNavElements a:hover{
-    color: white;
-    /* border: 1px solid var(--color-blue); */
-}
+/* .sideNavElements a:hover{
+    color: var(--color-hover);
+} */
 
 .active {
-    background-color: var(--color-button);
+    /* background-color: var(--color-button); */
     background-image: var(--color-gradient);
-    color: var(--color-main);
+    color: white;
+}
+
+.active:hover {
+    color: white;
 }
 
 #logo {
