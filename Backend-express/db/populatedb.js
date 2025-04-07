@@ -1,7 +1,13 @@
 require('dotenv').config()
 const { Client } = require("pg");
+const bcrypt = require('bcrypt');
 
-const SQL = `
+const createSeedData = async () => {
+  const saltRounds = 10;
+  const plainPassword = 'abcd1234'; // Your chosen default password
+  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+
+  return `
 -- Drop tables in correct order to respect foreign key constraints
 DROP TABLE IF EXISTS trades, strategies, users;
 
@@ -45,6 +51,11 @@ declare
   user_id integer;
   strategy_id integer;
 begin
+  -- Insert default user with properly hashed password
+  INSERT INTO users (username, email, password_hash) 
+  VALUES ('test', 'test@example.com', '${hashedPassword}') 
+  RETURNING id INTO user_id;
+
   -- First strategy with trades
   INSERT INTO strategies (strategy, user_id) 
   VALUES ('Vertical Spread', user_id) RETURNING strategyID INTO strategy_id;
@@ -65,7 +76,8 @@ begin
     ('META', (DATE '07/29/2024'), 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, (DATE '08/30/2024'), strategy_id),
     ('META', (DATE '07/29/2024'), 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, (DATE '08/30/2024'), strategy_id);
 end $$;
-`;
+`
+}
 
 async function main() {
   console.log("seeding...");
@@ -75,6 +87,7 @@ async function main() {
   
   try {
     await client.connect();
+    const SQL = await createSeedData();
     await client.query(SQL);
     console.log("Seeding completed successfully");
   } catch (error) {
