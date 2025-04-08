@@ -83,22 +83,22 @@ BEGIN
   VALUES ('Vertical Spread', test_user_id) -- Use the captured user ID
   RETURNING strategyID INTO current_strategy_id; -- Capture the strategy ID
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id) -- Added user_id column
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
   VALUES
-    ('SPY', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2024-08-30', current_strategy_id, test_user_id), -- Added user_id value
-    ('SPY', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2024-08-30', current_strategy_id, test_user_id); -- Added user_id value
+    ('SPY', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2024-08-30', current_strategy_id, test_user_id),
+    ('SPY', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2024-08-30', current_strategy_id, test_user_id);
 
   -- Second strategy with trades
   INSERT INTO strategies (strategy, user_id)
   VALUES ('Iron Condor', test_user_id) -- Use the captured user ID
   RETURNING strategyID INTO current_strategy_id; -- Capture the new strategy ID
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id) -- Added user_id column
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
   VALUES
-    ('META', '2024-07-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2024-08-30', current_strategy_id, test_user_id), -- Added user_id value
-    ('META', '2024-07-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2024-08-30', current_strategy_id, test_user_id), -- Added user_id value
-    ('META', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2024-08-30', current_strategy_id, test_user_id), -- Added user_id value
-    ('META', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2024-08-30', current_strategy_id, test_user_id); -- Added user_id value
+    ('META', '2024-07-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2024-08-30', current_strategy_id, test_user_id),
+    ('META', '2024-07-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2024-08-30', current_strategy_id, test_user_id),
+    ('META', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2024-08-30', current_strategy_id, test_user_id),
+    ('META', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2024-08-30', current_strategy_id, test_user_id);
 
 END $$;
 `;
