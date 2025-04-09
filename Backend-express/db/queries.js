@@ -1,15 +1,15 @@
 const pool = require("./pool");
 const client = pool.connect()
 
-// async function getAllTrades() {
-//   try {
-//     const {rows} = await pool.query("SELECT * FROM trades");
-//     return rows
-//   }
-//   catch (error) {
-//     console.error(error)
-//   }
-// }
+async function getAllTrades() {
+  try {
+    const {rows} = await pool.query("SELECT * FROM trades");
+    return rows
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
 
 async function getTradesByStrategyId(strategyId) {
     const query = `SELECT * FROM trades WHERE strategyID = $1 ORDER BY date DESC`;
@@ -22,53 +22,53 @@ async function getTradesByStrategyId(strategyId) {
     }
 }
 
-// async function getStrategiesByUserId(userId) {
-//   // const { rows } = await pool.query(
-//   //   `SELECT *
-//   //     FROM strategies, trades 
-//   //     WHERE strategies.strategyid = trades.strategyid`);
-//   try {
-//     const { rows } = await pool.query(query, [userId]);
-//       `SELECT 
-//         strategies.strategyid, strategy, strategies.user_id,
-//         symbol, date, action, sub_action, trade_type,
-//         qty, price, strikes, value, expdate
-//       FROM strategies, trades 
-//       WHERE strategies.strategyid = trades.strategyid AND
-//       strategies.user_id = $1`;
+async function getAllStrategies() {
+  // const { rows } = await pool.query(
+  //   `SELECT *
+  //     FROM strategies, trades 
+  //     WHERE strategies.strategyid = trades.strategyid`);
+  try {
+    const query = `SELECT 
+        strategies.strategyid, strategy,
+        symbol, date, action, sub_action, trade_type,
+        qty, price, strikes, value, expdate
+      FROM strategies, trades 
+      WHERE strategies.strategyid = trades.strategyid`;
+
+    const { rows } = await pool.query(query);
   
-//     const allTrades = []
-//     let groupTrades = []
-//     let strategy = {};
-//     let id
-//     let strategyName
-//     rows.forEach((trades, index) => {
-//       if (!id || id !== trades.strategyid) {
+    const allTrades = []
+    let groupTrades = []
+    let strategy = {};
+    let id
+    let strategyName
+    rows.forEach((trades, index) => {
+      if (!id || id !== trades.strategyid) {
         
-//         if (groupTrades.length !== 0) {
-//           strategy[strategyName] = groupTrades;
-//           strategy = {...strategy, id: id}
-//           allTrades.push(strategy)
-//           strategy = {}
-//           groupTrades = []
-//         }
-//         strategyName = trades.strategy;
-//         id = trades.strategyid;
-//       }
-//       groupTrades.push(trades)
+        if (groupTrades.length !== 0) {
+          strategy[strategyName] = groupTrades;
+          strategy = {...strategy, id: id}
+          allTrades.push(strategy)
+          strategy = {}
+          groupTrades = []
+        }
+        strategyName = trades.strategy;
+        id = trades.strategyid;
+      }
+      groupTrades.push(trades)
   
-//       if (index === rows.length - 1) {
-//         strategy[strategyName] = groupTrades;
-//         strategy = {...strategy, id: id}
-//         allTrades.push(strategy)
-//       }
-//       });
+      if (index === rows.length - 1) {
+        strategy[strategyName] = groupTrades;
+        strategy = {...strategy, id: id}
+        allTrades.push(strategy)
+      }
+      });
   
-//     return allTrades;
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+    return allTrades;
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 async function getStrategiesByUserId(userId) {
   const query = `
@@ -208,8 +208,8 @@ const deleteStrategy = async (id) => {
 }
 
 module.exports = {
-  // getAllTrades,
-  // getAllStrategies,
+  getAllTrades,
+  getAllStrategies,
   insertTrade,
   insertTrades,
   insertStrategy,

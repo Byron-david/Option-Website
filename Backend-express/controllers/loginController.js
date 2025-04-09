@@ -52,21 +52,57 @@ async function createUser(req, res) {
   }
 }
 
-const loginUser = (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (!user) return res.status(401).json({ error: info.message });
+// const loginUser = (req, res, next) => {
+//   passport.authenticate('local', (err, user, info) => {
+//     if (err) return res.status(500).json({ error: err.message });
+//     if (!user) return res.status(401).json({ error: info.message });
     
-    req.logIn(user, (err) => {
-      if (err) return res.status(500).json({ error: err.message });
-      return res.json({ 
-        user: {
-          id: user.id,
-          username: user.username
-        } 
+//     req.logIn(user, (err) => {
+//       if (err) return res.status(500).json({ error: err.message });
+//       return res.json({ 
+//         user: {
+//           id: user.id,
+//           username: user.username
+//         } 
+//       });
+//     });
+//   })(req, res, next);
+// };
+const loginUser = (req, res, next) => {
+  console.log('Login attempt with:', req.body); // Debug input
+    // Destroy old session completely
+  req.session.regenerate((err) => {
+    if (err) return next(err);
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        console.error('Auth error:', err);
+        return res.status(500).json({ error: err.message });
+      }
+      
+      if (!user) {
+        console.log('Auth failed:', info.message);
+        return res.status(401).json({ error: info.message });
+      }
+      
+      req.login(user, (err) => { // Note: req.login() not req.logIn()
+        if (err) {
+          console.error('Session save error:', err);
+          return res.status(500).json({ error: err.message });
+        }
+        
+        console.log('Login successful. Session:', req.session); // Debug session
+        console.log('Authenticated user:', req.user); // Should match user
+        return res.json({ user: req.user });
+        // return res.json({ 
+        //   user: {
+        //     id: user.id,
+        //     username: user.username
+        //   },
+        //   sessionId: req.sessionID // Helpful for debugging
+        // });
       });
-    });
-  })(req, res, next);
+    })(req, res, next);
+  })
 };
 
 const getCurrentUser = (req, res) => {

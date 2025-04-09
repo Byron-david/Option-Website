@@ -2,6 +2,8 @@ const config = require('./utils/config')
 const express = require('express')
 const session = require("express-session");
 const passport = require("./passportConfig");
+const pgSession = require('connect-pg-simple')(session);
+const pool = require("./db/pool");
 const app = express()
 const cors = require('cors')
 // const tradesRouter = require('./controllers/trades')
@@ -13,18 +15,38 @@ const logger = require('./utils/logger')
 require('express-async-errors')
 
 logger.info('connecting to', config.DATABASE_URL)
-  
+
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from this origin
+    credentials: true, // Allow credentials (cookies, authorization headers)
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'Accept',
+    ],
+    exposedHeaders: ['set-cookie']
+  })
+);
+
 app.use(
   session({
     secret: config.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
-    }
+      // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    },
+    store: new pgSession({
+      pool: pool,
+      tableName: 'user_sessions',
+      createTableIfMissing: true
+    }),
   })
 );
 
@@ -32,15 +54,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from this origin
-    credentials: true, // Allow credentials (cookies, authorization headers)
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['set-cookie']
-  })
-);
 
+app.use((req, res, next) => {
+  console.log('Request URL:', req.url);
+  console.log('Cookies:', req.headers.cookie);
+  next();
+});
+
+// app.use((req, res, next) => {
+//   console.log('Session:', req.session);
+//   console.log('User:', req.user);
+//   next();
+// });
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)

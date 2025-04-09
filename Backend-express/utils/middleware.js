@@ -25,11 +25,15 @@ const errorHandler = (error, request, response, next) => {
 }
 
 const ensureAuthenticated = (req, res, next) => {
+  console.log('\n=== AUTH CHECK ===');
+  console.log('Session user ID:', req.session.passport?.user);
+  console.log('req.user:', req.user);
   // passport adds isAuthenticated() to the request object
   if (req.isAuthenticated()) {
     return next(); // User is authenticated, proceed
   }
   // User is not authenticated
+  console.log("Auth failed!")
   res.status(401).json({ message: 'Authentication required' });
 };
 
