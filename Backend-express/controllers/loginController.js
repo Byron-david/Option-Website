@@ -71,8 +71,8 @@ async function createUser(req, res) {
 const loginUser = (req, res, next) => {
   console.log('Login attempt with:', req.body); // Debug input
     // Destroy old session completely
-  req.session.regenerate((err) => {
-    if (err) return next(err);
+  // req.session.regenerate((err) => {
+  //   if (err) return next(err);
     passport.authenticate('local', (err, user, info) => {
       if (err) {
         console.error('Auth error:', err);
@@ -84,7 +84,7 @@ const loginUser = (req, res, next) => {
         return res.status(401).json({ error: info.message });
       }
       
-      req.login(user, (err) => { // Note: req.login() not req.logIn()
+      req.logIn(user, (err) => { // Note: req.login() not req.logIn()
         if (err) {
           console.error('Session save error:', err);
           return res.status(500).json({ error: err.message });
@@ -102,7 +102,7 @@ const loginUser = (req, res, next) => {
         // });
       });
     })(req, res, next);
-  })
+  // })
 };
 
 const getCurrentUser = (req, res) => {

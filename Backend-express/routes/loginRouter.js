@@ -9,8 +9,8 @@ loginRouter.get('/me', loginController.getCurrentUser);
 loginRouter.post('/logout', loginController.logoutUser);
 loginRouter.get('/auth', loginController.checkAuth);
 loginRouter.post('/auth', loginController.checkAuth);
-loginRouter.get('/test-protected', ensureAuthenticated, (req, res) => {
-    res.json({ message: 'You are authenticated!', user: req.user });
-  });
+// loginRouter.get('/test-protected', ensureAuthenticated, (req, res) => {
+//     res.json({ message: 'You are authenticated!', user: req.user });
+//   });
   
 module.exports = loginRouter;

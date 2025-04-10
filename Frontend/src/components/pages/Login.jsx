@@ -35,7 +35,7 @@ function Login() {
           throw new Error(data.message || 'Login failed');
         }
         
-        navigate('/dashboard', { replace: true });
+        navigate('/dashboard/trades', { replace: true });
       } catch (e) {
         console.error('Failed to parse JSON:', e);
         throw new Error('Invalid server response');
