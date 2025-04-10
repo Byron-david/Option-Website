@@ -133,7 +133,7 @@ const logoutUser = (req, res) => {
 
 const checkAuth = (req, res) => {
   // console.log('Session check:', req.session); // Debug log
-  // console.log('Authenticated user:', req.user); // Debug log
+  console.log('checkAuth user:', req.user); // Debug log
   
   if (req.isAuthenticated()) {
     return res.json({ 

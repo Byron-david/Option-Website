@@ -22,6 +22,9 @@ export function useAuth() {
       if (!res.ok) throw new Error('Login failed');
       return res.json();
     },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ['auth'] }); // 💥 Force refetch
+    // },
   });
 
   return {

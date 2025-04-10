@@ -1,6 +1,4 @@
-import axios from 'axios'
-const baseUrl = 'http://localhost:3000/dashboard/trades'
-// const baseUrl = 'http://localhost:3001/trades'
+const baseUrl = 'http://localhost:3000/api/dashboard/trades'
 
 const fetchData = async () => {
   try {
@@ -29,14 +27,11 @@ const create = async newObject => {
     );
 
     const data = await response.json();
-    // // console.log(data)
 
     return data
   } catch (error) {
     console.error('Error adding trades:', error);
   }
-  // const {data} = await axios.post(baseUrl, newObject)
-  // return data
 }
 
 const update = (id, newObject) => {
@@ -59,10 +54,6 @@ const remove = async (id) => {
   } catch (error) {
     console.error('Error adding trades:', error);
   }
-  // axios way
-  // const {request} = await axios.delete(`${baseUrl}/${id}`)
-  // return request
-  // return request.then(response => response.data)
 }
 
 export default { 
