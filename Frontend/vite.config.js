@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       '/api/auth': 'http://localhost:3000',
       '/api/login': 'http://localhost:3000',
+      '/api/dashboard': 'http://localhost:3000',
       // Add other API endpoints if needed
     }
   }

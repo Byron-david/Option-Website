@@ -71,8 +71,8 @@ async function createUser(req, res) {
 const loginUser = (req, res, next) => {
   console.log('Login attempt with:', req.body); // Debug input
     // Destroy old session completely
-  // req.session.regenerate((err) => {
-  //   if (err) return next(err);
+  req.session.regenerate((err) => {
+    if (err) return next(err);
     passport.authenticate('local', (err, user, info) => {
       if (err) {
         console.error('Auth error:', err);
@@ -84,7 +84,7 @@ const loginUser = (req, res, next) => {
         return res.status(401).json({ error: info.message });
       }
       
-      req.logIn(user, (err) => { // Note: req.login() not req.logIn()
+      req.login(user, (err) => { // Note: req.login() not req.logIn()
         if (err) {
           console.error('Session save error:', err);
           return res.status(500).json({ error: err.message });
@@ -92,17 +92,17 @@ const loginUser = (req, res, next) => {
         
         console.log('Login successful. Session:', req.session); // Debug session
         console.log('Authenticated user:', req.user); // Should match user
-        return res.json({ user: req.user });
-        // return res.json({ 
-        //   user: {
-        //     id: user.id,
-        //     username: user.username
-        //   },
-        //   sessionId: req.sessionID // Helpful for debugging
-        // });
+        // return res.json({ user: req.user });
+        return res.json({ 
+          user: {
+            id: user.id,
+            username: user.username
+          },
+          sessionId: req.sessionID // Helpful for debugging
+        });
       });
     })(req, res, next);
-  // })
+  })
 };
 
 const getCurrentUser = (req, res) => {

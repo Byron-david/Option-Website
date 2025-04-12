@@ -1,8 +1,6 @@
 const db = require("../db/queries");
 
 async function getTrades(req, res) {
-  console.log('Session:', req.session);
-  console.log('User:', req.user);
   const strategies = await db.getAllStrategies()
   res.json(strategies)
 }

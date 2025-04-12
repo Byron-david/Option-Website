@@ -19,9 +19,9 @@ function Login() {
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
+        credentials: 'include', // Include cookies in the request
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-        credentials: 'include', // Include cookies in the request
       });
       
       const text = await response.text();
