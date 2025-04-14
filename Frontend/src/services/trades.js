@@ -1,4 +1,4 @@
-const baseUrl = '/api/dashboard/trades'
+const baseUrl = '/api/dashboard/strategies'
 
 const fetchData = async () => {
   try {
