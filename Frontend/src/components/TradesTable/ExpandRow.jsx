@@ -25,8 +25,8 @@ const formatDate = (date) => {
     return `${mm}/${dd}/${yyyy.slice(-2)}`
 }
 
-export default function ExpandRow({ trade, stratName }) {
-    const tradeLeg = trade[stratName]
+export default function ExpandRow({ strategy, stratName }) {
+    const tradeLeg = strategy[stratName]
     if (tradeLeg.length === 1) {
         
     }

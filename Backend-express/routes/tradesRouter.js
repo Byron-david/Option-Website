@@ -2,8 +2,9 @@ const { Router } = require("express");
 const tradesController = require("../controllers/tradesController");
 const tradesRouter = Router();
 const { ensureAuthenticated } = require('../utils/middleware'); // Use your auth middleware
+const db = require("../db/queries");
 
-tradesRouter.get('/dashboard/trades', tradesController.getTrades)
+// tradesRouter.get('/dashboard/trades', tradesController.getTrades)
 tradesRouter.get('/dashboard/trades/:id', tradesController.getTrade)
 tradesRouter.post('/dashboard/trades', tradesController.addTrade)
 tradesRouter.delete('/dashboard/trades/:id', tradesController.removeTrade)
@@ -11,16 +12,18 @@ tradesRouter.delete('/dashboard/trades/:id', tradesController.removeTrade)
 //     console.log("AUTHENTICATED USER: ", req.user)
 //     res.json({ message: 'You are authenticated!', user: req.user });
 //   });
-// tradesRouter.get('/trades', ensureAuthenticated, async (req, res) => {
-//   try {
-//     const userId = req.user.id;
-//     const strategies = await db.getStrategiesByUserId(userId);
-//     res.json(strategies);
-//   } catch (error) {
-//     console.error("Error fetching strategies:", error);
-//     res.status(500).json({ message: 'Failed to fetch strategies' });
-//   }
-// });
+
+// GET all trades for strategy
+tradesRouter.get('/dashboard/trades', ensureAuthenticated, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const strategies = await db.getStrategiesByUserId(userId);
+    res.json(strategies);
+  } catch (error) {
+    console.error("Error fetching strategies:", error);
+    res.status(500).json({ message: 'Failed to fetch strategies' });
+  }
+});
 
 // // GET /dashboard/strategies/:strategyId/trades - Get trades for a strategy
 // tradesRouter.get('/trades/:tradesId', ensureAuthenticated, async (req, res) => {

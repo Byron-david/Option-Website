@@ -2,6 +2,7 @@ const db = require("../db/queries");
 
 async function getTrades(req, res) {
   const strategies = await db.getAllStrategies()
+  console.log(strategies)
   res.json(strategies)
 }
 

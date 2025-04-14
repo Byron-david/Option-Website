@@ -44,12 +44,11 @@ const formatExpDate = (dates) => {
     }
 }
 
-export default function TableRow({ allTrades, setAllTrades, trade, stratName, index, }) {
+export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, }) {
     const [expand, setExpand] = useState(0);
     const [error, setError] = useState(null);
 
-    const tradeLeg = trade[Object.keys(trade)[0]]
-    const firstLeg = tradeLeg[0]
+    const firstLeg = strategy.trades[0]
 
     let strikes = []
     let exp = []
@@ -59,7 +58,7 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
     const quantity = []
     let className = null
 
-    tradeLeg.forEach(leg => {
+    strategy.trades.forEach(leg => {
         // Adds "C" or "P" to end of strike
         let strike = `${leg.strikes}${leg.trade_type[0]}`
 
@@ -84,7 +83,7 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
     })
 
     const dateExec = formatDate(firstLeg.date)
-    const strategy = stratName.split()
+    const strategyName = stratName.split()
     const qty = quantity.join(' / ')
 
     const subActionData = subActionFormat(subAction, className)
@@ -95,7 +94,7 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
     const expdates = formatExpDate(exp)
 
     const handleClick = () => {
-        if (trade[stratName].length === 1) {
+        if (strategy[stratName].length === 1) {
             expand === 0
         } else {
             expand === 0 ? setExpand(1) : setExpand(0);
@@ -171,7 +170,7 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 <td>{firstLeg.symbol}</td>
                 <td>{dateExec}</td>
                 <td>{subActionData}</td>
-                <td>{strategy}</td>
+                <td>{strategyName}</td>
                 <td>{qty}</td>
                 <td>
                     <div className={styles.price}>
@@ -199,7 +198,7 @@ export default function TableRow({ allTrades, setAllTrades, trade, stratName, in
                 </td>
             </tr>
             {expand === 1 ?
-                <ExpandRow stratName={stratName} trade={trade} key={uuid()} />
+                <ExpandRow stratName={stratName} strategy={strategy} key={uuid()} />
                 : null
             }
         </>

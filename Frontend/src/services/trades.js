@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/api/dashboard/trades'
+const baseUrl = '/api/dashboard/trades'
 
 const fetchData = async () => {
   try {

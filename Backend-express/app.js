@@ -66,19 +66,18 @@ app.use(
   })
 );
 
-// app.get('/api/dashboard', (req, res) => {
+app.use(express.static('dist'))
+app.use(express.json())
+app.use(middleware.requestLogger)
+
+// app.get('/api/dashboard/trades', (req, res) => {
 //   if (req.isAuthenticated()) {
-//     console.log(req.user);
+//     console.log("User: ", req.user);
 //     res.send('Authenticated!');
 //   } else {
 //     res.status(401).send('Not authenticated');
 //   }
 // });
-
-app.use(express.static('dist'))
-app.use(express.json())
-app.use(middleware.requestLogger)
-
 app.use('/api', tradesRouter)
 app.use('/api', loginRouter)
 app.use('/api', userRouter)
