@@ -4,17 +4,23 @@ const bcrypt = require('bcrypt');
 
 const createSeedData = async () => {
   const saltRounds = 10;
-  const plainPassword = 'abcd1234'; // Your chosen default password
+  const userOnePw = 'abcd1234'; // Your chosen default password
+  const userTwoPw = 'abcd1234'; // Your chosen default password
   // Ensure bcrypt hashing happens correctly
-  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds).catch(err => {
+  const userOne = await bcrypt.hash(userOnePw, saltRounds).catch(err => {
       console.error("Error hashing password during seed prep:", err);
       throw err; // Stop seeding if password hashing fails
   });
+  const userTwo = await bcrypt.hash(userTwoPw, saltRounds).catch(err => {
+    console.error("Error hashing password during seed prep:", err);
+    throw err; // Stop seeding if password hashing fails
+});
 
   // Escape single quotes in the hashed password for SQL insertion, although parameterized queries are safer
   // For a DO block, embedding might be necessary, but be cautious. Using E'' syntax is often safer.
   // Let's try embedding directly first, as pg might handle it. If not, use E'' or parameterized approach if possible.
-  const safeHashedPassword = hashedPassword.replace(/'/g, "''"); // Basic escaping for single quotes
+  const userOneSafePw = userOne.replace(/'/g, "''"); // Basic escaping for single quotes
+  const userTwoSafePw = userTwo.replace(/'/g, "''"); // Basic escaping for single quotes
 
   return `
 -- Drop tables in correct order to respect foreign key constraints
@@ -75,7 +81,7 @@ DECLARE
 BEGIN
   -- Insert default user with properly hashed password
   INSERT INTO users (username, email, password_hash)
-  VALUES ('test', 'test@example.com', '${safeHashedPassword}') -- Used escaped hash
+  VALUES ('test', 'test@example.com', '${userOneSafePw}') -- Used escaped hash
   RETURNING id INTO test_user_id; -- Capture the generated user ID
 
   -- First strategy with trades
@@ -100,6 +106,31 @@ BEGIN
     ('META', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2024-08-30', current_strategy_id, test_user_id),
     ('META', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2024-08-30', current_strategy_id, test_user_id);
 
+  ------------------------------------------
+  -- 2nd User
+  INSERT INTO users (username, email, password_hash)
+  VALUES ('test2', 'test2@example.com', '${userTwoSafePw}')
+  RETURNING id INTO test_user_id;
+
+  INSERT INTO strategies (strategy, user_id)
+  VALUES ('Vertical Spread', test_user_id) -- Use the captured user ID
+  RETURNING strategyID INTO current_strategy_id; -- Capture the strategy ID
+
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
+  VALUES
+    ('AAPL', '2024-02-05', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2025-03-30', current_strategy_id, test_user_id),
+    ('AAPL', '2025-02-05', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2025-03-30', current_strategy_id, test_user_id);
+
+  INSERT INTO strategies (strategy, user_id)
+  VALUES ('Iron Condor', test_user_id) -- Use the captured user ID
+  RETURNING strategyID INTO current_strategy_id; -- Capture the new strategy ID
+
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
+  VALUES
+    ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2025-03-30', current_strategy_id, test_user_id),
+    ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2025-03-30', current_strategy_id, test_user_id),
+    ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2025-03-30', current_strategy_id, test_user_id),
+    ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2025-03-30', current_strategy_id, test_user_id);
 END $$;
 `;
 }

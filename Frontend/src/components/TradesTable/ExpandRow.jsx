@@ -26,11 +26,8 @@ const formatDate = (date) => {
 }
 
 export default function ExpandRow({ strategy, stratName }) {
-    const tradeLeg = strategy[stratName]
-    if (tradeLeg.length === 1) {
-        
-    }
-
+    const tradeLeg = strategy.trades
+    
     return (
         <>
             {tradeLeg.map(leg => (
