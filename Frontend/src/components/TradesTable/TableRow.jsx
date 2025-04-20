@@ -94,7 +94,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
     const expdates = formatExpDate(exp)
 
     const handleClick = () => {
-        if (strategy[stratName].length === 1) {
+        if (strategy.trades.length === 1) {
             expand === 0
         } else {
             expand === 0 ? setExpand(1) : setExpand(0);
