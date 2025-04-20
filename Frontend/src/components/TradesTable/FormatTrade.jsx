@@ -3,7 +3,7 @@ import styles from './TradesTable.module.css';
 import TableRow from './TableRow'
 
 export default function FormatTrade({ allTrades, setAllTrades, tableHeader }) {
-    const strategyNames = allTrades.map(item => Object.keys(item)[0])
+    const strategyNames = allTrades.map(item => Object.values(item)[1])
 
     return (
         <>

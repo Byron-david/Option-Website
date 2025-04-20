@@ -18,6 +18,7 @@ const fetchData = async () => {
 const create = async newObject => {
   try {
     const response = await fetch(baseUrl, {
+      credentials: 'include',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

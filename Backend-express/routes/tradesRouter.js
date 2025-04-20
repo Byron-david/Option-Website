@@ -6,7 +6,7 @@ const db = require("../db/queries");
 
 // tradesRouter.get('/dashboard/trades', tradesController.getTrades)
 tradesRouter.get('/dashboard/trades/:id', tradesController.getTrade)
-tradesRouter.post('/dashboard/trades', tradesController.addTrade)
+// tradesRouter.post('/dashboard/trades', tradesController.addTrade)
 tradesRouter.delete('/dashboard/trades/:id', tradesController.removeTrade)
 
 // GET all trades for strategy
@@ -22,7 +22,7 @@ tradesRouter.get('/dashboard/strategies', ensureAuthenticated, async (req, res) 
 });
 
 // // GET /dashboard/strategies/:strategyId/trades - Get trades for a strategy
-tradesRouter.get('/trades/:tradesId', ensureAuthenticated, async (req, res) => {
+tradesRouter.get('/dashboard/strategies/:strategyId', ensureAuthenticated, async (req, res) => {
   const { strategyId } = req.params;
   const userId = req.user.id;
   if (isNaN(parseInt(strategyId, 10))) {
@@ -38,6 +38,21 @@ tradesRouter.get('/trades/:tradesId', ensureAuthenticated, async (req, res) => {
   } catch (error) {
     console.error("Error fetching trades for strategy:", error);
     res.status(500).json({ message: 'Failed to fetch trades' });
+  }
+});
+
+tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res) => {
+  const { strategy } = req.body;
+  if (!strategy || typeof strategy !== 'string' || strategy.trim() === '') {
+    return res.status(400).json({ message: 'Valid strategy name is required' });
+  }
+  try {
+    const userId = req.user.id; // Get user ID from authenticated session
+    const strategyId = await db.insertStrategy(strategy.trim(), userId);
+    res.status(201).json({ strategyID: strategyId, strategy: strategy.trim(), user_id: userId });
+  } catch (error) {
+    console.error("Error creating strategy:", error);
+    res.status(500).json({ message: 'Failed to create strategy' });
   }
 });
 
