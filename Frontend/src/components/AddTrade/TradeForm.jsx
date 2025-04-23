@@ -1,3 +1,4 @@
+import { useTradeFormLogic, useTrade } from '../../hooks/useTradeFormLogic'
 import { useState } from 'react'
 import OptionItems from '../Input/OptionItems.jsx'
 import Button from '../Button/Button.jsx'
@@ -12,116 +13,24 @@ import {
   subAction, 
   posType } from '../../../public/tradeDefaults.js'
 
-function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade, strategy, setStrategy }) {
-  const [preset, setPreset] = useState("Stock");
-  const [stockVisible, setStockVisible] = useState(1);
+function TradeForm({ handleClickClose, onSubmit,  strategy, setStrategy }) {
+  const { newTrade, setNewTrade } = useTrade();
+  const {
+    preset, stockVisible, setStockVisible,
+    handleTrade, handleStock, handleStrategy,
+    addNewLeg, addStock
+  } = useTradeFormLogic(setStrategy)
 
-  const handleTrade = (event) => {
-    setNewTrade(values => ({
-      ...values, 
-      base: {...values.base, [event.target.name]: event.target.value.toUpperCase()}
-    }))
-  }
-
-  const handleStock = (event) => {
-    setNewTrade(values => (
-      { ...values, 
-      stock: {...values.stock, [event.target.name]: event.target.value }}
-    ))
-  }
-
-  const handleStrategy = (event) => {
-    const updateStrategy = event.target.value
-    setStrategy(updateStrategy)
-
-    const findQty = strategyOptions.find(element => element.value === updateStrategy)
-
-    if (updateStrategy === "Stock" || updateStrategy === "Covered Call") {
-      setNewTrade(values => ({
-        ...values, 
-        stock: {...defaultStock}}))
-      setStockVisible(1)
-    }
-    else {
-      setNewTrade(values => ({
-        ...values, 
-        stock: {}
-      }))
-      setStockVisible(0)
-    }
-
-    setNewTrade(values => (
-      { ...values, 
-      legs: [] }
-    ))
-
-    let allLegs = []
-    for (let i = 0; i < findQty.quantity; i++ ) {
-      const newLeg = { ...defaultLeg }
-
-      if (i > 0 && i < 3) {
-        newLeg.action = "SELL"
-      }
-
-      if (updateStrategy === "Iron Condor") {
-        if (i < 2) {
-          newLeg.trade_type = "PUT"
-        }
-      }
-
-      if (updateStrategy === "Butterfly") {
-        if (i === 1) {
-          newLeg.qty = 2
-        }
-        if (i === 2) {
-          newLeg.action = "BUY"
-        }
-      }
-
-      if (updateStrategy === "Covered Call") {
-        newLeg.action = "SELL"
-      }
-
-      if (updateStrategy === "Strangle" ) {
-        newLeg.action = "SELL"
-        if (i < 1) {
-          newLeg.trade_type = "PUT"
-        }
-      }
-
-      allLegs.push(newLeg)
-    }
-    setNewTrade(values => (
-      { ...values, 
-      legs: allLegs }
-    ))
-  }
-
-  const addNewLeg = () => {
-    const newLeg = { ...defaultLeg }
-    const leg = newTrade.legs
-
-    // 3 legs max
-    if (leg.length <= 3) {
-      setNewTrade(values => ({
-        ...values, 
-        legs: [...values.legs, newLeg] 
-      }))
-      console.log(newTrade);
-
-    }
-  }
-
-  const addStock = (event) => {
-    event.preventDefault()
-    if (stockVisible === 0) {
-      setNewTrade(values => (
-        { ...values, 
-        stock: {...defaultStock} }
-      ))
-      setStockVisible(1);
-    }
-  }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    
+  //   if (!validateLegs()) {
+  //     alert(`Invalid leg count for ${strategy} strategy!`);
+  //     return;
+  //   }
+    
+  //   onSubmit(e); // Proceed with original submission
+  // };
 
   return (
     <>
@@ -132,7 +41,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade, strategy
                 <input 
                   type="text" 
                   name="symbol" 
-                  value={newTrade.base.symbol || ""} 
+                  value={newTrade.symbol || ""} 
                   onChange={handleTrade}
                   placeholder="AAPL"
                   maxLength="4"
@@ -142,7 +51,7 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade, strategy
                 <input 
                   type="date" 
                   name="date" 
-                  value={newTrade.base.date || ""} 
+                  value={newTrade.date || ""} 
                   onChange={handleTrade}
                 />
               </label>
@@ -159,14 +68,10 @@ function TradeForm({ handleClickClose, onSubmit, newTrade, setNewTrade, strategy
 
           <AddStock items={action}
                     handleChange={handleStock}
-                    stock={newTrade.stock}
                     itemSubAction={subAction}
                     stockVisible={stockVisible}
-                    setStockVisible={setStockVisible}
-                    setNewTrade={setNewTrade} />
-          <AddLeg newTrade={newTrade}
-                  setNewTrade={setNewTrade}
-                  strategy={preset}
+                    setStockVisible={setStockVisible} />
+          <AddLeg strategy={preset}
                   itemTypes={posType}
                   itemActions={action}
                   itemSubAction={subAction} />

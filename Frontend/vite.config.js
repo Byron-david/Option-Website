@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    jsxRuntime: 'automatic' // ← This is the modern way
+  })],
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'] // Add this
+  },
   server: {
     proxy: {
       '/api/auth': 'http://localhost:3000',

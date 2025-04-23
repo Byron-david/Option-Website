@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TradeProvider } from '../../contexts/TradeContext.jsx';
 import tradeService from '../../services/trades.js'
 import TradeForm from './TradeForm.jsx';
 import formatTrade from '../../functions/formatTrade.js'
@@ -39,12 +40,13 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        <TradeForm newTrade={newTrade} 
-                   setNewTrade={setNewTrade} 
-                   setStrategy={setStrategy} 
-                   strategy={strategy} 
-                   onSubmit={addTrade} 
-                   handleClickClose={handleClickClose} />
+        {/* <TradeProvider> */}
+          <TradeForm setStrategy={setStrategy} 
+                    strategy={strategy} 
+                    onSubmit={addTrade} 
+                    handleClickClose={handleClickClose} />
+        {/* </TradeProvider> */}
+
       </div>
     </>
   );

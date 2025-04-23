@@ -1,43 +1,61 @@
+import { useTrade } from '../../contexts/TradeContext'
 import styles from './AddTrade.module.css'; 
 import OptionAction from './OptionAction.jsx';
 import OptionItems from '../Input/OptionItems.jsx';
 import { defaultStock } from '../../../public/tradeDefaults.js'
 import Button from '../Button/Button.jsx'
 
-function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVisible, setStockVisible, setNewTrade }) {
-  if (stockVisible === 0) {
-    return null
-  }
+function AddStock({ strategy,
+  handleChange,
+  items,
+  itemSubAction,
+  stockVisible,
+  setStockVisible,
+}) {
+  const { newTrade, setNewTrade } = useTrade();
 
-  let stockValue = 0;
-  if (stock.price !== '' && stock.qty !== '') {
-    stockValue = stock.price * stock.qty
-    stock.value = stockValue
-  }
+  const stockTrade = newTrade.trades.find(t => t.trade_type === 'STOCK') || {};
+  
+  if (!stockVisible || !stockTrade) return null;
+
+  const stockValue = stockTrade.price && stockTrade.qty 
+  ? (stockTrade.price * stockTrade.qty).toFixed(2)
+  : '';
 
   const deleteStock = () => {
-    setNewTrade(values => ({
-      ...values, 
-      stock: {}
-    }))
+    setNewTrade(prev => ({
+      ...prev,
+      trades: prev.trades.filter(trade => trade.trade_type !== 'STOCK')
+    }));
+    setStockVisible(0);
+  };
 
-    setStockVisible(0)
-  }
+  const handleStockChange = (e) => {
+    const { name, value } = e.target;
+    setNewTrade(prev => ({
+      ...prev,
+      trades: prev.trades.map(trade => 
+        trade.trade_type === 'STOCK'
+          ? { ...trade, [name]: value }
+          : trade
+      )
+    }));
+  };
 
   return (
     <>
       <div className={styles.addOption}>
         <span>Stock:&nbsp;&nbsp;&nbsp;</span>
         {/* <Button handleClick={deleteStock} className={styles.buttonRemove} /> */}
-        <OptionAction option={stock}
+        <OptionAction option={stockTrade}
             items={items}
-            handleChange={handleChange} />
+            handleChange={handleStockChange} />
         <label>Open/Close: 
           <select 
               className="inputSelect"
               name="sub_action"
-              value={stock.sub_action || ""}
-              onChange={handleChange}>
+              value={stockTrade.sub_action || ""}
+              onChange={handleStockChange}>
               <OptionItems items={itemSubAction}/>
           </select>
         </label>
@@ -45,8 +63,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
             <input 
             type="number" 
             name="price" 
-            value={stock.price || ""} 
-            onChange={handleChange}
+            value={stockTrade.price || ""} 
+            onChange={handleStockChange}
             placeholder="100"
             />
         </label>
@@ -54,8 +72,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
             <input 
             type="number" 
             name="value" 
-            value={stock.value || ""} 
-            onChange={handleChange}
+            value={stockTrade.value || ""} 
+            onChange={handleStockChange}
             placeholder="10,000"
             readOnly/>
         </label>
@@ -63,8 +81,8 @@ function AddStock({ strategy, stock, handleChange, items, itemSubAction, stockVi
             <input 
             type="number" 
             name="qty" 
-            value={stock.qty || ""} 
-            onChange={handleChange}
+            value={stockTrade.qty || ""} 
+            onChange={handleStockChange}
             placeholder="1"
             />
         </label>

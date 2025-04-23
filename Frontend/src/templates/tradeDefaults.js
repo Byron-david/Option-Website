@@ -4,6 +4,8 @@ const defaultTrade = {
  }
 
 const defaultStock = {
+    symbol: '',
+    date: '',
     action: 'BUY', 
     sub_action: 'OPEN', 
     trade_type: 'STOCK', 
@@ -14,6 +16,8 @@ const defaultStock = {
 }
 
 const defaultLeg = { 
+    symbol: '',
+    date: '',
     action: 'BUY',
     sub_action: 'OPEN', 
     trade_type: 'CALL', 
@@ -53,23 +57,9 @@ const posType = [
 
 // base are defaults for each trade
 const defaultNewTrade = {
-    symbol: '',
-    date: '',
-    trades: [],
-  // base: {
-  //   symbol: '',
-  //   date: ''
-  // },
-  // stock: {
-  //   action: 'BUY', 
-  //   sub_action: 'OPEN', 
-  //   trade_type: 'STOCK', 
-  //   qty: '', 
-  //   price: '', 
-  //   value: '', 
-  //   exp: null, 
-  // },
-  // legs: []
+  symbol: '',
+  strategy: '',
+  trades: []
 }
 
 export { 
