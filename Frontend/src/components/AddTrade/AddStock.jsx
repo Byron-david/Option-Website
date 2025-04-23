@@ -1,4 +1,4 @@
-import { useTrade } from '../../contexts/TradeContext'
+import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
 import styles from './AddTrade.module.css'; 
 import OptionAction from './OptionAction.jsx';
 import OptionItems from '../Input/OptionItems.jsx';
@@ -12,7 +12,7 @@ function AddStock({ strategy,
   stockVisible,
   setStockVisible,
 }) {
-  const { newTrade, setNewTrade } = useTrade();
+  const { newTrade, setNewTrade } = useTradeFormLogic();
 
   const stockTrade = newTrade.trades.find(t => t.trade_type === 'STOCK') || {};
   
@@ -21,6 +21,8 @@ function AddStock({ strategy,
   const stockValue = stockTrade.price && stockTrade.qty 
   ? (stockTrade.price * stockTrade.qty).toFixed(2)
   : '';
+
+  stockTrade.value = stockValue
 
   const deleteStock = () => {
     setNewTrade(prev => ({

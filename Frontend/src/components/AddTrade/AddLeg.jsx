@@ -1,4 +1,4 @@
-import { useTrade } from '../../contexts/TradeContext'
+import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
 import Button from '../Button/Button.jsx'
 import { useState } from 'react'
 import OptionLeg from './OptionLeg.jsx'
@@ -8,7 +8,7 @@ import OptionAction from './OptionAction.jsx';
 import { defaultLeg } from '../../../public/tradeDefaults.js'
 
 function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
-  const { newTrade, setNewTrade } = useTrade();
+  const { newTrade, setNewTrade } = useTradeFormLogic();
 
     // Use trades array consistently (recommended to standardize on either 'trades' or 'legs')
   const legs = newTrade.trades?.filter(trade => trade.trade_type !== 'STOCK') || [];

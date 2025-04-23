@@ -1,16 +1,12 @@
 import { createContext, useContext, useState } from 'react';
+import { useTradeForm } from '../hooks/useTradeForm';
 
 const TradeContext = createContext();
 
 export function TradeProvider({ children }) {
-  const [newTrade, setNewTrade] = useState({
-    symbol: '',
-    date: '',
-    trades: []
-  });
-
+  const tradeLogic = useTradeForm();
   return (
-    <TradeContext.Provider value={{ newTrade, setNewTrade }}>
+    <TradeContext.Provider value={tradeLogic}>
       {children}
     </TradeContext.Provider>
   );

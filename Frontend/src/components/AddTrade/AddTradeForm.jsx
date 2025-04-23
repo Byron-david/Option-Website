@@ -7,32 +7,31 @@ import { defaultNewTrade, defaultTrade } from '../../../public/tradeDefaults.js'
 
 function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
   const [newTrade, setNewTrade] = useState(defaultNewTrade)
-  const [strategy, setStrategy] = useState("Stock");
   const [error, setError] = useState(null)
 
   const addTrade = event => {
     event.preventDefault()
     
-    const tradeObject = formatTrade(newTrade, strategy)
+    const tradeObject = formatTrade(newTrade)
 
     console.log(tradeObject)
-    const createTrade = async (tradeObject) => {
-      // setIsLoading(true);
-      try {
-        const fetchedData = await tradeService.create(tradeObject);
-        setAllTrades(allTrades.concat(fetchedData));
-        setNewTrade(defaultNewTrade)
-      } 
-      catch (err) {
-        setError(err);
-      } 
-      // finally {
-      //   setIsLoading(false);
-      // }
-    };
-    createTrade(tradeObject);
+    // const createTrade = async (tradeObject) => {
+    //   // setIsLoading(true);
+    //   try {
+    //     const fetchedData = await tradeService.create(tradeObject);
+    //     setAllTrades(allTrades.concat(fetchedData));
+    //     setNewTrade(defaultNewTrade)
+    //   } 
+    //   catch (err) {
+    //     setError(err);
+    //   } 
+    //   // finally {
+    //   //   setIsLoading(false);
+    //   // }
+    // };
+    // createTrade(tradeObject);
 
-    handleClickClose()
+    // handleClickClose()
 
   }
 
@@ -40,12 +39,10 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     <>
       <div className="containerTemplate">
         <div className="titleTemplate">Add Trade</div>
-        {/* <TradeProvider> */}
-          <TradeForm setStrategy={setStrategy} 
-                    strategy={strategy} 
-                    onSubmit={addTrade} 
+        <TradeProvider>
+          <TradeForm onSubmit={addTrade} 
                     handleClickClose={handleClickClose} />
-        {/* </TradeProvider> */}
+        </TradeProvider>
 
       </div>
     </>

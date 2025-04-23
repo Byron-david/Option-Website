@@ -1,4 +1,4 @@
-import { useTradeFormLogic, useTrade } from '../../hooks/useTradeFormLogic'
+import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
 import { useState } from 'react'
 import OptionItems from '../Input/OptionItems.jsx'
 import Button from '../Button/Button.jsx'
@@ -13,13 +13,19 @@ import {
   subAction, 
   posType } from '../../../public/tradeDefaults.js'
 
-function TradeForm({ handleClickClose, onSubmit,  strategy, setStrategy }) {
-  const { newTrade, setNewTrade } = useTrade();
+function TradeForm({ handleClickClose, onSubmit,  strategy }) {
   const {
-    preset, stockVisible, setStockVisible,
-    handleTrade, handleStock, handleStrategy,
-    addNewLeg, addStock
-  } = useTradeFormLogic(setStrategy)
+    newTrade,
+    preset,
+    stockVisible,
+    setStockVisible,
+    handleTrade,
+    handleStock,
+    handleStrategy,
+    addNewLeg,
+    addStock,
+    validateLegs
+  } = useTradeFormLogic();
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
