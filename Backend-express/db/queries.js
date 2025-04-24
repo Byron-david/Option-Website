@@ -130,51 +130,93 @@ async function getStrategiesByUserId(userId) {
   }
 }
 
-const insertStrategy = async (tradeObj) => {
+async function insertStrategy(strategyName, userId) {
+  const query = `
+    INSERT INTO strategies (strategy, user_id)
+    VALUES ($1, $2)
+    RETURNING strategyID
+  `;
   try {
-    const strategyName = Object.keys(tradeObj)[0]
-
-    const strategy = `INSERT INTO strategies (strategy) 
-                      VALUES ($1) RETURNING strategyid`
-                      
-    const response = await pool.query(strategy, [strategyName]);
-  
-    return response.rows[0].strategyid
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const insertTrades = async (tradeObj, id) => {
-  try {
-    const strategyName = Object.keys(tradeObj)[0]
-    const trades = tradeObj[strategyName]
-  
-    for (const trade of trades) {
-      await insertTrade(trade, id)
+    const { rows } = await pool.query(query, [strategyName, userId]);
+    if (rows.length === 0) {
+      throw new Error("Strategy insertion failed, no ID returned.");
     }
+    return rows[0].strategyid; // Postgres returns lowercase column names by default
   } catch (error) {
-    console.error(error)
+    console.error("Error inserting strategy:", error);
+    throw error; // Re-throw for router handling
   }
 }
 
-const insertTrade = async (tradeObj, id) => {
+async function insertTrade(tradeData, strategyId) {
+  const query = `
+    INSERT INTO trades
+      (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    RETURNING *
+  `;
+  const values = [
+    tradeData.symbol, tradeData.date, tradeData.action,
+    tradeData.sub_action, tradeData.trade_type, tradeData.qty, tradeData.price,
+    tradeData.strikes, tradeData.value, tradeData.expdate,
+    strategyId,
+    tradeData.userId   // ✅ Use this instead of referencing undefined `userId`
+  ];
   try {
-    const text = `INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyid) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
-
-    const values =
-      [tradeObj.symbol, tradeObj.date, tradeObj.action,
-      tradeObj.sub_action, tradeObj.trade_type, tradeObj.qty, tradeObj.price,
-      tradeObj.strikes, tradeObj.value, tradeObj.expdate, id]
-      
-    const res = await pool.query(text, values)
-    
-    return res
+    const { rows } = await pool.query(query, values);
+    return rows[0];
   } catch (error) {
-    console.error(error)
+    console.error("Error inserting trade:", error);
+    throw error;
   }
 }
+
+
+async function insertTrades(tradesArray, strategyId) {
+    // Map each trade object to a promise returned by insertTrade
+    const insertPromises = tradesArray.map(trade => insertTrade(trade, strategyId));
+    try {
+        // Execute all insertion promises concurrently
+        const insertedTrades = await Promise.all(insertPromises);
+        return insertedTrades;
+    } catch (error) {
+        console.error("Error inserting multiple trades:", error);
+        // In a real app, consider using database transactions here
+        // to ensure all trades are inserted or none are (atomicity).
+        throw error;
+    }
+}
+
+// const insertTrades = async (tradeObj, id) => {
+//   try {
+//     const strategyName = Object.keys(tradeObj)[0]
+//     const trades = tradeObj[strategyName]
+  
+//     for (const trade of trades) {
+//       await insertTrade(trade, id)
+//     }
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
+// const insertTrade = async (tradeObj, id) => {
+//   try {
+//     const text = `INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyid) 
+//       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+
+//     const values =
+//       [tradeObj.symbol, tradeObj.date, tradeObj.action,
+//       tradeObj.sub_action, tradeObj.trade_type, tradeObj.qty, tradeObj.price,
+//       tradeObj.strikes, tradeObj.value, tradeObj.expdate, id]
+      
+//     const res = await pool.query(text, values)
+    
+//     return res
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 const deleteTrade = async (id) => {
   const text = `DELETE FROM trades WHERE strategyid = $1`

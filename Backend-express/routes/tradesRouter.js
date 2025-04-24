@@ -42,19 +42,47 @@ tradesRouter.get('/dashboard/strategies/:strategyId', ensureAuthenticated, async
 });
 
 tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res) => {
-  const { strategy } = req.body;
-  console.log(req.body)
+  const {
+    newTrade: {
+      strategy,
+      trades,
+      symbol,
+      date
+    }
+  } = req.body;
+
+  const userId = req.user.id;
+
   if (!strategy || typeof strategy !== 'string' || strategy.trim() === '') {
     return res.status(400).json({ message: 'Valid strategy name is required' });
   }
+
   try {
-    const userId = req.user.id; // Get user ID from authenticated session
-    const strategyId = await db.insertStrategy(strategy.trim(), userId);
-    res.status(201).json({ strategyID: strategyId, strategy: strategy.trim(), user_id: userId });
+    // 1. Insert strategy
+    const strategyId = await db.insertStrategy(strategy, userId);
+
+    // 2. Format trades before insert (ensure required fields like user_id are present)
+    const formattedTrades = trades.map(t => ({
+      ...t,
+      symbol,
+      date,
+      userId,
+    }));
+
+    // 3. Insert all trades
+    const insertedTrades = await db.insertTrades(formattedTrades, strategyId);
+
+    // 4. Respond with inserted data
+    res.status(201).json({
+      strategyID: strategyId,
+      trades: insertedTrades,
+      user_id: userId
+    });
   } catch (error) {
-    console.error("Error creating strategy:", error);
-    res.status(500).json({ message: 'Failed to create strategy' });
+    console.error("Error creating strategy with trades:", error);
+    res.status(500).json({ message: 'Failed to create strategy and trades' });
   }
 });
+
 
 module.exports = tradesRouter;
