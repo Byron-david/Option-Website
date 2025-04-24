@@ -4,6 +4,8 @@ const defaultTrade = {
  }
 
 const defaultStock = {
+    symbol: '',
+    date: '',
     action: 'BUY', 
     sub_action: 'OPEN', 
     trade_type: 'STOCK', 
@@ -14,6 +16,8 @@ const defaultStock = {
 }
 
 const defaultLeg = { 
+    symbol: '',
+    date: '',
     action: 'BUY',
     sub_action: 'OPEN', 
     trade_type: 'CALL', 

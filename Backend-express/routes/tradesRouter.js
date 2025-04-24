@@ -43,6 +43,7 @@ tradesRouter.get('/dashboard/strategies/:strategyId', ensureAuthenticated, async
 
 tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res) => {
   const { strategy } = req.body;
+  console.log(req.body)
   if (!strategy || typeof strategy !== 'string' || strategy.trim() === '') {
     return res.status(400).json({ message: 'Valid strategy name is required' });
   }

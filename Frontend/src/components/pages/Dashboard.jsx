@@ -2,6 +2,7 @@ import Navbar from '../Navbar/Navbar';
 import styles from './Pages.module.css'; 
 import { Link, Outlet } from "react-router-dom"
 import { useEffect } from 'react'
+import { TradeProvider } from '../../contexts/TradeContext.jsx';
 
 function dashboard() {
   // const fetchTest = async (e) => {
@@ -35,7 +36,9 @@ function dashboard() {
     <>
       <Navbar />
       <main className={styles.dashboard}>
-        <Outlet />
+        <TradeProvider>
+          <Outlet />
+        </TradeProvider>
       </main>
     </>
   )
