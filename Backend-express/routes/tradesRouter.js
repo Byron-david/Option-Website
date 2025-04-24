@@ -84,5 +84,30 @@ tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res)
   }
 });
 
+// DELETE /dashboard/strategies/:strategyId - Delete a strategy
+tradesRouter.delete('/dashboard/strategies/:strategyId', ensureAuthenticated, async (req, res) => {
+  const { strategyId } = req.params;
+
+  const userId = req.user.id;
+  console.log('=============')
+  console.log(req.params)
+  console.log("Deleting strategy", strategyId, "for user", userId);
+  console.log('=============')
+  if (isNaN(parseInt(strategyId, 10))) {
+      return res.status(400).json({ message: "Invalid Strategy ID format." });
+  }
+  try {
+    const deletedCount = await db.deleteStrategyForUser(parseInt(strategyId, 10), userId);
+    if (deletedCount > 0) {
+      res.status(204).send(); // Success, no content
+    } else {
+      res.status(404).json({ message: 'Strategy not found or access denied' });
+    }
+  } catch (error) {
+    console.error("Error deleting strategy:", error);
+    res.status(500).json({ message: 'Failed to delete strategy' });
+  }
+});
+
 
 module.exports = tradesRouter;

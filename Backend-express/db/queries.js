@@ -187,36 +187,34 @@ async function insertTrades(tradesArray, strategyId) {
     }
 }
 
-// const insertTrades = async (tradeObj, id) => {
-//   try {
-//     const strategyName = Object.keys(tradeObj)[0]
-//     const trades = tradeObj[strategyName]
-  
-//     for (const trade of trades) {
-//       await insertTrade(trade, id)
-//     }
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+async function deleteTradeByIdForUser(tradeId, userId) {
+  const query = `
+    DELETE FROM trades
+    WHERE tradeID = $1 AND user_id = $2
+  `;
+  try {
+    const result = await pool.query(query, [tradeId, userId]);
+    // rowCount will be 1 if deleted, 0 if tradeId doesn't exist or doesn't belong to user
+    return result.rowCount;
+  } catch (error) {
+    console.error("Error deleting trade by ID:", error);
+    throw error;
+  }
+}
 
-// const insertTrade = async (tradeObj, id) => {
-//   try {
-//     const text = `INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyid) 
-//       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
-
-//     const values =
-//       [tradeObj.symbol, tradeObj.date, tradeObj.action,
-//       tradeObj.sub_action, tradeObj.trade_type, tradeObj.qty, tradeObj.price,
-//       tradeObj.strikes, tradeObj.value, tradeObj.expdate, id]
-      
-//     const res = await pool.query(text, values)
-    
-//     return res
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+async function deleteStrategyForUser(strategyId, userId) {
+  const query = `
+    DELETE FROM strategies
+    WHERE strategyID = $1 AND user_id = $2
+  `;
+  try {
+    const result = await pool.query(query, [strategyId, userId]);
+    return result.rowCount; // 1 if deleted, 0 if not found or unauthorized
+  } catch (error) {
+    console.error("Error deleting strategy:", error);
+    throw error;
+  }
+}
 
 const deleteTrade = async (id) => {
   const text = `DELETE FROM trades WHERE strategyid = $1`
@@ -257,7 +255,8 @@ module.exports = {
   insertStrategy,
   deleteTrade,
   deleteStrategy,
-
+  deleteTradeByIdForUser,
+  deleteStrategyForUser,
   getStrategiesByUserId,
   getTradesByStrategyId,
 };
