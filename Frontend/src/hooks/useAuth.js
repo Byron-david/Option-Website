@@ -1,7 +1,9 @@
 // src/hooks/useAuth.js
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useAuth() {
+  const queryClient = useQueryClient();
+
   const authQuery = useQuery({
     queryKey: ['auth'],
     queryFn: async () => {
@@ -22,16 +24,29 @@ export function useAuth() {
       if (!res.ok) throw new Error('Login failed');
       return res.json();
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['auth'] }); // 💥 Force refetch
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+    },
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      await fetch('/api/logout', { method: 'POST' });
+    },
+    onSuccess: () => {
+      // 1. Clear the React Query cache instantly
+      queryClient.setQueryData(['auth'], null); 
+      // 2. Force a refetch to be sure (optional)
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+    },
   });
 
   return {
     authData: authQuery.data,
     isLoading: authQuery.isLoading,
-    isAuthenticated: authQuery.data?.authenticated,
+    isAuthenticated: authQuery.data?.authenticated == true,
     login: loginMutation.mutateAsync,
+    logout: logoutMutation.mutate,
     error: authQuery.error,
   };
 }
