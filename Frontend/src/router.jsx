@@ -29,11 +29,11 @@ const router = createBrowserRouter([
       { path: 'signup', element: <SignUp /> },
       {
         path: 'dashboard',
-        element: (
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        ),
+        // element: (
+        //   <ProtectedRoute>
+        //     <Dashboard />
+        //   </ProtectedRoute>
+        // ),
         children: [
           { path: 'trades', element: <TradesTable /> },
           { path: 'trades/:id', element: <TradesTable /> },

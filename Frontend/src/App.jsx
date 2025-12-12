@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      {!isAuthenticated && <TopNavbar />}
+      {/* {!isAuthenticated && <TopNavbar />} */}
       <main id="pageContainer">
         <Outlet />
       </main>
