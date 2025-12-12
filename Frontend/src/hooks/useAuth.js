@@ -31,7 +31,10 @@ export function useAuth() {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      await fetch('/api/logout', { method: 'POST' });
+      await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
     },
     onSuccess: () => {
       // 1. Clear the React Query cache instantly
@@ -44,7 +47,7 @@ export function useAuth() {
   return {
     authData: authQuery.data,
     isLoading: authQuery.isLoading,
-    isAuthenticated: authQuery.data?.authenticated == true,
+    isAuthenticated: authQuery.data?.authenticated == true, 
     login: loginMutation.mutateAsync,
     logout: logoutMutation.mutate,
     error: authQuery.error,
