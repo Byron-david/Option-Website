@@ -20,8 +20,10 @@ const MapRows = ({data}) => {
 
     return (
         data.map((row) => (
-            <tr key={uuid()}>
-                {Object.values(row).map((value) => (<td key={uuid()}>{value}</td>) )}
+            <tr key={index}> 
+                {Object.values(row).map((value, i) => (
+                    <td key={i}>{value}</td>
+                ))}
             </tr>
         ))
     )

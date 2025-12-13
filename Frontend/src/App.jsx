@@ -13,18 +13,28 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoading) return;
+
+    if (isAuthenticated === false && location.pathname.startsWith('/dashboard')) {
+       console.log("Redirecting to Home...");
        navigate('/'); 
     }
-    if (isAuthenticated) {
-          navigate('/dashboard');
-        }
-  }, [isLoading, isAuthenticated, location, navigate]);
+
+    if (isAuthenticated === true && location.pathname === '/') {
+       console.log("Redirecting to Dashboard...");
+       navigate('/dashboard/trades');
+    }
+  }, [isLoading, isAuthenticated, location.pathname, navigate]);
+
+  if (isLoading) {
+        return <div style={{color: 'white', padding: '20px'}}>Loading...</div>;
+    }
 
   return (
     <>
 
       {!isAuthenticated && <TopNavbar />}
+      {isAuthenticated && <Navbar />}
       <main id="pageContainer">
         <Outlet />
       </main>

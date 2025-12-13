@@ -9,9 +9,17 @@ export default function FormatTrade({ allTrades, setAllTrades, tableHeader }) {
         <>
             {allTrades.map((strategy, index) => {
                 const stratName = strategyNames[index]
+                const rowKey = strategy.id || index;
 
                 return (
-                    <TableRow stratName={stratName} strategy={strategy} key={uuid()} index={index} setAllTrades={setAllTrades} allTrades={allTrades} />
+                    <TableRow 
+                        stratName={stratName} 
+                        strategy={strategy} 
+                        key={rowKey}
+                        index={index} 
+                        setAllTrades={setAllTrades} 
+                        allTrades={allTrades} 
+                    />
                 )})}
         </>
 

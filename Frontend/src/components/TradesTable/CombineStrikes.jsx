@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import styles from './TradesTable.module.css'; 
 import AddSlash from './AddSlash'
 import React, { Fragment } from "react"
@@ -17,9 +16,8 @@ export default function CombineStrikes({ strikes }) {
                     className = styles["putStrike"]
                 }
                 return (
-                    <Fragment key={uuid()}>
+                    <Fragment key={index}>
                         <div className={className}>{strike}</div>
-                        {/* {index !== (strikes.length - 1) ? <AddSlash className={styles.addSlash} />: null} */}
                     </Fragment >
                 )
             })}

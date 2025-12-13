@@ -109,22 +109,12 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
             try {
                 await tradeService.remove(databaseId);
                 setAllTrades(allTrades.filter(t => t.id !== databaseId))
-                console.log(response);
                 return response
               } 
               catch (err) {
                 setError(err);
               } 
 
-            // axios way
-            // tradeService
-            //     .remove(databaseId)
-            //     .then(response => {
-            //         setAllTrades(allTrades.filter(t => t.id !== databaseId))
-            //         console.log(response);
-            //         return response
-            //     }
-            //     )
         }
     }
 
@@ -178,7 +168,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
                     </div>
                 </td>
                 <td>
-                    <CombineStrikes key={uuid()} strikes={strikes} />
+                    <CombineStrikes strikes={strikes} />
                 </td>
                 <td>{totalValue}</td>
                 <td>{expdates}</td>
@@ -198,7 +188,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
                 </td>
             </tr>
             {expand === 1 ?
-                <ExpandRow stratName={stratName} strategy={strategy} key={uuid()} />
+                <ExpandRow stratName={stratName} strategy={strategy}/>
                 : null
             }
         </>
