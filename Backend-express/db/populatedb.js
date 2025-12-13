@@ -27,6 +27,15 @@ const createSeedData = async () => {
 DROP TABLE IF EXISTS trades;
 DROP TABLE IF EXISTS strategies;
 DROP TABLE IF EXISTS users; -- Drop users last
+DROP TABLE IF EXISTS user_sessions;
+
+CREATE TABLE IF NOT EXISTS user_sessions (
+  "sid" varchar NOT NULL COLLATE "default",
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL,
+  CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+);
+CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON user_sessions ("expire");
 
 -- Create users table with your complete schema
 CREATE TABLE IF NOT EXISTS users (

@@ -13,11 +13,12 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // If we are done loading, NOT authenticated, and trying to view a dashboard page...
-    if (!isLoading && !isAuthenticated && location.pathname.startsWith('/dashboard')) {
-       // ...kick the user back to the landing page
+    if (!isLoading && !isAuthenticated) {
        navigate('/'); 
     }
+    if (isAuthenticated) {
+          navigate('/dashboard');
+        }
   }, [isLoading, isAuthenticated, location, navigate]);
 
   return (
