@@ -6,6 +6,7 @@ import {
   Link,
 } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 function Login() {
   // State for form inputs
@@ -13,39 +14,21 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        credentials: 'include', // Include cookies in the request
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-      
-      const text = await response.text();
-      console.log('Raw response:', text); // Debug log
-      
+      e.preventDefault();
       try {
-
-        const data = JSON.parse(text);
-        
-        if (!response.ok) {
-          throw new Error(data.message || 'Login failed');
-        }
+        await login({ username, password });
         
         navigate('/dashboard/trades', { replace: true });
-      } catch (e) {
-        console.error('Failed to parse JSON:', e);
-        throw new Error('Invalid server response');
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        setError(error.message || "Login failed");
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setError(error.message);
-    }
-  };
-  
+    };
+
   return (
     <>
       <div>
