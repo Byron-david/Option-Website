@@ -150,7 +150,9 @@ button {
   border-radius: var(--border-radius-main);
 }
 
-
+button:hover {
+  filter: brightness(125%);
+}
 
 hr {
   display: block;
