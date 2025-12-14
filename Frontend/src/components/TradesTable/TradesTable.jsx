@@ -5,6 +5,8 @@ import { v4 as uuid } from 'uuid';
 import Button from '../Button/Button.jsx'
 import FormatTrade from './FormatTrade.jsx'
 import AddTradeModal from '../AddTrade/AddTradeModal.jsx';
+import UpdateTradeForm from '../AddTrade/UpdateTradeForm.jsx';
+import Modal from '../Modal/Modal.jsx';
 import tradeService from '../../services/trades.js'
 
 function RowButtons() {
@@ -30,8 +32,10 @@ const MapRows = ({data}) => {
 }
 
 export default function TradesTable({ data }) {
-    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
+    const [allTrades, setAllTrades] = useState([])
+    const [editingTrade, setEditingTrade] = useState(null);
+
     // const [importData, setImportData] = useState([]);
 
     // const tableHeader = {
@@ -61,7 +65,6 @@ export default function TradesTable({ data }) {
     ]
 
     const headers = Object.keys(tableHeader)
-    const [allTrades, setAllTrades] = useState([])
 
     useEffect(() => {
         const fetchDataAsync = async () => {
@@ -80,6 +83,14 @@ export default function TradesTable({ data }) {
     
         fetchDataAsync();
       }, []);
+
+    const handleEditClick = (trade) => {
+        setEditingTrade(trade);
+    };
+
+    const closeEditModal = () => {
+        setEditingTrade(null);
+    };
 
     // useEffect(() => {
     //     tradeService
@@ -108,6 +119,17 @@ export default function TradesTable({ data }) {
                     {/* <RemapData onFileLoad={handleFileLoad} /> */}
                     <AddTradeModal allTrades={allTrades} setAllTrades={setAllTrades} header={tableHeader} />
                 </div>
+
+                {editingTrade && (
+                    <Modal open={true}>
+                        <UpdateTradeForm 
+                            currentTrade={editingTrade}
+                            setAllTrades={setAllTrades}
+                            handleClickClose={closeEditModal}
+                        />
+                    </Modal>
+                )}
+
                 <hr/>
                 <table>
                     <caption>All Trades</caption>
@@ -120,7 +142,10 @@ export default function TradesTable({ data }) {
                         </tr>
                     </thead>
                     <tbody>
-                        <FormatTrade allTrades={allTrades} setAllTrades={setAllTrades} tableHeader={tableHeader} />
+                        <FormatTrade 
+                            allTrades={allTrades}
+                            setAllTrades={setAllTrades}
+                            onEdit={handleEditClick} />
                     </tbody>
                 </table>  
             </div>

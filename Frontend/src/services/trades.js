@@ -35,9 +35,27 @@ const create = async newObject => {
   }
 }
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
-  return request.then(response => response.data)
+const update = async (id, newObject) => {
+  try {
+    const response = await fetch(`${baseUrl}/${id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newObject),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Update failed with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating trade:', error);
+    throw error;
+  }
 }
 
 const remove = async (id) => {
@@ -49,8 +67,15 @@ const remove = async (id) => {
       },
     });
 
-    const data = await response.json();
-    return data;
+    if (!response.ok) {
+        throw new Error(`Delete failed with status: ${response.status}`);
+    }
+
+    if (response.status === 204) {
+        return { success: true };
+    }
+
+    return await response.json();
     
   } catch (error) {
     console.error('Error adding trades:', error);

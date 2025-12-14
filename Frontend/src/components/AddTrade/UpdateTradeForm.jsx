@@ -1,202 +1,70 @@
-import { useState } from 'react'
-import OptionItems from '../Input/OptionItems.jsx'
-import Button from '../Button/Button.jsx'
-import { v4 as uuid } from 'uuid';
-import AddLeg from './AddLeg.jsx'
+import { useEffect, useState } from 'react'
+import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
 import tradeService from '../../services/trades.js'
-import AddStock from './AddStock.jsx';
+import TradeForm from './TradeForm.jsx';
+import formatTrade from '../../functions/formatTrade.js'
 
-const defaultTrade = { symbol: '', 
-                       date: ''
-                    }
+export default function UpdateTradeForm({ currentTrade, setAllTrades, handleClickClose }) {
+  // Reuse the exact same logic hook as the Add form
+  const { newTrade, setNewTrade } = useTradeFormLogic();
+  const [error, setError] = useState(null)
 
-const defaultStock = {
-  action: 'BUY', 
-  sub_action: 'OPEN', 
-  trade_type: 'STOCK', 
-  qty: '', 
-  price: '', 
-  value: '', 
-  exp: null, 
-}
+  useEffect(() => {
+    if (currentTrade && currentTrade.trades && currentTrade.trades.length > 0) {
+      const firstLeg = currentTrade.trades[0];
+      
+      // Map DB structure back to Form State structure
+      const formState = {
+        strategy: currentTrade.strategy,
+        symbol: firstLeg.symbol,
+        // Format date to YYYY-MM-DD for the input
+        date: firstLeg.date ? new Date(firstLeg.date).toISOString().split('T')[0] : '', 
+        trades: currentTrade.trades.map(t => ({
+          ...t,
+          // Ensure we don't carry over negative numbers to the inputs if your form expects positives
+          price: Math.abs(t.price),
+          value: Math.abs(t.value),
+        }))
+      };
 
-const defaultLeg = { 
-                action: 'BUY',
-                sub_action: 'OPEN', 
-                trade_type: 'CALL', 
-                qty: 1, 
-                strikes: '', 
-                value: '', 
-                exp: '', 
-              }
-
-function UpdateTradeForm({ allTrades, setAllTrades, handleClickClose, header }) {
-  const [newTrade, setNewTrade] = useState(defaultTrade)
-  const [stock, setStock] = useState({...defaultStock})
-  const [leg, setLeg] = useState([])
-  const [strategy, setStrategy] = useState("Stock");
-
-  const strategyOptions = [
-    { id: uuid(), value: "Stock", text: "Stock", quantity: 0 },
-    { id: uuid(), value: "Option", text: "Single Option", quantity: 1 },
-    { id: uuid(), value: "Covered Call", text: "Covered Call", quantity: 1 },
-    { id: uuid(), value: "Vertical Spread", text: "Vertical Spread", quantity: 2 },
-    { id: uuid(), value: "Strangle", text: "Strangle", quantity: 2 },
-    { id: uuid(), value: "Iron Condor", text: "Iron Condor", quantity: 4 },
-    { id: uuid(), value: "Butterfly", text: "Butterfly", quantity: 4 },
-    // { id: uuid(), value: "ratioSpread", text: "Ratio Spread", quantity: 3 },
-    // { id: uuid(), value: "custom", text: "Custom", quantity: 0 }
-  ]
-
-  const action = [
-    { id: uuid(), value: "BUY", text: "Buy" },
-    { id: uuid(), value: "SELL", text: "Sell" },
-  ]
-
-  const subAction = [
-    { id: uuid(), value: "OPEN", text: "Open" },
-    { id: uuid(), value: "CLOSE", text: "Close" },
-  ]
-
-  const posType = [
-    { id: uuid(), value: "PUT", text: "Put" },
-    { id: uuid(), value: "CALL", text: "Call" },
-  ]
-
-  const handleTrade = (event) => {
-    setNewTrade(values => ({...values, [event.target.name]: event.target.value.toUpperCase()}))
-  }
-
-  const handleStock = (event) => {
-    setStock(values => ({...values, [event.target.name]: event.target.value}))
-  }
-
-  const handleStrategy = (event) => {
-    const updateStrategy = event.target.value
-    setStrategy(updateStrategy)
-
-    const findQty = strategyOptions.find(element => element.value === updateStrategy)
-
-    if (updateStrategy === "Stock" || updateStrategy === "Covered Call") {
-      setStock({...defaultStock})
+      setNewTrade(formState);
     }
-    else {
-      setStock({})
-    }
+  }, [currentTrade, setNewTrade]);
 
-    setLeg([])
-    for (let i = 0; i < findQty.quantity; i++ ) {
-      const newLeg = { ...defaultLeg }
-
-      if (i > 0 && i < 3) {
-        newLeg.action = "SELL"
-      }
-
-      if (updateStrategy === "Iron Condor") {
-        if (i < 2) {
-          newLeg.trade_type = "PUT"
-        }
-      }
-
-      if (updateStrategy === "Covered Call") {
-        newLeg.action = "SELL"
-      }
-
-      if (updateStrategy === "Strangle" ) {
-        newLeg.action = "SELL"
-        if (i < 1) {
-          newLeg.trade_type = "PUT"
-        }
-      }
-
-      setLeg((prev) => {
-        const newState = [...prev, newLeg]
-        return newState
-      })
-    }
-  }
-
-  const valueAdjust = (combinedTrade, value) => {
-    combinedTrade.map(t => t.action === "BUY" ? t[value] = `${t[value] * -1}` : t[value] )
-  }
-
-  const addTrade = event => {
-    event.preventDefault()
-    let combinedTrade = []
+  const handleUpdate = async (event) => {
+    event.preventDefault();
     
-    if (leg.length !== 0 && Object.keys(stock).length !== 0) {
-      const newStock = {...newTrade, ...stock}
-      const newLeg = leg.map(prev => ({...newTrade, ...prev}))
-      combinedTrade = combinedTrade.concat(newStock, ...newLeg)
-    }
-    else if (leg.length !== 0) {
-      combinedTrade = leg.map(prev => ({...newTrade, ...prev}))
+    // Use your existing formatter
+    const tradeObject = formatTrade(newTrade);
+    
+    // Get the Strategy ID (handle Postgres capitalization quirks)
+    const strategyId = currentTrade.strategyid || currentTrade.strategyID || currentTrade.id;
 
+    try {
+      const updatedStrategy = await tradeService.update(strategyId, tradeObject);
+      
+      // Update the table list locally without refreshing
+      setAllTrades(prevTrades => prevTrades.map(t => 
+        (t.strategyid || t.strategyID || t.id) === strategyId ? updatedStrategy : t
+      ));
+      
+      handleClickClose();
+    } catch (err) {
+      console.error("Update failed:", err);
+      setError("Failed to update trade");
     }
-    else {
-      combinedTrade = [{...newTrade, ...stock}]
-    }
-  
-    valueAdjust(combinedTrade, "value")
-    valueAdjust(combinedTrade, "price")
-
-    const tradeObject = {[strategy]: combinedTrade}
-
-    tradeService
-      .create(tradeObject)
-      .then(returnedTrade => {
-        setAllTrades(allTrades.concat(returnedTrade))
-        setNewTrade(defaultTrade)
-      })
-      // handleClickClose()
   }
 
   return (
-    <>
-      <div className="containerTemplate">
-        <div className="titleTemplate">Add Trade</div>
-        <form action ="/dashboard/trades" onSubmit={addTrade} method="POST">
-          <div className="bodyTemplate">
-            <div className="inputContainer">
-                <label>Symbol: 
-                  <input 
-                    type="text" 
-                    name="symbol" 
-                    value={newTrade.symbol || ""} 
-                    onChange={handleTrade}
-                    placeholder="AAPL"
-                    maxLength="4"
-                  />
-                </label>
-                <label>Strategy:
-                  <select 
-                      className="inputSelect"
-                      name="strategy"
-                      value={strategy}
-                      onChange={handleStrategy}> 
-                      <OptionItems items={strategyOptions}/>
-                  </select>
-                </label>
-                <label>Date Exec.:
-                  <input 
-                    type="date" 
-                    name="date" 
-                    value={newTrade.date || ""} 
-                    onChange={handleTrade}
-                  />
-                </label>
-            </div>
-            <AddStock strategy={strategy} items={action} handleChange={handleStock} stock={stock} itemSubAction={subAction} />
-            <AddLeg leg={leg} setLeg={setLeg} strategy={strategy} itemTypes={posType} itemActions={action} newLeg={defaultLeg} itemSubAction={subAction} />
-          </div>
-          <div className="footerTemplate">
-            <Button text="Cancel" backgroundColor="var(--color-button-red)" handleClick={handleClickClose} />
-            <Button type="submit" text="Save" className="buttonAdd" />
-          </div>
-        </form>
-      </div>
-    </>
+    <div className="containerTemplate">
+      <div className="titleTemplate">Edit Trade</div>
+      
+      <TradeForm 
+        onSubmit={handleUpdate} 
+        handleClickClose={handleClickClose} 
+      />
+      
+      {error && <div style={{color: 'red', padding: '10px'}}>{error}</div>}
+    </div>
   );
 }
-
-export default UpdateTradeForm

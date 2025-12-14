@@ -44,7 +44,7 @@ const formatExpDate = (dates) => {
     }
 }
 
-export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, }) {
+export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, onEdit}) {
     const [expand, setExpand] = useState(0);
     const [error, setError] = useState(null);
 
@@ -104,55 +104,36 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
     const handleDelete = async (event, id) => {
         event.preventDefault()
         event.stopPropagation();
-        const databaseId = allTrades[id].id
+
+        const databaseId = strategy.strategyid || strategy.strategyID || strategy.id;
+        if (!databaseId) {
+                    console.error("Cannot delete: Missing Strategy ID", strategy);
+                    return;
+                }
 
         if (window.confirm("Delete Entry?")) {
             try {
                 await tradeService.remove(databaseId);
-                setAllTrades(allTrades.filter(t => t.id !== databaseId))
-                return response
+
+                setAllTrades(prevTrades => prevTrades.filter(t => 
+                    (t.strategyid || t.strategyID || t.id) !== databaseId
+                ));
               } 
               catch (err) {
                 setError(err);
+                console.error("Delete failed:", err);
               } 
 
         }
     }
 
-    const handleUpdate = (event, id) => {
-        event.preventDefault()
-        const currentStrategy = allTrades[id]
-        const stratName = Object.keys(currentStrategy)[0]
-        const tradesArray = currentStrategy[stratName]
-
-        const defaultTrade = { 
-            symbol: tradesArray[0].symbol, 
-            date: tradesArray[0].date
-         }
-
-        const defaultStock = {
-            action: 'BUY', 
-            sub_action: 'OPEN', 
-            trade_type: 'STOCK', 
-            qty: '', 
-            price: '', 
-            value: '', 
-            exp: null, 
+    const handleUpdate = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        if (onEdit) {
+            onEdit(strategy);
         }
-
-        const defaultLeg = { 
-            action: 'BUY',
-            sub_action: 'OPEN', 
-            trade_type: 'CALL', 
-            qty: 1, 
-            strikes: '', 
-            value: '', 
-            exp: '', 
-        }
-
-        tradesArray.forEach(leg => 
-            console.log(leg)
-        )
     }
     
     return (
@@ -178,7 +159,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
                         <Button text="Edit"
                         backgroundColor={`var(--color-blue)`}
                         color={`var(--color-main)`}
-                        handleClick={event => handleUpdate(event, index)} />
+                        handleClick={handleUpdate} />
 
                         <Button text="Del"
                         backgroundColor={`var(--color-red)`}
