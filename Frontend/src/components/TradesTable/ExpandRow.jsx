@@ -31,7 +31,7 @@ export default function ExpandRow({ strategy, stratName }) {
     return (
         <>
             {tradeLeg.map(leg => (
-                <tr key={leg.id || index} className={styles.individualTrades} >
+                <tr key={uuid()} className={styles.individualTrades} >
                     <td>{}</td>
                     <td>{formatDate(leg.date)}</td>
                     <td>{subActionFormat(leg.sub_action)}</td>

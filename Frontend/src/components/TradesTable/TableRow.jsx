@@ -103,6 +103,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
 
     const handleDelete = async (event, id) => {
         event.preventDefault()
+        event.stopPropagation();
         const databaseId = allTrades[id].id
 
         if (window.confirm("Delete Entry?")) {
@@ -188,7 +189,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
                 </td>
             </tr>
             {expand === 1 ?
-                <ExpandRow stratName={stratName} strategy={strategy}/>
+                <ExpandRow stratName={stratName} strategy={strategy} />
                 : null
             }
         </>
