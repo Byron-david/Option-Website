@@ -9,7 +9,8 @@ export function useTradeFormLogic() {
     stockVisible,
     handleTrade,
     handleStockChange,
-    handleStrategyChange
+    handleStrategyChange,
+    resetForm
   } = useTrade();
 
   // Additional derived logic
@@ -43,6 +44,7 @@ export function useTradeFormLogic() {
     handleStock: handleStockChange,
     handleStrategy: handleStrategyChange,
     validateLegs,
-    addNewLeg
+    addNewLeg,
+    resetForm
   };
 }

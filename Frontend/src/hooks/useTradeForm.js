@@ -2,6 +2,13 @@
 import { useState } from 'react';
 import { defaultStock, defaultLeg, strategyOptions } from '../../public/tradeDefaults';
 
+const initialDefaultState = {
+  symbol: '',
+  date: '',
+  trades: [{ ...defaultStock }],
+  strategy: 'Stock'
+};
+
 export function useTradeForm(initialState = {
   symbol: '',
   date: '',
@@ -59,6 +66,12 @@ export function useTradeForm(initialState = {
     });
   };
 
+  const resetForm = () => {
+    setTradeState(initialDefaultState);
+    setPreset("Stock");
+    setStockVisible(1);
+  };
+
   return {
     tradeState,
     setTradeState,
@@ -66,6 +79,7 @@ export function useTradeForm(initialState = {
     stockVisible,
     handleTrade,
     handleStockChange,
-    handleStrategyChange
+    handleStrategyChange,
+    resetForm
   };
 }

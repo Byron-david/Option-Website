@@ -59,21 +59,8 @@ const posType = [
 const defaultNewTrade = {
     symbol: '',
     date: '',
-    trades: [],
-  // base: {
-  //   symbol: '',
-  //   date: ''
-  // },
-  // stock: {
-  //   action: 'BUY', 
-  //   sub_action: 'OPEN', 
-  //   trade_type: 'STOCK', 
-  //   qty: '', 
-  //   price: '', 
-  //   value: '', 
-  //   exp: null, 
-  // },
-  // legs: []
+    trades: [{ ...defaultStock }],
+    strategy: 'Stock'
 }
 
 export { 

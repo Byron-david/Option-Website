@@ -3,10 +3,9 @@ import { useState } from 'react'
 import tradeService from '../../services/trades.js'
 import TradeForm from './TradeForm.jsx';
 import formatTrade from '../../functions/formatTrade.js'
-import { defaultNewTrade, defaultTrade } from '../../../public/tradeDefaults.js'
 
 function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
-  const { newTrade, setNewTrade } = useTradeFormLogic();
+  const { newTrade, resetForm } = useTradeFormLogic();
   const [error, setError] = useState(null)
 
   const addTrade = async (event) => { // Make sure this is async
@@ -27,7 +26,9 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
       setAllTrades(freshTrades);
 
       
-      setNewTrade(defaultNewTrade);
+      // setNewTrade(defaultNewTrade);
+
+      resetForm();
       if (handleClickClose) handleClickClose();
       
     } catch (err) {
