@@ -27,3 +27,31 @@ const formatTrade = (newTrade) => {
 }
 
 export default formatTrade
+
+// const valueAdjust = (combinedTrade, field) => {
+//     combinedTrade.forEach(t => {
+//       // Safely parse the value, defaulting to 0 if missing or invalid
+//       let val = parseFloat(t[field]);
+//       if (isNaN(val)) val = 0;
+  
+//       if (t.action === "BUY") {
+//         // Invert value for BUYS (Debit)
+//         t[field] = (val * -1).toString();
+//       } else {
+//         // Ensure it's a string for consistency
+//         t[field] = val.toString();
+//       }
+//     });
+//   }
+  
+//   const formatTrade = (newTrade) => {
+//       // Pass the trades array to be adjusted
+//       if (newTrade && newTrade.trades) {
+//         valueAdjust(newTrade.trades, "value")
+//         valueAdjust(newTrade.trades, "price")
+//       }
+  
+//       return { newTrade }
+//   }
+  
+//   export default formatTrade

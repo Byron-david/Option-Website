@@ -13,6 +13,7 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
     event.preventDefault()
     
     const tradeObject = formatTrade(newTrade)
+    console.log("Created Trade", tradeObject)
 
     try {
       // 1. Create the trade on the server
@@ -24,6 +25,7 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
       
       // 3. Update state with the fresh data
       setAllTrades(freshTrades);
+
       
       setNewTrade(defaultNewTrade);
       if (handleClickClose) handleClickClose();

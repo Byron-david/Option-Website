@@ -16,13 +16,42 @@ async function getTrade(req, res) {
   }
 }
 
+// async function addTrade(req, res) {
+//   const body = req.body;
+
+//   const id = await db.insertStrategy(body);
+//   await db.insertTrades(body, id);
+
+//   res.status(201).send(body);
+// }
+
 async function addTrade(req, res) {
-  const body = req.body;
+  try {
+    // 1. Destructure the request body to get the newTrade object
+    const { newTrade } = req.body; 
 
-  const id = await db.insertStrategy(body);
-  await db.insertTrades(body, id);
+    // 2. Get the User ID (for the Strategy only)
+    const userId = req.user ? req.user.id : 1; 
 
-  res.status(201).send(body);
+    // Check if trade data exists
+    if (!newTrade || !newTrade.trades) {
+        return res.status(400).json({ error: "Invalid trade data" });
+    }
+
+    // 3. Determine Strategy Name
+    const strategyName = newTrade.strategy || "Custom Strategy"; 
+
+    // 4. Insert Strategy (User ID is needed here)
+    const strategyId = await db.insertStrategy(strategyName, userId);
+
+    // 5. Insert Trades (User ID is NOT needed here)
+    await db.insertTrades(newTrade.trades, strategyId);
+
+    res.status(201).json(newTrade);
+  } catch (err) {
+    console.error("Error adding trade:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 async function removeTrade(req, res) {
@@ -36,11 +65,10 @@ async function removeTrade(req, res) {
     }
 
     res.json({ message: `Trade ${id} deleted successfully.`, deletedEntry: result.rows[0] });
-} catch (error) {
+  } catch (error) {
     console.error('Error deleting entry:', error.message);
     res.status(500).json({ message: 'An error occurred while deleting the entry.' });
-}
-   
+  }
 }
 
 // async function getTrades(req, res) {

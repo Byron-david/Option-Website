@@ -44,9 +44,14 @@ const formatExpDate = (dates) => {
     }
 }
 
-export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, onEdit}) {
+export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, }) {
     const [expand, setExpand] = useState(0);
     const [error, setError] = useState(null);
+
+    // FIX: Guard against empty trades to prevent crash
+    if (!strategy.trades || strategy.trades.length === 0) {
+        return null; // Or return <tr /> with an error message
+    }
 
     const firstLeg = strategy.trades[0]
 

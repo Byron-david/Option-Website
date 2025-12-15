@@ -6,7 +6,9 @@ import React, { Fragment } from "react"
 export default function FormatPrice({ price }) {
     let className = null
 
-    if (price[0] === '-') {
+    const priceStr = String(price);
+
+    if (priceStr.startsWith('-')) {
         className = styles["debit"]
     }
     else {

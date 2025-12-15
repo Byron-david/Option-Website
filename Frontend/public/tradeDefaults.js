@@ -21,7 +21,7 @@ const defaultLeg = {
     action: 'BUY',
     sub_action: 'OPEN', 
     trade_type: 'CALL', 
-    qty: 1, 
+    qty: 1,
     strikes: '', 
     value: '', 
     exp: '', 

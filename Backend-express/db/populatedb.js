@@ -41,70 +41,64 @@ CREATE TABLE IF NOT EXISTS users (
 -- Create strategies table with user reference
 CREATE TABLE IF NOT EXISTS strategies (
   strategyID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL, -- Made user_id NOT NULL
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   strategy text NOT NULL
-  -- Optional: Add constraint to ensure strategy name is unique per user
-  -- CONSTRAINT unique_strategy_per_user UNIQUE (user_id, strategy)
 );
 
 -- Create trades table WITH user_id reference
 CREATE TABLE IF NOT EXISTS trades (
-  tradeID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  symbol VARCHAR ( 255 ),
-  date date,
-  action text NOT NULL,
-  sub_action text NOT NULL,
-  trade_type text NOT NULL,
-  qty int NOT NULL,
-  price Numeric(10, 2) NOT NULL,
-  strikes int,
-  value int NOT NULL,
-  expdate date,
-  -- Add user_id column referencing users table
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL, -- Added user_id
-  -- Existing strategyID reference (made consistent)
-  strategyID INTEGER REFERENCES strategies(strategyID) ON DELETE CASCADE NOT NULL -- Added NOT NULL and CASCADE
-);
+      tradeID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      symbol VARCHAR ( 255 ),
+      date date,
+      action text NOT NULL,
+      sub_action text NOT NULL,
+      trade_type text NOT NULL,
+      qty int NOT NULL,
+      price Numeric(10, 2) NOT NULL,
+      strikes Numeric(10, 2),
+      value Numeric(10, 2) NOT NULL,
+      expdate date,
+      strategyID INTEGER REFERENCES strategies(strategyID) ON DELETE CASCADE NOT NULL
+    );
 
--- Optional but Recommended Indexes
-CREATE INDEX IF NOT EXISTS idx_trades_user_id ON trades(user_id);
-CREATE INDEX IF NOT EXISTS idx_trades_strategyID ON trades(strategyID);
-CREATE INDEX IF NOT EXISTS idx_strategies_user_id ON strategies(user_id);
+    -- Indexes
+    CREATE INDEX IF NOT EXISTS idx_trades_strategyID ON trades(strategyID);
+    CREATE INDEX IF NOT EXISTS idx_strategies_user_id ON strategies(user_id);
 
 
 -- Create test user and sample data
 DO
 $$
 DECLARE
-  test_user_id integer;     -- Renamed variable for clarity
-  current_strategy_id integer; -- Renamed variable for clarity
+  test_user_id integer;
+  current_strategy_id integer;
 BEGIN
   -- Insert default user with properly hashed password
   INSERT INTO users (username, email, password_hash)
-  VALUES ('test', 'test@example.com', '${userOneSafePw}') -- Used escaped hash
-  RETURNING id INTO test_user_id; -- Capture the generated user ID
+  VALUES ('test', 'test@example.com', '${userOneSafePw}')
+  RETURNING id INTO test_user_id;
 
-  -- First strategy with trades
+  -- Strategy 1
   INSERT INTO strategies (strategy, user_id)
-  VALUES ('Vertical Spread', test_user_id) -- Use the captured user ID
-  RETURNING strategyID INTO current_strategy_id; -- Capture the strategy ID
+  VALUES ('Vertical Spread', test_user_id)
+  RETURNING strategyID INTO current_strategy_id;
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
-  VALUES
-    ('SPY', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2024-08-30', current_strategy_id, test_user_id),
-    ('SPY', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2024-08-30', current_strategy_id, test_user_id);
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID)
+      VALUES
+        ('SPY', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2024-08-30', current_strategy_id),
+        ('SPY', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2024-08-30', current_strategy_id);
 
   -- Second strategy with trades
   INSERT INTO strategies (strategy, user_id)
   VALUES ('Iron Condor', test_user_id) -- Use the captured user ID
   RETURNING strategyID INTO current_strategy_id; -- Capture the new strategy ID
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
-  VALUES
-    ('META', '2024-07-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2024-08-30', current_strategy_id, test_user_id),
-    ('META', '2024-07-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2024-08-30', current_strategy_id, test_user_id),
-    ('META', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2024-08-30', current_strategy_id, test_user_id),
-    ('META', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2024-08-30', current_strategy_id, test_user_id);
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID)
+      VALUES
+        ('META', '2024-07-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2024-08-30', current_strategy_id),
+        ('META', '2024-07-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2024-08-30', current_strategy_id),
+        ('META', '2024-07-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2024-08-30', current_strategy_id),
+        ('META', '2024-07-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2024-08-30', current_strategy_id);
 
   ------------------------------------------
   -- 2nd User
@@ -116,21 +110,21 @@ BEGIN
   VALUES ('Vertical Spread', test_user_id) -- Use the captured user ID
   RETURNING strategyID INTO current_strategy_id; -- Capture the strategy ID
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
-  VALUES
-    ('AAPL', '2024-02-05', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2025-03-30', current_strategy_id, test_user_id),
-    ('AAPL', '2025-02-05', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2025-03-30', current_strategy_id, test_user_id);
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID)
+      VALUES
+        ('AAPL', '2024-02-05', 'SELL', 'OPEN', 'PUT', 1, 1.50, 160, 150, '2025-03-30', current_strategy_id),
+        ('AAPL', '2025-02-05', 'BUY', 'OPEN', 'PUT', 1, -1.30, 150, 130, '2025-03-30', current_strategy_id);
 
   INSERT INTO strategies (strategy, user_id)
   VALUES ('Iron Condor', test_user_id) -- Use the captured user ID
   RETURNING strategyID INTO current_strategy_id; -- Capture the new strategy ID
 
-  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID, user_id)
-  VALUES
-    ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2025-03-30', current_strategy_id, test_user_id),
-    ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2025-03-30', current_strategy_id, test_user_id),
-    ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2025-03-30', current_strategy_id, test_user_id),
-    ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2025-03-30', current_strategy_id, test_user_id);
+  INSERT INTO trades (symbol, date, action, sub_action, trade_type, qty, price, strikes, value, expdate, strategyID)
+      VALUES
+        ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'CALL', 1, 8.80, 540, 880, '2025-03-30', current_strategy_id),
+        ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'CALL', 1, -7.10, 550, -710, '2025-03-30', current_strategy_id),
+        ('TSLA', '2025-01-29', 'SELL', 'OPEN', 'PUT', 1, 7.80, 415, 780, '2025-03-30', current_strategy_id),
+        ('TSLA', '2025-01-29', 'BUY', 'OPEN', 'PUT', 1, -6.00, 405, -600, '2025-03-30', current_strategy_id);
 END $$;
 `;
 }
