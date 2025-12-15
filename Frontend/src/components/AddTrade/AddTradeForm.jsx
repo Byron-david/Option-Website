@@ -11,26 +11,24 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
 
   const addTrade = event => {
     event.preventDefault()
-    console.log(newTrade)
     
     const tradeObject = formatTrade(newTrade)
 
-    console.log(tradeObject)
-    // const createTrade = async (tradeObject) => {
-    //   // setIsLoading(true);
-    //   try {
-    //     const fetchedData = await tradeService.create(tradeObject);
-    //     setAllTrades(allTrades.concat(fetchedData));
-    //     setNewTrade(defaultNewTrade)
-    //   } 
-    //   catch (err) {
-    //     setError(err);
-    //   } 
-    //   // finally {
-    //   //   setIsLoading(false);
-    //   // }
-    // };
-    // createTrade(tradeObject);
+    const createTrade = async (tradeObject) => {
+      // setIsLoading(true);
+      try {
+        const fetchedData = await tradeService.create(tradeObject);
+        setAllTrades(allTrades.concat(fetchedData));
+        setNewTrade(defaultNewTrade)
+      } 
+      catch (err) {
+        setError(err);
+      } 
+      // finally {
+      //   setIsLoading(false);
+      // }
+    };
+    createTrade(tradeObject);
 
     // handleClickClose()
 
