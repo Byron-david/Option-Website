@@ -12,8 +12,8 @@ function AddTradeForm({ allTrades, setAllTrades, handleClickClose }) {
   const addTrade = async (event) => { // Make sure this is async
     event.preventDefault()
     
+    console.log("Created Trade", newTrade)
     const tradeObject = formatTrade(newTrade)
-    console.log("Created Trade", tradeObject)
 
     try {
       // 1. Create the trade on the server

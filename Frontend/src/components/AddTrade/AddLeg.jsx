@@ -1,7 +1,5 @@
 import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
 import Button from '../Button/Button.jsx'
-import { useState } from 'react'
-import OptionLeg from './OptionLeg.jsx'
 import styles from './AddTrade.module.css'; 
 import OptionItems from '../Input/OptionItems.jsx'
 import OptionAction from './OptionAction.jsx';
@@ -12,7 +10,6 @@ function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
 
     // Use trades array consistently (recommended to standardize on either 'trades' or 'legs')
   const legs = newTrade.trades?.filter(trade => trade.trade_type !== 'STOCK') || [];
-  // const leg = newTrade.legs
 
   const addNewLeg = () => {
     const newLeg = { ...defaultLeg };
@@ -23,35 +20,6 @@ function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
         trades: [...values.trades, newLeg] 
       }));
     }
-  };
-
-  const deleteLeg = (index) => {
-    setNewTrade(values => {
-      // Get all non-stock legs
-      const nonStockLegs = values.trades.filter(trade => trade.trade_type !== 'STOCK');
-      
-      // If we're deleting the last option leg
-      if (nonStockLegs.length === 1) {
-        return {
-          ...values,
-          trades: values.trades.filter(trade => trade.trade_type === 'STOCK')
-        };
-      }
-      
-      // For other cases, find and remove the specific leg
-      let foundCount = 0;
-      const updatedTrades = values.trades.filter((trade, i) => {
-        if (trade.trade_type !== 'STOCK') {
-          if (foundCount === index) {
-            return false; // Skip this one
-          }
-          foundCount++;
-        }
-        return true;
-      });
-      
-      return { ...values, trades: updatedTrades };
-    });
   };
 
   const handleLegChange = (index, event) => {
@@ -69,11 +37,17 @@ function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
       for (let i = 0; i < updatedTrades.length; i++) {
         if (updatedTrades[i].trade_type !== 'STOCK') {
           if (foundCount === index) {
+
             // Update the specific leg
-            updatedTrades[i] = { 
+            const currentLeg = { 
               ...updatedTrades[i], 
               [name]: value 
             };
+
+            const p = name === 'price' ? parseFloat(value) : parseFloat(currentLeg.price);
+            currentLeg.value = (p * 100).toFixed(2);
+
+            updatedTrades[i] = currentLeg;
             break;
           }
           foundCount++;
@@ -142,8 +116,8 @@ function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
                         placeholder="2.50"
                         id="optionPrice"
                         type="number" 
-                        name="value" 
-                        value={option.value} 
+                        name="price" 
+                        value={option.price || ""} 
                         onChange={e => handleLegChange(index, e)}
                       />
                     </label>
