@@ -37,6 +37,8 @@ dialog {
 }
 
 .modalButtonContainer {
+    display: flex;
+    gap: 1rem;
     padding: var(--padding-condensed);
     text-align: left;
 }

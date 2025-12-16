@@ -89,6 +89,7 @@ export function useTradeForm(initialState = {
     tradeState,
     setTradeState,
     preset,
+    setPreset,
     stockVisible,
     setStockVisible,
     handleTrade,
