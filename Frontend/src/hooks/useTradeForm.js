@@ -39,6 +39,10 @@ export function useTradeForm(initialState = {
     const leg = { ...defaultLeg };
     
     if (strategy === "Covered Call" || strategy === "Strangle") leg.action = "SELL";
+
+    if (strategy === "Vertical Spread" && index == 1) {
+      leg.action = "SELL"
+    }
     if (strategy === "Iron Condor") {
       if (index < 2) leg.trade_type = "PUT"
 
@@ -46,7 +50,10 @@ export function useTradeForm(initialState = {
         leg.action = "SELL"
       }
     }
-    if (strategy === "Butterfly" && index === 1) leg.qty = 2;
+    if (strategy === "Butterfly" && index === 1) {
+      leg.qty = 2;
+      leg.action = "SELL"
+    } 
     
     return leg;
   };
