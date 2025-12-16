@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 function OptionItems(props) {
     return (
       props.items.map((item) => (

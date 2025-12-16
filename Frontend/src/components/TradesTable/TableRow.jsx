@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import styles from './TradesTable.module.css'; 
 import CombineStrikes from './CombineStrikes'
 import CombinePrice from './CombinePrice.jsx'
