@@ -45,7 +45,9 @@ function AddLeg({ strategy, itemTypes, itemActions, itemSubAction }) {
             };
 
             const p = name === 'price' ? parseFloat(value) : parseFloat(currentLeg.price);
-            currentLeg.value = (p * 100).toFixed(2);
+            const q = name === 'qty' ? parseFloat(value) : parseFloat(currentLeg.qty);
+
+            currentLeg.value = (p * q * 100).toFixed(2);
 
             updatedTrades[i] = currentLeg;
             break;
