@@ -57,9 +57,10 @@ const posType = [
 
 // base are defaults for each trade
 const defaultNewTrade = {
-  symbol: '',
-  strategy: '',
-  trades: []
+    symbol: '',
+    date: '',
+    trades: [{ ...defaultStock }],
+    strategy: 'Stock'
 }
 
 export { 

@@ -65,7 +65,7 @@ function TradeForm({ handleClickClose, onSubmit,  strategy }) {
                 <select 
                     className="inputSelect"
                     name="strategy"
-                    value={strategy}
+                    value={newTrade.strategy}
                     onChange={handleStrategy}> 
                     <OptionItems items={strategyOptions}/>
                 </select>
