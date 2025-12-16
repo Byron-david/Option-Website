@@ -84,6 +84,49 @@ tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res)
   }
 });
 
+tradesRouter.put('/dashboard/strategies/:strategyId', ensureAuthenticated, async (req, res) => {
+  const { strategyId } = req.params;
+  const { newTrade: { strategy, trades, symbol, date } } = req.body;
+  const userId = req.user.id;
+
+  if (isNaN(parseInt(strategyId, 10))) {
+    return res.status(400).json({ message: "Invalid Strategy ID." });
+  }
+
+  try {
+    // 1. Verify ownership and update the strategy name
+    const updatedStrategy = await db.updateStrategy(parseInt(strategyId, 10), strategy, userId);
+    if (!updatedStrategy) {
+      return res.status(404).json({ message: 'Strategy not found or access denied' });
+    }
+
+    // 2. Delete existing trades for this strategy (simplest way to "update" the set of trades)
+    // Note: This replaces all trades. If you need to preserve IDs, logic would be more complex.
+    await db.deleteTradesForStrategy(parseInt(strategyId, 10));
+
+    // 3. Insert the new set of trades
+    const formattedTrades = trades.map(t => ({
+      ...t,
+      symbol,
+      date,
+      userId,
+    }));
+    
+    const insertedTrades = await db.insertTrades(formattedTrades, parseInt(strategyId, 10));
+
+    res.json({
+      strategyID: parseInt(strategyId, 10),
+      strategy: strategy,
+      trades: insertedTrades,
+      user_id: userId
+    });
+
+  } catch (error) {
+    console.error("Error updating strategy:", error);
+    res.status(500).json({ message: 'Failed to update strategy' });
+  }
+});
+
 // DELETE /dashboard/strategies/:strategyId - Delete a strategy
 tradesRouter.delete('/dashboard/strategies/:strategyId', ensureAuthenticated, async (req, res) => {
   const { strategyId } = req.params;

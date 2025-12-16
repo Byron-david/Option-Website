@@ -1,5 +1,6 @@
 // src/hooks/useTradeFormLogic.js
 import { useTrade } from '../contexts/TradeContext';
+import { defaultLeg } from '../templates/tradeDefaults';
 
 export function useTradeFormLogic() {
   const {
@@ -7,6 +8,7 @@ export function useTradeFormLogic() {
     setTradeState,
     preset,
     stockVisible,
+    setStockVisible,
     handleTrade,
     handleStockChange,
     handleStrategyChange,
@@ -40,6 +42,7 @@ export function useTradeFormLogic() {
     setNewTrade: setTradeState,
     preset,
     stockVisible,
+    setStockVisible,
     handleTrade,
     handleStock: handleStockChange,
     handleStrategy: handleStrategyChange,

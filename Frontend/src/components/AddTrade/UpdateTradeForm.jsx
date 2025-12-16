@@ -1,70 +1,139 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTradeFormLogic } from '../../hooks/useTradeFormLogic'
+import OptionItems from '../Input/OptionItems.jsx'
+import Button from '../Button/Button.jsx'
+import AddLeg from './AddLeg.jsx'
+import AddStock from './AddStock.jsx'
 import tradeService from '../../services/trades.js'
-import TradeForm from './TradeForm.jsx';
 import formatTrade from '../../functions/formatTrade.js'
+import styles from './AddTrade.module.css'; 
+import { strategyOptions, action, subAction, posType } from '../../templates/tradeDefaults.js'
 
-export default function UpdateTradeForm({ currentTrade, setAllTrades, handleClickClose }) {
-  // Reuse the exact same logic hook as the Add form
-  const { newTrade, setNewTrade } = useTradeFormLogic();
-  const [error, setError] = useState(null)
+function UpdateTradeForm({ setAllTrades, handleClickClose, existingStrategy }) {
+  // Use the Context hook instead of local state to be compatible with AddLeg/AddStock
+  const {
+    newTrade,
+    setNewTrade,
+    preset,
+    stockVisible,
+    setStockVisible,
+    handleTrade,
+    handleStock,
+    handleStrategy,
+    validateLegs
+  } = useTradeFormLogic();
 
+  // Load existing strategy data into Context on mount
   useEffect(() => {
-    if (currentTrade && currentTrade.trades && currentTrade.trades.length > 0) {
-      const firstLeg = currentTrade.trades[0];
+    if (existingStrategy) {
+      // 1. Determine Strategy Name
+      const stratName = existingStrategy.strategy;
       
-      // Map DB structure back to Form State structure
-      const formState = {
-        strategy: currentTrade.strategy,
-        symbol: firstLeg.symbol,
-        // Format date to YYYY-MM-DD for the input
-        date: firstLeg.date ? new Date(firstLeg.date).toISOString().split('T')[0] : '', 
-        trades: currentTrade.trades.map(t => ({
+      // 2. Extract base info from first trade (symbol, date)
+      const firstTrade = existingStrategy.trades[0];
+      const symbol = firstTrade ? firstTrade.symbol : '';
+      const date = firstTrade ? firstTrade.date.split('T')[0] : ''; // Format for date input
+
+      // 3. Set Context State
+      setNewTrade({
+        strategy: stratName,
+        symbol: symbol,
+        date: date,
+        trades: existingStrategy.trades.map(t => ({
           ...t,
-          // Ensure we don't carry over negative numbers to the inputs if your form expects positives
-          price: Math.abs(t.price),
-          value: Math.abs(t.value),
+          // Ensure dates are formatted for inputs if needed
+          exp: t.expdate ? t.expdate.split('T')[0] : '',
+          // Ensure numeric values are numbers
+          qty: Number(t.qty),
+          price: Number(t.price),
+          value: Number(t.value),
+          strikes: t.strikes // Ensure this matches AddLeg expectation
         }))
-      };
+      });
 
-      setNewTrade(formState);
+      // 4. Update UI visibility
+      setStockVisible(stratName === "Stock" || stratName === "Covered Call" ? 1 : 0);
     }
-  }, [currentTrade, setNewTrade]);
+  }, [existingStrategy, setNewTrade, setStockVisible]);
 
-  const handleUpdate = async (event) => {
+  const updateTrade = async (event) => {
     event.preventDefault();
     
-    // Use your existing formatter
+    // Use your formatTrade function to prepare payload
     const tradeObject = formatTrade(newTrade);
-    
-    // Get the Strategy ID (handle Postgres capitalization quirks)
-    const strategyId = currentTrade.strategyid || currentTrade.strategyID || currentTrade.id;
+
+    // Override the strategy in the payload if needed
+    tradeObject.newTrade.strategy = newTrade.strategy;
 
     try {
-      const updatedStrategy = await tradeService.update(strategyId, tradeObject);
+      // Backend requires a PUT route. 
+      // If your backend doesn't support PUT, you might need to Delete & Re-create manually.
+      // Assuming you will add a PUT route or use a workaround:
+      const updatedStrategy = await tradeService.update(existingStrategy.strategyID, tradeObject);
       
-      // Update the table list locally without refreshing
-      setAllTrades(prevTrades => prevTrades.map(t => 
-        (t.strategyid || t.strategyID || t.id) === strategyId ? updatedStrategy : t
+      setAllTrades(prev => prev.map(t => 
+        t.strategyID === updatedStrategy.strategyID ? updatedStrategy : t
       ));
       
       handleClickClose();
     } catch (err) {
-      console.error("Update failed:", err);
-      setError("Failed to update trade");
+      console.error("Failed to update trade:", err);
+      alert("Failed to update. Ensure your backend supports editing.");
     }
-  }
+  };
 
   return (
     <div className="containerTemplate">
       <div className="titleTemplate">Edit Trade</div>
-      
-      <TradeForm 
-        onSubmit={handleUpdate} 
-        handleClickClose={handleClickClose} 
-      />
-      
-      {error && <div style={{color: 'red', padding: '10px'}}>{error}</div>}
+      <form onSubmit={updateTrade}>
+        <div className="bodyTemplate inputDark">
+          <div className="inputContainer">
+              <label>Symbol: 
+                <input 
+                  type="text" 
+                  name="symbol" 
+                  value={newTrade.symbol || ""} 
+                  onChange={handleTrade}
+                  placeholder="AAPL"
+                  maxLength="4"
+                />
+              </label>
+              <label>Date Exec.:
+                <input 
+                  type="date" 
+                  name="date" 
+                  value={newTrade.date || ""} 
+                  onChange={handleTrade}
+                />
+              </label>
+              <label className={styles.preset}>Strategy:
+                <select 
+                    className="inputSelect"
+                    name="strategy"
+                    value={newTrade.strategy}
+                    onChange={handleStrategy}> 
+                    <OptionItems items={strategyOptions}/>
+                </select>
+              </label>
+          </div>
+
+          <AddStock items={action}
+                    handleChange={handleStock}
+                    itemSubAction={subAction}
+                    stockVisible={stockVisible}
+                    setStockVisible={setStockVisible} />
+          <AddLeg strategy={preset}
+                  itemTypes={posType}
+                  itemActions={action}
+                  itemSubAction={subAction} />
+        </div>
+        <div className="footerTemplate">
+          <Button text="Cancel" backgroundColor="var(--color-red)" handleClick={handleClickClose} />
+          <Button type="submit" text="Update" className={styles.buttonSave} />
+        </div>
+      </form>
     </div>
   );
 }
+
+export default UpdateTradeForm;

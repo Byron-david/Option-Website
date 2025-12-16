@@ -7,6 +7,8 @@ import { useState } from 'react';
 import ExpandRow from './ExpandRow'
 import tradeService from '../../services/trades.js'
 import formatDate from '../../functions/formatDate.js'
+import Modal from '../Modal/Modal.jsx' 
+import UpdateTradeForm from '../AddTrade/UpdateTradeForm.jsx'
 
 const subActionFormat = (subAction, className) => {
     const open = subAction.find((element) => element === "OPEN")
@@ -46,6 +48,7 @@ const formatExpDate = (dates) => {
 
 export default function TableRow({ allTrades, setAllTrades, strategy, stratName, index, }) {
     const [expand, setExpand] = useState(0);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const [error, setError] = useState(null);
 
     // FIX: Guard against empty trades to prevent crash
@@ -136,9 +139,7 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
         event.preventDefault();
         event.stopPropagation();
         
-        if (onEdit) {
-            onEdit(strategy);
-        }
+        setEditModalOpen(true);
     }
     
     return (
@@ -178,6 +179,13 @@ export default function TableRow({ allTrades, setAllTrades, strategy, stratName,
                 <ExpandRow stratName={stratName} strategy={strategy} />
                 : null
             }
+            <Modal open={editModalOpen}>
+                <UpdateTradeForm 
+                    handleClickClose={() => setEditModalOpen(false)}
+                    setAllTrades={setAllTrades}
+                    existingStrategy={strategy}
+                />
+            </Modal>
         </>
     )
 }

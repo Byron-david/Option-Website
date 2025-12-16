@@ -90,6 +90,7 @@ export function useTradeForm(initialState = {
     setTradeState,
     preset,
     stockVisible,
+    setStockVisible,
     handleTrade,
     handleStockChange,
     handleStrategyChange,

@@ -227,6 +227,32 @@ async function insertTrades(tradesArray, strategyId) {
     }
 }
 
+async function updateStrategy(strategyId, newName, userId) {
+  const query = `
+    UPDATE strategies 
+    SET strategy = $1 
+    WHERE strategyID = $2 AND user_id = $3
+    RETURNING *
+  `;
+  try {
+    const { rows } = await pool.query(query, [newName, strategyId, userId]);
+    return rows[0]; // Returns undefined if no row was updated (e.g. wrong user)
+  } catch (error) {
+    console.error("Error updating strategy:", error);
+    throw error;
+  }
+}
+
+async function deleteTradesForStrategy(strategyId) {
+  const query = `DELETE FROM trades WHERE strategyID = $1`;
+  try {
+    await pool.query(query, [strategyId]);
+  } catch (error) {
+    console.error("Error deleting trades for strategy update:", error);
+    throw error;
+  }
+}
+
 async function deleteTradeByIdForUser(tradeId, userId) {
   const query = `
     DELETE FROM trades
@@ -293,6 +319,8 @@ module.exports = {
   insertTrade,
   insertTrades,
   insertStrategy,
+  updateStrategy,
+  deleteTradesForStrategy,
   deleteTrade,
   deleteStrategy,
   deleteTradeByIdForUser,

@@ -1,27 +1,22 @@
 const valueAdjust = (combinedTrade, value) => {
-  // Return a new array with modified objects
-  return combinedTrade.map(t => {
-    if (t.action === "BUY") {
-      return { ...t, [value]: `${t[value] * -1}` };
-    }
-    return t;
-  });
-}
+    combinedTrade.map(t => t.action === "BUY" ? t[value] = `${t[value] * -1}` : t[value] )
+  }
 
 const formatTrade = (newTrade) => {
-    // Create a deep copy of trades to avoid mutating state
-    let tradesCopy = newTrade.trades.map(t => ({...t}));
+    // Fix: Map frontend 'exp' to backend 'expdate'
+    if (newTrade.trades) {
+        newTrade.trades.forEach(trade => {
+            if (trade.exp) {
+                trade.expdate = trade.exp;
+            }
+        });
+    }
 
-    tradesCopy = valueAdjust(tradesCopy, "value");
-    tradesCopy = valueAdjust(tradesCopy, "price");
+    // Existing value adjustments
+    valueAdjust(newTrade.trades, "value")
+    valueAdjust(newTrade.trades, "price")
 
-    // Return the new structure with the modified trades copy
-    return {
-      newTrade: {
-        ...newTrade,
-        trades: tradesCopy
-      }
-    };
+    return {newTrade}
 }
 
 export default formatTrade
