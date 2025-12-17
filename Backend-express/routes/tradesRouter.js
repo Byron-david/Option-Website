@@ -58,6 +58,18 @@ tradesRouter.post('/dashboard/strategies', ensureAuthenticated, async (req, res)
   }
 
   try {
+    // Hard cap of 50 trades total for testing
+    const tradeCountResult = await pool.query('SELECT COUNT(*) FROM trades');
+
+    const totalTradesInDb = parseInt(tradeCountResult.rows[0].count, 10);
+    const newTradesCount = trades.length;
+
+    if (totalTradesInDb + newTradesCount > 50) {
+      return res.status(403).json({ 
+        message: `System limit reached. The database allows a maximum of 50 trades total. Current total: ${totalTradesInDb}.` 
+      });
+    }
+    
     // 1. Insert strategy
     const strategyId = await db.insertStrategy(strategy, userId);
 

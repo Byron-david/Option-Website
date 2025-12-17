@@ -11,6 +11,14 @@ async function createUser(req, res) {
   }
 
   try {
+    // Check User limit of 10
+    const userCountResult = await pool.query('SELECT COUNT(*) FROM users');
+    const userCount = parseInt(userCountResult.rows[0].count, 10);
+
+    if (userCount >= 10) {
+      return res.status(403).json({ message: 'User limit reached. No new registrations allowed.' });
+    }
+
     // Check if username or email already exists
     const existingUser = await pool.query(
       `SELECT 
