@@ -15,14 +15,14 @@ function App() {
   useEffect(() => {
     if (isLoading) return;
 
-    if (isAuthenticated === false && location.pathname.startsWith('/dashboard')) {
+    if (isAuthenticated === false && location.pathname.startsWith('/trades')) {
        console.log("Redirecting to Home...");
        navigate('/'); 
     }
 
     if (isAuthenticated === true && location.pathname === '/') {
-       console.log("Redirecting to Dashboard...");
-       navigate('/dashboard/trades');
+       console.log("Redirecting to trades...");
+       navigate('/trades');
     }
     }, [isLoading, isAuthenticated, location.pathname, navigate]);
 
