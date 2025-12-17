@@ -18,6 +18,33 @@ logger.info('connecting to', config.DATABASE_URL)
 // 1. Trust Proxy (REQUIRED for Render Cookies)
 app.set('trust proxy', 1);
 
+// 2. CORS - MOVED TO TOP (Best Practice)
+// This ensures headers are sent even if the session fails or redirects.
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        'http://localhost:5173', 
+        'http://127.0.0.1:5173',
+        process.env.FRONTEND_URL // Must match exactly: https://option-website-one.vercel.app
+      ];
+
+      // Check if origin is allowed OR if it's a Vercel preview URL
+      if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        console.log('Blocked by CORS:', origin); // <--- CHECK RENDER LOGS FOR THIS
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, 
+  })
+);
+
+// 3. Session Middleware
 app.use(session({
   store: new pgSession({
     pool: pool,
@@ -27,38 +54,14 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    // 2. Cookie Settings (Secure + SameSite None for Cross-Origin)
     secure: process.env.NODE_ENV === 'production', 
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  } 
+    maxAge: 1000 * 60 * 60 * 24 
+  }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// 3. Updated CORS to allow Vercel Preview URLs
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    const allowedOrigins = [
-      'http://localhost:5173', 
-      'http://127.0.0.1:5173',
-      process.env.FRONTEND_URL // Your main production domain from Render env
-    ];
-
-    // Check if the origin is in our list OR if it is a Vercel preview URL
-    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      console.log('Blocked by CORS:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, 
-}));
 
 app.use(express.static('dist'))
 app.use(express.json())
