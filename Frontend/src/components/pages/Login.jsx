@@ -10,8 +10,8 @@ import { useAuth } from '../../hooks/useAuth';
 
 function Login() {
   // State for form inputs
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('test');
+  const [password, setPassword] = useState('abcd1234');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();

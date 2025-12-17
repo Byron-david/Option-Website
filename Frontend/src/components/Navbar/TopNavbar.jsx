@@ -42,8 +42,8 @@ function TopNavbar() {
           </div>
           <div id={styles.topNavElements}>
               <Link to="/">Home</Link>
-              <Link to="/features">Features</Link>
-              <Link to="/pricing">Pricing</Link>
+              {/* <Link to="/features">Features</Link> */}
+              {/* <Link to="/pricing">Pricing</Link> */}
               <Link to="/login">Log In</Link>
           </div>
 
