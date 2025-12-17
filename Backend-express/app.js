@@ -6,7 +6,6 @@ const pgSession = require('connect-pg-simple')(session);
 const pool = require("./db/pool");
 const app = express()
 const cors = require('cors')
-// const tradesRouter = require('./controllers/trades')
 const tradesRouter = require('./routes/tradesRouter')
 const loginRouter = require('./routes/loginRouter')
 const userRouter = require('./routes/userRouter');
@@ -16,78 +15,55 @@ require('express-async-errors')
 
 logger.info('connecting to', config.DATABASE_URL)
 
+// 1. Trust Proxy (REQUIRED for Render Cookies)
 app.set('trust proxy', 1);
-// app.use(
-//   session({
-//     secret: config.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       // secure: process.env.NODE_ENV === 'production',
-//       secure: false,
-//       httpOnly: true,
-//       maxAge: 1000 * 60 * 60 * 24, // 24 hours
-//       sameSite: 'lax'
-//       // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
-//     },
-//     store: new pgSession({
-//       pool: pool,
-//       tableName: 'user_sessions',
-//       createTableIfMissing: true
-//     }),
-//   })
-// );
 
 app.use(session({
   store: new pgSession({
-    pool: pool, // Reuse your PostgreSQL pool
-    tableName: 'user_sessions' // Sessions table
+    pool: pool,
+    tableName: 'user_sessions'
   }),
   secret: config.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    // Production (Render) NEEDS secure: true and sameSite: 'none'
+    // 2. Cookie Settings (Secure + SameSite None for Cross-Origin)
     secure: process.env.NODE_ENV === 'production', 
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
+  } 
 }));
 
-// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: [
+// 3. Updated CORS to allow Vercel Preview URLs
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
       'http://localhost:5173', 
       'http://127.0.0.1:5173',
-      process.env.FRONTEND_URL
-    ],
-    credentials: true, // Allow credentials (cookies, authorization headers)
-    // allowedHeaders: [
-    //   'Content-Type',
-    //   'Authorization',
-    //   'X-Requested-With',
-    //   'Accept',
-    // ],
-    // exposedHeaders: ['set-cookie']
-  })
-);
+      process.env.FRONTEND_URL // Your main production domain from Render env
+    ];
+
+    // Check if the origin is in our list OR if it is a Vercel preview URL
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, 
+}));
 
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-// app.get('/api/trades', (req, res) => {
-//   if (req.isAuthenticated()) {
-//     console.log("User: ", req.user);
-//     res.send('Authenticated!');
-//   } else {
-//     res.status(401).send('Not authenticated');
-//   }
-// });
 app.use('/api', tradesRouter)
 app.use('/api', loginRouter)
 app.use('/api', userRouter)
