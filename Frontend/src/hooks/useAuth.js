@@ -1,5 +1,6 @@
 // src/hooks/useAuth.js
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { BASE_URL } from '../utils/config';
 
 export function useAuth() {
   const queryClient = useQueryClient();
@@ -7,39 +8,45 @@ export function useAuth() {
   const authQuery = useQuery({
     queryKey: ['auth'],
     queryFn: async () => {
-      const res = await fetch('/api/auth', { credentials: 'include' });
-      if (!res.ok) throw new Error('Not authenticated');
+      const res = await fetch(`${BASE_URL}/api/auth`, { credentials: 'include' });
+
+      if (!res.ok) {
+        // Return a default "not logged in" state
+        return { authenticated: false }; 
+      }
+      
       return res.json();
     },
+    retry: false
   });
 
   const loginMutation = useMutation({
     mutationFn: async ({ username, password }) => {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${BASE_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
         credentials: 'include',
       });
-      if (!res.ok) throw new Error('Login failed');
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || 'Login failed');
+      }
+      
       return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['auth'] });
     },
   });
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      await fetch('/api/logout', {
+      await fetch(`${BASE_URL}/api/logout`, {
         method: 'POST',
         credentials: 'include'
       });
     },
     onSuccess: () => {
-      // 1. Clear the React Query cache instantly
-      queryClient.setQueryData(['auth'], null); 
-      // 2. Force a refetch to be sure (optional)
+      queryClient.setQueryData(['auth'], { authenticated: false });
       queryClient.invalidateQueries({ queryKey: ['auth'] });
     },
   });
