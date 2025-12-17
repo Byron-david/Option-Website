@@ -16,6 +16,7 @@ require('express-async-errors')
 
 logger.info('connecting to', config.DATABASE_URL)
 
+app.set('trust proxy', 1);
 // app.use(
 //   session({
 //     secret: config.SESSION_SECRET,
@@ -45,7 +46,12 @@ app.use(session({
   secret: config.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Set to `true` in production
+  cookie: {
+    // Production (Render) NEEDS secure: true and sameSite: 'none'
+    secure: process.env.NODE_ENV === 'production', 
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
 }));
 
 // Passport initialization
@@ -54,7 +60,11 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from this origin
+    origin: [
+      'http://localhost:5173', 
+      'http://127.0.0.1:5173',
+      process.env.FRONTEND_URL
+    ],
     credentials: true, // Allow credentials (cookies, authorization headers)
     // allowedHeaders: [
     //   'Content-Type',
