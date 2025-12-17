@@ -7,6 +7,7 @@ import {
 } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { BASE_URL } from '../../utils/config';
 
 function Login() {
   // State for form inputs
@@ -18,9 +19,30 @@ function Login() {
 
   const handleLogin = async (e) => {
       e.preventDefault();
+      setError('');
+
       try {
-        await login({ username, password });
+        const response = await fetch(`${BASE_URL}/api/login`, { 
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ username, password }),
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || data.error || "Login failed");
+        }
+
+        // 2. Update Auth Context with the user data from the server
+        if (login) {
+            await login(data.user); 
+        }
         
+        // 3. Navigate to trades
         navigate('/trades', { replace: true });
         
       } catch (error) {

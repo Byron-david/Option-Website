@@ -54,7 +54,10 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from this origin
+    origin: [
+      'http://localhost:5173', 
+      process.env.FRONTEND_URL
+    ],
     credentials: true, // Allow credentials (cookies, authorization headers)
     // allowedHeaders: [
     //   'Content-Type',

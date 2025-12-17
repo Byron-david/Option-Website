@@ -1,4 +1,6 @@
-const baseUrl = '/api/dashboard/strategies'
+import { BASE_URL } from '../utils/config';
+
+const baseUrl = `${BASE_URL}/api/dashboard/strategies`;
 
 const fetchData = async () => {
   try {
