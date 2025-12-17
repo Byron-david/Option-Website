@@ -30,21 +30,21 @@ function Navbar() {
           <ul>
             <li>
               {/* Check location, then set active */}
-              <Link to="/dashboard/trades"
-                    className={location.pathname === "/dashboard/trades" ?
+              <Link to="/trades"
+                    className={location.pathname === "/trades" ?
                     `${styles.active} ${styles.navButtons}` : styles.navButtons}
                     >
                     Trades
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/dashboard"
                     className={location.pathname === "/dashboard" ?
                       `${styles.active} ${styles.navButtons}` : styles.navButtons}
                     >
                     Dashboard
               </Link>
-            </li>
+            </li> */}
             <li className={styles.logout}>
                 <button 
                     onClick={() => logout()} 
