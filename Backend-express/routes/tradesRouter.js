@@ -4,10 +4,10 @@ const tradesRouter = Router();
 const { ensureAuthenticated } = require('../utils/middleware'); // Use your auth middleware
 const db = require("../db/queries");
 
-// tradesRouter.get('/dashboard/trades', tradesController.getTrades)
-tradesRouter.get('/dashboard/trades/:id', tradesController.getTrade)
-// tradesRouter.post('/dashboard/trades', tradesController.addTrade)
-tradesRouter.delete('/dashboard/trades/:id', tradesController.removeTrade)
+// tradesRouter.get('/trades', tradesController.getTrades)
+tradesRouter.get('/trades/:id', tradesController.getTrade)
+// tradesRouter.post('/trades', tradesController.addTrade)
+tradesRouter.delete('/trades/:id', tradesController.removeTrade)
 
 // GET all trades for strategy
 tradesRouter.get('/dashboard/strategies', ensureAuthenticated, async (req, res) => {

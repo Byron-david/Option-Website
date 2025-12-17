@@ -70,7 +70,7 @@ app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-// app.get('/api/dashboard/trades', (req, res) => {
+// app.get('/api/trades', (req, res) => {
 //   if (req.isAuthenticated()) {
 //     console.log("User: ", req.user);
 //     res.send('Authenticated!');

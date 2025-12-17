@@ -19,7 +19,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      // '/api/dashboard/trades': 'http://localhost:3000',
+      // '/api/trades': 'http://localhost:3000',
       // Add other API endpoints if needed
     }
   }

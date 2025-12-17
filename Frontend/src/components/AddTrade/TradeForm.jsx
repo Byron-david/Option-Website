@@ -40,7 +40,7 @@ function TradeForm({ handleClickClose, onSubmit,  strategy }) {
 
   return (
     <>
-      <form action ="/dashboard/trades" onSubmit={onSubmit} method="POST">
+      <form action ="/trades" onSubmit={onSubmit} method="POST">
         <div className="bodyTemplate inputDark">
           <div className="inputContainer">
               <label>Symbol: 

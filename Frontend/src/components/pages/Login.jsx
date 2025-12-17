@@ -21,7 +21,7 @@ function Login() {
       try {
         await login({ username, password });
         
-        navigate('/dashboard/trades', { replace: true });
+        navigate('/trades', { replace: true });
         
       } catch (error) {
         console.error('Login error:', error);
@@ -49,9 +49,9 @@ function Login() {
                 />
                 <div className={styles.spaceBetween}>
                   <label htmlFor="password">Password</label>
-                  <Link to="/" className={`textButton text75`}>
+                  {/* <Link to="/" className={`textButton text75`}>
                     Forgot Password?
-                  </Link>
+                  </Link> */}
                 </div>
                 <input
                   id="password"
