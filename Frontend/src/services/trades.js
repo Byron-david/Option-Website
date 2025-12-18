@@ -1,4 +1,6 @@
-const baseUrl = '/api/dashboard/strategies'
+import { BASE_URL } from '../utils/config';
+
+const baseUrl = `${BASE_URL}/api/dashboard/strategies`
 
 const fetchData = async () => {
   try {
@@ -8,10 +10,21 @@ const fetchData = async () => {
         'Content-Type': 'application/json'
       }
     });
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+       throw new Error("Received non-JSON response from server");
+    }
+
     const data = await response.json();
-    return data
+    
+    if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch trades");
+    }
+
+    return data;
   } catch (error) {
     console.error('Error fetching trades:', error);
+    return [];
   }
 };
 
@@ -32,6 +45,7 @@ const create = async newObject => {
     return data
   } catch (error) {
     console.error('Error adding trades:', error);
+    throw error;
   }
 }
 
@@ -78,6 +92,7 @@ const remove = async (id) => {
     
   } catch (error) {
     console.error('Error adding trades:', error);
+    throw error;
   }
 }
 
