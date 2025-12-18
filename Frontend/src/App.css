@@ -166,7 +166,7 @@ hr {
 
 /* Hacky way to change date input icon */
 ::-webkit-calendar-picker-indicator {
-  /* filter: invert(1); */
+  filter: invert(1);
 }
 
 fieldset {
@@ -253,10 +253,6 @@ input[type=text], input[type=password], input[type=date], input[type=number], in
   /* border: 1px solid var(--color-highlight); */
   box-sizing: border-box;
   border-radius: var(--border-radius-main);
-}
-
-input[type=date] {
-  filter: invert(1);
 }
 
 input[type=number]{
