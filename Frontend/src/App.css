@@ -243,7 +243,7 @@ input::-webkit-inner-spin-button {
 .inputLight input, select {
   background-color: transparent;
   border: solid 1px var(--border-light);
-  color: var(--input-color-light);
+  color: var(--color-main);
   padding: var(--padding-condensed);
   border-radius: var(--border-radius-main);
 }
