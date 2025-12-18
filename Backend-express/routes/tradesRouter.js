@@ -3,6 +3,7 @@ const tradesController = require("../controllers/tradesController");
 const tradesRouter = Router();
 const { ensureAuthenticated } = require('../utils/middleware'); // Use your auth middleware
 const db = require("../db/queries");
+const pool = require("../db/pool")
 
 // tradesRouter.get('/trades', tradesController.getTrades)
 tradesRouter.get('/trades/:id', tradesController.getTrade)
