@@ -36,6 +36,13 @@ export function useAuth() {
       
       return res.json();
     },
+    onSuccess: (data) => {
+      // 1. Immediately update the cache so the UI knows we are logged in
+      queryClient.setQueryData(['auth'], { authenticated: true, user: data.user });
+      
+      // 2. Force a re-fetch to be absolutely sure (optional but safe)
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+    },
   });
 
   const logoutMutation = useMutation({
