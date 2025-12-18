@@ -75,6 +75,7 @@ const remove = async (id) => {
   try {
     const response = await fetch(`${baseUrl}/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
