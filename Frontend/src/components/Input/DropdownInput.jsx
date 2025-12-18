@@ -10,10 +10,6 @@ function OptionItems(props) {
 }
 
 function DropdownInput( { text, placeholder, htmlFor, items, value, onChange }) {
-  const inputStyle = {
-    placeholder: placeholder,
-    htmlFor: htmlFor,
-  }
 
   return (
     <>
@@ -22,7 +18,7 @@ function DropdownInput( { text, placeholder, htmlFor, items, value, onChange }) 
           <legend>{text}</legend>
           <select 
             className="inputSelect"
-            style={inputStyle} 
+            id={htmlFor}
             value={value}
             onChange={onChange}> 
             <OptionItems items={items}/>

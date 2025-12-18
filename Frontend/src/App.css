@@ -202,6 +202,25 @@ input::-webkit-inner-spin-button {
   width: 30%;
 }
 
+select.inputSelect {
+  background-color: var(--color-secondary); /* or var(--color-main) */
+  color: var(--text-color-light); /* White text */
+  border: 1px solid var(--border-dark);
+}
+
+/* Force options to be dark with light text */
+select.inputSelect option {
+  background-color: var(--color-secondary);
+  color: var(--text-color-light);
+}
+
+/* Fix specific issue in DropdownInput where style prop might override */
+/* Ensure the text color is always light for your dark inputs */
+.fieldsetDiv select {
+    color: var(--text-color-light);
+    background-color: var(--color-secondary);
+}
+
 .inputDark label {
   display: flex;
   flex-direction: column;
