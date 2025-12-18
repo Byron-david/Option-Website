@@ -255,6 +255,9 @@ input[type=text], input[type=password], input[type=date], input[type=number], in
   border-radius: var(--border-radius-main);
 }
 
+input[type=date] {
+  filter: invert(1);
+}
 
 input[type=number]{
   -moz-appearance: textfield;
