@@ -1,5 +1,4 @@
 const pool = require("./pool");
-const client = pool.connect()
 
 async function getAllTrades() {
   try {
