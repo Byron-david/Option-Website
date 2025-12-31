@@ -12,8 +12,10 @@ const userRouter = require('./routes/userRouter');
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 require('express-async-errors')
+const cronRouter = require('./routes/cronRouter');
 
 logger.info('connecting to', config.DATABASE_URL)
+
 
 // 1. Trust Proxy (REQUIRED for Render Cookies)
 app.set('trust proxy', 1);
@@ -61,6 +63,7 @@ app.use(session({
   }
 }));
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -71,6 +74,7 @@ app.use(middleware.requestLogger)
 app.use('/api', tradesRouter)
 app.use('/api', loginRouter)
 app.use('/api', userRouter)
+app.use('/api', cronRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
