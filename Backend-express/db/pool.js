@@ -3,6 +3,9 @@ const config = require('../utils/config');
 
 const poolConfig = {
   connectionString: config.DATABASE_URL,
+  max: 1,
+  connectionTimeoutMillis: 2000,
+  idleTimeoutMillis: 30000,
 };
 
 // Add SSL for production (Render/Neon)
