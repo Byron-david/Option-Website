@@ -27,6 +27,11 @@ RUN npm ci --include=dev
 # Copy application code
 COPY --link . .
 
+# --- ADD THESE TWO LINES ---
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+# ---------------------------
+
 # Build application
 RUN npm run build
 
