@@ -6,19 +6,25 @@ export function useAuth() {
   const queryClient = useQueryClient();
 
   const authQuery = useQuery({
-    queryKey: ['auth'],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/api/auth`, { credentials: 'include' });
+      queryKey: ['auth'],
+      queryFn: async () => {
+        // Wrap in try/catch to handle network errors or invalid JSON
+        try {
+          const res = await fetch(`${BASE_URL}/api/auth`, { credentials: 'include' });
 
-      if (!res.ok) {
-        // Return a default "not logged in" state
-        return { authenticated: false }; 
-      }
-      
-      return res.json();
-    },
-    retry: false
-  });
+          if (!res.ok) {
+            return { authenticated: false }; 
+          }
+          
+          return await res.json();
+        } catch (error) {
+          // If fetch fails (e.g., backend down), assume not logged in
+          console.warn("Auth check failed, assuming logged out:", error);
+          return { authenticated: false };
+        }
+      },
+      retry: false
+    });
 
   const loginMutation = useMutation({
     mutationFn: async ({ username, password }) => {
